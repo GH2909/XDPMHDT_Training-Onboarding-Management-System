@@ -22,8 +22,8 @@ public class User {
     @Column(name = "id")
     private Integer id;
 
-    @Column(name = "username")
-    private String username;
+    @Column(name = "userName")
+    private String userName;
 
     @Column(name = "password")
     private String password;
@@ -31,7 +31,7 @@ public class User {
     @Column(name = "email")
     private String email;
 
-    @Column(name = "fullname")
+    @Column(name = "fullName")
     private String fullName;
 
     @Column(name = "phone")
