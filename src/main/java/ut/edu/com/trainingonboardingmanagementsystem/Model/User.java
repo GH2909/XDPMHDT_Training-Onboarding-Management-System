@@ -6,49 +6,52 @@ import lombok.experimental.FieldDefaults;
 import ut.edu.com.trainingonboardingmanagementsystem.enums.UserStatus;
 
 import java.time.LocalDateTime;
-import java.util.Set;
 
-@Data
+
+@Setter
+@Getter
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
 @FieldDefaults(level = AccessLevel.PRIVATE)
 @Entity
+@Table(name = "users")
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id")
     private Integer id;
 
-    @Column(length = 100, nullable = false, unique = true)
+    @Column(name = "username")
     private String username;
 
-    @Column(length = 255, nullable = false)
+    @Column(name = "password")
     private String password;
 
-    @Column(length = 255, nullable = false, unique = true)
+    @Column(name = "email")
     private String email;
 
-    @Column(name = "fullname", length = 255)
+    @Column(name = "fullname")
     private String fullName;
 
-    @Column(length = 20)
+    @Column(name = "phone")
     private String phone;
 
-    @Column(length = 255)
+    @Column(name = "avatar")
     private String avatar;
 
     @Enumerated(EnumType.STRING)
-    @Column(nullable = false)
+    @Column(name = "status")
     private UserStatus status = UserStatus.ACTIVE;
 
-    @Column(name = "roleId", nullable = false)
-    private Integer roleId;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "roleId")
+    private Role role;
 
-    @Column(name = "created_at", updatable = false)
+    @Column(name = "created_at",
+            updatable = false,
+            insertable = false)
     private LocalDateTime createdAt;
 
-    @PrePersist
-    protected void onCreate() {
-        this.createdAt = LocalDateTime.now();
-    }
+
 }
