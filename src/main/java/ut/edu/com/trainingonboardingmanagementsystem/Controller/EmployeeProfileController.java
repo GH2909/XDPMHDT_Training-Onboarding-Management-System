@@ -18,12 +18,12 @@ public class EmployeeProfileController {
     @Autowired
     UserService userService;
 
-    @PostMapping
-    ApiResponse<User> createEmployeeProfile(@RequestBody EmployeeProfileCreationRequest request){
-        ApiResponse<User> apiResponse = new ApiResponse<>();
-        apiResponse.setResult(userService.creatEmployeeProfile(request));
-        return apiResponse;
-    }
+//    @PostMapping
+//    ApiResponse<User> createEmployeeProfile(@RequestBody EmployeeProfileCreationRequest request){
+//        ApiResponse<User> apiResponse = new ApiResponse<>();
+//        apiResponse.setResult(userService.creatEmployeeProfile(request));
+//        return apiResponse;
+//    }
 
     @GetMapping
     ApiResponse<List<User>> getEmployeeProfiles() {
@@ -60,12 +60,12 @@ public class EmployeeProfileController {
         return apiResponse;
     }
 
-    @DeleteMapping("/{email}")
-    ApiResponse<String> deleteEmployeeProfile(@PathVariable String email){
-        ApiResponse<String> apiResponse = new ApiResponse<>();
-        apiResponse.setResult("Customerprofile has been deleted");
-        userService.deleteEmployeeProfile(email);
-        return apiResponse;
-    }
+//    @DeleteMapping("/{email}")
+//    ApiResponse<String> deleteEmployeeProfile(@PathVariable String email){
+//        ApiResponse<String> apiResponse = new ApiResponse<>();
+//        apiResponse.setResult("Customerprofile has been deleted");
+//        userService.deleteEmployeeProfile(email);
+//        return apiResponse;
+//    }
 
 }

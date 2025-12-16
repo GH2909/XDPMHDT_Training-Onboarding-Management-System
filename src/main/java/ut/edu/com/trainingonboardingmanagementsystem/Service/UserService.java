@@ -22,14 +22,14 @@ public class UserService {
     private final UserMapper userMapper;
     private final PasswordEncoder passwordEncoder;
 
-    public User creatEmployeeProfile(EmployeeProfileCreationRequest request) {
-        User user = userMapper.creatEmployeeProfile(request);
-        user.setPassword(request.getPassword());
-        user.setFullName(request.getFullName());
-        user.setPhone(request.getPhone());
-        user.setAvatar(request.getAvatar());
-        return userRepository.save(user);
-    }
+//    public User creatEmployeeProfile(EmployeeProfileCreationRequest request) {
+//        User user = userMapper.creatEmployeeProfile(request);
+//        user.setPassword(request.getPassword());
+//        user.setFullName(request.getFullName());
+//        user.setPhone(request.getPhone());
+//        user.setAvatar(request.getAvatar());
+//        return userRepository.save(user);
+//    }
 
     public User updateEmployeeProfile(String email, EmployeeProfileUpdateRequest request) {
         User user = userRepository.findByEmail(email)
@@ -64,8 +64,8 @@ public class UserService {
     public User getEmployeeProfile(String email) {
         return userRepository.findByEmail(email) .orElseThrow(() -> new RuntimeException("Employee Profile not found"));
     }
-    public void deleteEmployeeProfile(String email) {
-        userRepository.deleteByEmail(email);
-    }
+//    public void deleteEmployeeProfile(String email) {
+//        userRepository.deleteByEmail(email);
+//    }
 
 }
