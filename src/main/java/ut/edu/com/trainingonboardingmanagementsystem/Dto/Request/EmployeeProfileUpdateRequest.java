@@ -1,9 +1,14 @@
 package ut.edu.com.trainingonboardingmanagementsystem.Dto.Request;
 
 public class EmployeeProfileUpdateRequest {
+    private String password;
     private String fullName;
     private String phone;
     private String avatar;
+
+    public String getPassword() {return password;}
+
+    public void setPassword(String password) {this.password = password;}
 
     public String getFullName() {
         return fullName;
