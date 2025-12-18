@@ -12,3 +12,8 @@ spring:
     hibernate:
       ddl-auto: update
     show-sql: true
+
+gg:
+  sheet:
+    id: 15HW7AzD_nitLsS7UhdbuZaBgWMBvdbTRjz7fAzEwcCs
+    range: User!A1:H
