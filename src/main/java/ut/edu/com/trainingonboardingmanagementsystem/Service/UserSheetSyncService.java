@@ -27,28 +27,31 @@ public class UserSheetSyncService {
 
         for (UserFromGGSheet dto : sheetUsers) {
 
-            if (userRepository.existsByUsername(dto.getUsername())) {
-                continue;
+            if (dto.getUsername() == null || dto.getRoleName() == null) continue;
+
+            Role role = roleRepository.findByRoleName(dto.getRoleName())
+                    .orElseGet(() ->
+                            roleRepository.save(
+                                    Role.builder()
+                                            .roleName(dto.getRoleName())
+                                            .build()
+                            )
+                    );
+
+            User user = userRepository.findByEmail(dto.getEmail())
+                    .orElseGet(User::new);
+
+            user.setUsername(dto.getUsername());
+            user.setPassword(dto.getPassword());
+            user.setEmail(dto.getEmail());
+            user.setFullName(dto.getFullname());
+            user.setPhone(dto.getPhone());
+            user.setAvatar(dto.getAvatar());
+            user.setRole(role);
+
+            if (dto.getStatus() != null) {
+                user.setStatus(UserStatus.valueOf(dto.getStatus().toUpperCase()));
             }
-
-            Role role = roleRepository
-                    .findByRoleName(dto.getRoleName())
-                    .orElseGet(() -> roleRepository.save(
-                            Role.builder()
-                                    .roleName(dto.getRoleName())
-                                    .build()
-                    ));
-
-            User user = User.builder()
-                    .username(dto.getUsername())
-                    .password(dto.getPassword())
-                    .email(dto.getEmail())
-                    .fullName(dto.getFullname())
-                    .phone(dto.getPhone())
-                    .avatar(dto.getAvatar())
-                    .status(UserStatus.valueOf(dto.getStatus().toUpperCase()))
-                    .role(role)
-                    .build();
 
             userRepository.save(user);
         }
