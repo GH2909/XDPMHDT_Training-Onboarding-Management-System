@@ -15,5 +15,4 @@ spring:
 
 gg:
   sheet:
-    id: 15HW7AzD_nitLsS7UhdbuZaBgWMBvdbTRjz7fAzEwcCs
-    range: User!A1:H
+    api-url: https://script.google.com/macros/s/AKfycbwcYGiePkXFcbwqanjSC06-UqobsDc4WTj1Y_N3IceOLmIayUFYAq1MAKoruVWI0wN5/exec

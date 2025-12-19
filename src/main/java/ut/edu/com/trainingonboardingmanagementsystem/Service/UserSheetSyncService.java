@@ -11,33 +11,46 @@ import ut.edu.com.trainingonboardingmanagementsystem.Repository.RoleRepository;
 import ut.edu.com.trainingonboardingmanagementsystem.Repository.UserRepository;
 import ut.edu.com.trainingonboardingmanagementsystem.enums.UserStatus;
 
+import java.util.List;
+
 @Service
 @RequiredArgsConstructor
 public class UserSheetSyncService {
+    private final GGSheetService ggSheetService;
     private final UserRepository userRepository;
     private final RoleRepository roleRepository;
-    private final PasswordEncoder passwordEncoder;
 
     @Transactional
-    public void upsertUser(UserFromGGSheet dto) {
+    public void syncUsersFromGGSheet() {
 
-        Role role = roleRepository.findByRoleName(dto.getRoleName())
-                .orElseThrow(() ->
-                        new RuntimeException("Role không tồn tại: " + dto.getRoleName())
-                );
+        List<UserFromGGSheet> sheetUsers = ggSheetService.readUsers();
 
-        User user = userRepository.findByUsername(dto.getUsername())
-                .orElse(new User());
+        for (UserFromGGSheet dto : sheetUsers) {
 
-        user.setUserName(dto.getUsername());
-        user.setPassword(passwordEncoder.encode(dto.getPassword()));
-        user.setEmail(dto.getEmail());
-        user.setFullName(dto.getFullname());
-        user.setPhone(dto.getPhone());
-        user.setAvatar(dto.getAvatar());
-        user.setStatus(UserStatus.valueOf(dto.getStatus()));
-        user.setRole(role);
+            if (userRepository.existsByUsername(dto.getUsername())) {
+                continue;
+            }
 
-        userRepository.save(user);
+            Role role = roleRepository
+                    .findByRoleName(dto.getRoleName())
+                    .orElseGet(() -> roleRepository.save(
+                            Role.builder()
+                                    .roleName(dto.getRoleName())
+                                    .build()
+                    ));
+
+            User user = User.builder()
+                    .username(dto.getUsername())
+                    .password(dto.getPassword())
+                    .email(dto.getEmail())
+                    .fullName(dto.getFullname())
+                    .phone(dto.getPhone())
+                    .avatar(dto.getAvatar())
+                    .status(UserStatus.valueOf(dto.getStatus().toUpperCase()))
+                    .role(role)
+                    .build();
+
+            userRepository.save(user);
+        }
     }
 }
