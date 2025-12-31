@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Thiết lập khung năng lực</title>
+    <link rel="stylesheet" href="../CSS/competency_framework.css">
+</head>
+<body>
+    <!-- Header -->
+    <div class="header">
+        <div class="header-icon">👤</div>
+        <div class="header-icon">☰</div>
+    </div>
+
+    <!-- Top Banner -->
+    <div class="top-banner">
+        <div class="banner-left">
+            <div class="logo">
+                <a href="dashboard.html"><img src="../images/baove.jpg" alt="Logo"></a>
+            </div>
+            <div class="welcome-text">
+                <h1>Welcome, Quản trị viên đã trở lại</h1>
+                <p>Đây là hệ thống dành cho HR</p>
+            </div>
+        </div>
+        <div class="banner-right">
+            <button class="banner-btn"> Tải nguồn</button>
+            <button class="banner-btn"> Khóa học gần đây</button>
+            <button class="banner-btn"> Tất cả khóa học</button>
+        </div>
+    </div>
+
+    <div class="main-container">
+        <h2 class="page-title">THIẾT LẬP KHUNG NĂNG LỰC</h2>
+
+        <!-- Danh sách khung năng lực theo vị trí -->
+        <div class="card position-list-card" id="positionListCard">
+            <div class="card-header">
+                <h3> Khung năng lực theo vị trí</h3>
+                <button class="btn-primary" onclick="showCreateForm()"> Tạo mới</button>
+            </div>
+            <div class="position-grid" id="positionGrid"></div>
+        </div>
+
+        <!-- Form Tạo mới / Chỉnh sửa -->
+        <div class="card form-card" id="formCard" style="display: none;">
+            <div class="tabs">
+                <div class="tab active" id="createTab" onclick="switchTab('create')">
+                    Tạo khung năng lực
+                </div>
+                <div class="tab inactive" id="editTab" onclick="switchTab('edit')">
+                    Chỉnh sửa
+                </div>
+            </div>
+
+            <div class="form-content">
+                <!-- Form Tạo mới -->
+                <div id="createFormContent">
+                    <div class="form-group">
+                        <label>Vị trí công việc <span class="required">*</span></label>
+                        <select id="positionSelect" class="form-control">
+                            <option value="">-- Chọn vị trí --</option>
+                            <option value="developer">Lập trình viên</option>
+                            <option value="designer">Thiết kế đồ họa</option>
+                            <option value="marketing">Chuyên viên Marketing</option>
+                            <option value="hr">Nhân viên Nhân sự</option>
+                            <option value="sales">Nhân viên Kinh doanh</option>
+                            <option value="accountant">Kế toán</option>
+                            <option value="manager">Quản lý dự án</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Tên năng lực <span class="required">*</span></label>
+                        <input type="text" id="competencyName" class="form-control" placeholder="VD: Năng lực kỹ thuật cốt lõi">
+                    </div>
+
+                    <div class="form-group">
+                        <label>Kỹ năng <span class="required">*</span></label>
+                        <div id="skills-container">
+                            <div class="skill-item">
+                                <input type="text" class="form-control skill-input" placeholder="VD: JavaScript, React">
+                                <button class="btn-delete" onclick="removeSkill(this)">❌ Xóa</button>
+                            </div>
+                        </div>
+                        <button class="btn-add" onclick="addSkill()">
+                             Thêm kỹ năng
+                        </button>
+                    </div>
+
+                    <div class="form-actions">
+                        <button class="btn-save" onclick="saveCompetency()"> Lưu</button>
+                        <button class="btn-cancel" onclick="cancelForm()"> Hủy</button>
+                    </div>
+                </div>
+
+                <!-- Form Chỉnh sửa -->
+                <div id="editFormContent" style="display: none;">
+                    <div class="form-group">
+                        <label>Chọn khung năng lực để chỉnh sửa</label>
+                        <select id="editCompetencySelect" class="form-control" onchange="loadCompetencyForEdit()">
+                            <option value="">-- Chọn khung năng lực --</option>
+                        </select>
+                    </div>
+
+                    <div id="editFormFields" style="display: none;">
+                        <div class="form-group">
+                            <label>Vị trí công việc</label>
+                            <input type="text" id="editPosition" class="form-control" readonly>
+                        </div>
+
+                        <div class="form-group">
+                            <label>Tên năng lực <span class="required">*</span></label>
+                            <input type="text" id="editCompetencyName" class="form-control">
+                        </div>
+
+                        <div class="form-group">
+                            <label>Kỹ năng <span class="required">*</span></label>
+                            <div id="edit-skills-container"></div>
+                            <button class="btn-add" onclick="addEditSkill()">
+                                 Thêm kỹ năng
+                            </button>
+                        </div>
+
+                        <div class="form-actions">
+                            <button class="btn-save" onclick="updateCompetency()"> Cập nhật</button>
+                            <button class="btn-danger" onclick="deleteCompetency()"> Xóa</button>
+                            <button class="btn-cancel" onclick="cancelEdit()"> Hủy</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Success Modal -->
+    <div class="modal" id="successModal">
+        <div class="modal-content">
+            <div class="modal-header success">
+                <span class="modal-icon">✅</span>
+                <h3 id="modalTitle">Thành công!</h3>
+            </div>
+            <div class="modal-body">
+                <p id="modalMessage"></p>
+            </div>
+            <div class="modal-footer">
+                <button class="btn-primary" onclick="closeModal()">Đóng</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Confirm Delete Modal -->
+    <div class="modal" id="confirmModal">
+        <div class="modal-content">
+            <div class="modal-header warning">
+                <span class="modal-icon">⚠️</span>
+                <h3>Xác nhận xóa</h3>
+            </div>
+            <div class="modal-body">
+                <p>Bạn có chắc chắn muốn xóa khung năng lực này không?</p>
+                <p class="text-muted">Hành động này không thể hoàn tác.</p>
+            </div>
+            <div class="modal-footer">
+                <button class="btn-danger" onclick="confirmDelete()">Xóa</button>
+                <button class="btn-cancel" onclick="closeConfirmModal()">Hủy</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Loading Overlay -->
+    <div class="loading-overlay" id="loadingOverlay">
+        <div class="spinner"></div>
+        <p>Đang xử lý...</p>
+    </div>
+
+    <!-- Footer -->
+    <div class="footer">
+        <p>© 2024 HR Competency Framework System. All rights reserved.</p>
+    </div>
+
+    <script src="../Javascipt/competency_framework.js"></script>
+</body>
+</html>

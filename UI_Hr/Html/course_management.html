@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quản lý khóa học</title>
+    <link rel="stylesheet" href="../CSS/course_management.css">
+</head>
+<body>
+    <!-- Header -->
+    <div class="header">
+        <div class="header-icon">👤</div>
+        <div class="header-icon">☰</div>
+    </div>
+
+    <!-- Top Banner -->
+    <div class="top-banner">
+        <div class="banner-left">
+                        <div class="logo">
+                <a href="dashboard.html"><img src="../images/baove.jpg" alt="Logo"></a>
+                </div>
+            <div class="welcome-text">
+                <h1>Welcome, Quản trị viên đã trở lại</h1>
+                <p>Đây là hệ thống dành cho HR</p>
+            </div>
+        </div>
+        <div class="banner-right">
+            <button class="banner-btn"> Tài nguyên</button>
+            <button class="banner-btn"> Khóa học gần đây</button>
+            <button class="banner-btn"> Tất cả khóa học</button>
+        </div>
+    </div>
+
+    <div class="main-container">
+        <h1 class="page-title">QUẢN LÝ KHÓA HỌC</h1>
+
+        <!-- Danh sách khóa học -->
+        <div class="card course-list-card" id="courseListCard">
+            <div class="card-header">
+                <h3>📚 Danh sách khóa học</h3>
+                <button class="btn-primary" onclick="showCreateForm()"> Tạo mới</button>
+            </div>
+            <div class="course-grid" id="courseGrid"></div>
+        </div>
+
+        <!-- Form Tạo mới / Chỉnh sửa -->
+        <div class="card form-card" id="formCard" style="display: none;">
+            <div class="tabs">
+                <div class="tab active" id="createTab" onclick="switchTab('create')">
+                    Tạo khóa học
+                </div>
+                <div class="tab inactive" id="editTab" onclick="switchTab('edit')">
+                    Chỉnh sửa
+                </div>
+            </div>
+
+            <div class="form-content">
+                <!-- Form Tạo mới -->
+                <div id="createFormContent">
+                    <div class="form-group">
+                        <label>Tên khóa học <span class="required">*</span></label>
+                        <div class="input-with-btn">
+                            <input type="text" class="form-control" id="courseName" placeholder="VD: Khóa học JavaScript cơ bản">
+                            <button class="btn-clear" onclick="clearInput('courseName')">✖ Xóa</button>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Thời lượng <span class="required">*</span></label>
+                        <div class="input-with-btn">
+                            <input type="text" class="form-control" id="duration" placeholder="VD: 40 giờ">
+                            <button class="btn-clear" onclick="clearInput('duration')">✖ Xóa</button>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Mô tả <span class="required">*</span></label>
+                        <div class="input-with-btn">
+                            <textarea class="form-control" id="description" rows="3" placeholder="Nhập mô tả khóa học..."></textarea>
+                            <button class="btn-clear" onclick="clearInput('description')">✖ Xóa</button>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Phân loại <span class="required">*</span></label>
+                        <select class="form-control" id="category">
+                            <option value="">-- Chọn phân loại --</option>
+                            <option value="Onboarding">Onboarding</option>
+                            <option value="Soft_Skills">Soft Skills</option>
+                            <option value="Professional_Skills">Professional Skills</option>
+                            <option value="Regulations">Regulations</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Module <span class="required">*</span></label>
+                        <div class="module-options">
+                            <label class="module-checkbox">
+                                <input type="checkbox" value="PDF"> 📄 PDF
+                            </label>
+                            <label class="module-checkbox">
+                                <input type="checkbox" value="Video"> 🎥 Video
+                            </label>
+                            <label class="module-checkbox">
+                                <input type="checkbox" value="Slide"> 📊 Slide
+                            </label>
+                            <label class="module-checkbox">
+                                <input type="checkbox" value="SCORM"> 📦 SCORM
+                            </label>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Điều kiện hoàn thành khóa học <span class="required">*</span></label>
+                        <div class="input-with-btn">
+                            <input type="text" class="form-control" id="completion" placeholder="VD: Hoàn thành 100% bài học và đạt 80% bài kiểm tra">
+                            <button class="btn-clear" onclick="clearInput('completion')"> Xóa</button>
+                        </div>
+                    </div>
+
+                    <div class="form-actions">
+                        <button class="btn-save" onclick="saveCourse()"> Lưu</button>
+                        <button class="btn-cancel" onclick="cancelForm()"> Hủy</button>
+                    </div>
+                </div>
+
+                <!-- Form Chỉnh sửa -->
+                <div id="editFormContent" style="display: none;">
+                    <div class="form-group">
+                        <label>Chọn khóa học để chỉnh sửa</label>
+                        <select id="editCourseSelect" class="form-control" onchange="loadCourseForEdit()">
+                            <option value="">-- Chọn khóa học --</option>
+                        </select>
+                    </div>
+
+                    <div id="editFormFields" style="display: none;">
+                        <div class="form-group">
+                            <label>Tên khóa học <span class="required">*</span></label>
+                            <div class="input-with-btn">
+                                <input type="text" class="form-control" id="editCourseName">
+                                <button class="btn-clear" onclick="clearInput('editCourseName')">✖ Xóa</button>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label>Thời lượng <span class="required">*</span></label>
+                            <div class="input-with-btn">
+                                <input type="text" class="form-control" id="editDuration">
+                                <button class="btn-clear" onclick="clearInput('editDuration')">✖ Xóa</button>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label>Mô tả <span class="required">*</span></label>
+                            <div class="input-with-btn">
+                                <textarea class="form-control" id="editDescription" rows="3"></textarea>
+                                <button class="btn-clear" onclick="clearInput('editDescription')">✖ Xóa</button>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label>Phân loại <span class="required">*</span></label>
+                            <select class="form-control" id="editCategory">
+                                <option value="">-- Chọn phân loại --</option>
+                                <option value="Onboarding">Onboarding</option>
+                                <option value="Soft_Skills">Soft Skills</option>
+                                <option value="Professional_Skills">Professional Skills</option>
+                                <option value="Regulations">Regulations</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label>Module <span class="required">*</span></label>
+                            <div class="module-options" id="editModuleOptions">
+                                <label class="module-checkbox">
+                                    <input type="checkbox" value="PDF"> 📄 PDF
+                                </label>
+                                <label class="module-checkbox">
+                                    <input type="checkbox" value="Video"> 🎥 Video
+                                </label>
+                                <label class="module-checkbox">
+                                    <input type="checkbox" value="Slide"> 📊 Slide
+                                </label>
+                                <label class="module-checkbox">
+                                    <input type="checkbox" value="SCORM"> 📦 SCORM
+                                </label>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label>Điều kiện hoàn thành khóa học <span class="required">*</span></label>
+                            <div class="input-with-btn">
+                                <input type="text" class="form-control" id="editCompletion">
+                                <button class="btn-clear" onclick="clearInput('editCompletion')">✖ Xóa</button>
+                            </div>
+                        </div>
+
+                        <div class="form-actions">
+                            <button class="btn-save" onclick="updateCourse()"> Cập nhật</button>
+                            <button class="btn-danger" onclick="deleteCourse()"> Xóa</button>
+                            <button class="btn-cancel" onclick="cancelEdit()"> Hủy</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Success Modal -->
+    <div class="modal" id="successModal">
+        <div class="modal-content">
+            <div class="modal-header success">
+                <span class="modal-icon">✅</span>
+                <h3 id="modalTitle">Thành công!</h3>
+            </div>
+            <div class="modal-body">
+                <p id="modalMessage"></p>
+            </div>
+            <div class="modal-footer">
+                <button class="btn-primary" onclick="closeModal()">Đóng</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Confirm Delete Modal -->
+    <div class="modal" id="confirmModal">
+        <div class="modal-content">
+            <div class="modal-header warning">
+                <span class="modal-icon">⚠️</span>
+                <h3>Xác nhận xóa</h3>
+            </div>
+            <div class="modal-body">
+                <p>Bạn có chắc chắn muốn xóa khóa học này không?</p>
+                <p class="text-muted">Hành động này không thể hoàn tác.</p>
+            </div>
+            <div class="modal-footer">
+                <button class="btn-danger" onclick="confirmDelete()">Xóa</button>
+                <button class="btn-cancel" onclick="closeConfirmModal()">Hủy</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Course Detail Modal -->
+    <div class="modal" id="detailModal">
+        <div class="modal-content">
+            <div class="modal-header success">
+                <span class="modal-icon"></span>
+                <h3 id="detailTitle">Chi tiết khóa học</h3>
+            </div>
+            <div class="modal-body" id="detailBody">
+            </div>
+            <div class="modal-footer">
+                <button class="btn-primary" onclick="closeDetailModal()">Đóng</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Loading Overlay -->
+    <div class="loading-overlay" id="loadingOverlay">
+        <div class="spinner"></div>
+        <p>Đang xử lý...</p>
+    </div>
+
+    <!-- Footer -->
+    <div class="footer">
+        <p>© 2024 HR Course Management System. All rights reserved.</p>
+    </div>
+
+    <script src="../Javascipt/course_management.js"></script>
+</body>
+</html>
