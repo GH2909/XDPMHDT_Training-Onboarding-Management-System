@@ -13,21 +13,28 @@ import ut.edu.com.trainingonboardingmanagementsystem.enums.UserStatus;
 
 import java.util.List;
 
-@Service
 @RequiredArgsConstructor
+@Service
 public class UserSheetSyncService {
+
     private final GGSheetService ggSheetService;
     private final UserRepository userRepository;
     private final RoleRepository roleRepository;
+    private final PasswordEncoder passwordEncoder;
 
     @Transactional
     public void syncUsersFromGGSheet() {
 
         List<UserFromGGSheet> sheetUsers = ggSheetService.readUsers();
 
+        System.out.println("Sheet users size = " + sheetUsers.size());
+
         for (UserFromGGSheet dto : sheetUsers) {
 
-            if (dto.getUsername() == null || dto.getRoleName() == null) continue;
+            if (dto.getUsername() == null || dto.getRoleName() == null) {
+                System.out.println("Skip row: " + dto);
+                continue;
+            }
 
             Role role = roleRepository.findByRoleName(dto.getRoleName())
                     .orElseGet(() ->
@@ -42,15 +49,25 @@ public class UserSheetSyncService {
                     .orElseGet(User::new);
 
             user.setUsername(dto.getUsername());
-            user.setPassword(dto.getPassword());
+
+            if (dto.getPassword() != null) {
+                user.setPassword(passwordEncoder.encode(dto.getPassword()));
+            }
+
             user.setEmail(dto.getEmail());
             user.setFullName(dto.getFullname());
             user.setPhone(dto.getPhone());
             user.setAvatar(dto.getAvatar());
             user.setRole(role);
 
-            if (dto.getStatus() != null) {
-                user.setStatus(UserStatus.valueOf(dto.getStatus().toUpperCase()));
+            try {
+                if (dto.getStatus() != null) {
+                    user.setStatus(
+                            UserStatus.valueOf(dto.getStatus().trim().toUpperCase())
+                    );
+                }
+            } catch (Exception e) {
+                System.out.println("Invalid status: " + dto.getStatus());
             }
 
             userRepository.save(user);

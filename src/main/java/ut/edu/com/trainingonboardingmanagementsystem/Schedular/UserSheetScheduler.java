@@ -12,8 +12,11 @@ public class UserSheetScheduler {
     private final UserSheetSyncService syncService;
 
     @Scheduled(fixedDelay = 60000)
-    public void sync() {
-        System.out.println("Scheduler running...");
-        syncService.syncUsersFromGGSheet();
+    public void syncUsers() {
+        try {
+            syncService.syncUsersFromGGSheet();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 }

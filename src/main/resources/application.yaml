@@ -9,10 +9,19 @@ spring:
     password: 123456
 
   jpa:
-    hibernate:
-      ddl-auto: update
     show-sql: true
+    properties:
+      hibernate:
+        format_sql: true
+logging:
+  level:
+    logging:
+      level:
+        org.springframework.web.client.RestTemplate: DEBUG
+        ut.edu.com.trainingonboardingmanagementsystem: DEBUG
+
+
 
 gg:
   sheet:
-    api-url: https://script.google.com/macros/s/AKfycbwcYGiePkXFcbwqanjSC06-UqobsDc4WTj1Y_N3IceOLmIayUFYAq1MAKoruVWI0wN5/exec
+    api-url: https://script.google.com/macros/s/AKfycbxOtStn3U3-MlO6R13wxb8Xbkw3_1BunZNH4a3YZlFfEvwdrbw2A8F4D55rBAjpEKp9/exec
