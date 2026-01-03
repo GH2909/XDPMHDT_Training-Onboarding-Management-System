@@ -4,17 +4,16 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import ut.edu.com.trainingonboardingmanagementsystem.enums.QuestionType;
-
-import java.util.List;
 
 @Data
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class QuestionResponse {
+public class ChoiceResponse {
     private Integer id;
     private String content;
-    private QuestionType type;
-    private List<ChoiceResponse> choices;
+    private String choices;
+    private Boolean isAnswer; // Chỉ hiển thị khi showAnswers = true
+    private Integer score;
+    private Integer orderIndex;
 }

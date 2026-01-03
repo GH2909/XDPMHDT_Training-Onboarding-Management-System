@@ -9,6 +9,7 @@ import java.io.Serializable;
 @Embeddable //nhúng làm khóa chính
 @Getter
 @Setter
+@Data
 @NoArgsConstructor
 @AllArgsConstructor
 @EqualsAndHashCode

@@ -1,10 +1,7 @@
 package ut.edu.com.trainingonboardingmanagementsystem.Model;
 
 import jakarta.persistence.*;
-import lombok.AccessLevel;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 import lombok.experimental.FieldDefaults;
 import ut.edu.com.trainingonboardingmanagementsystem.enums.QuestionType;
 
@@ -15,6 +12,7 @@ import java.util.List;
 @Table(name = "question")
 @Getter
 @Setter
+@Data
 @NoArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class Question {
@@ -30,11 +28,10 @@ public class Question {
     @Column(nullable = false)
     private QuestionType type;
 
-    @OneToMany(
-            mappedBy = "question",
-            cascade = CascadeType.ALL,
-            orphanRemoval = true
-    )
+    @OneToMany(mappedBy = "question", cascade = CascadeType.ALL, orphanRemoval = true)
     List<Choice> choices = new ArrayList<>();
+
+    @OneToMany(mappedBy = "question")
+    private List<QuizQuestion> quizQuestions;
 }
 

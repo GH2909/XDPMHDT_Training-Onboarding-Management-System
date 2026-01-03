@@ -1,38 +1,56 @@
-//package ut.edu.com.trainingonboardingmanagementsystem.Service;
-//
-//import jakarta.validation.ValidationException;
-//import lombok.RequiredArgsConstructor;
-//import org.springframework.stereotype.Service;
-//import ut.edu.com.trainingonboardingmanagementsystem.Dto.Request.LessonCreateRequest;
-//import ut.edu.com.trainingonboardingmanagementsystem.Exception.ResourceNotFoundException;
-//import ut.edu.com.trainingonboardingmanagementsystem.Model.Course;
-//import ut.edu.com.trainingonboardingmanagementsystem.Model.Lesson;
-//import ut.edu.com.trainingonboardingmanagementsystem.Model.User;
-//import ut.edu.com.trainingonboardingmanagementsystem.Repository.CourseRepository;
-//import ut.edu.com.trainingonboardingmanagementsystem.Repository.LessonRepository;
-//
-//@Service
-//@RequiredArgsConstructor
-//public class LessonService {
-//    private final LessonRepository lessonRepo;
-//    private final CourseRepository courseRepo;
-//
-//    public Lesson createLesson(LessonCreateRequest request, User user) {
-//
-//        if (request.getTitle() == null || request.getTitle().isBlank()) {
-//            throw new ValidationException("Vui lòng nhập tên bài giảng");
-//        }
-//
-//        Course course = courseRepo.findById(request.getCourseId())
-//                .orElseThrow(() -> new ResourceNotFoundException("Khóa học không tồn tại"));
-//
-//        Lesson lesson = new Lesson();
-//        lesson.setTitle(request.getTitle());
-//        lesson.setDescription(request.getDescription());
-//        lesson.setDuration(request.getDuration());
-//        lesson.setCourse(course);
-//        lesson.setCreatedBy(user);
-//
-//        return lessonRepo.save(lesson);
-//    }
-//}
+package ut.edu.com.trainingonboardingmanagementsystem.Service;
+
+import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Service;
+import ut.edu.com.trainingonboardingmanagementsystem.Dto.Request.LessonRequest;
+import ut.edu.com.trainingonboardingmanagementsystem.Dto.Response.LessonResponse;
+import ut.edu.com.trainingonboardingmanagementsystem.Exception.ResourceNotFoundException;
+import ut.edu.com.trainingonboardingmanagementsystem.Mapper.LessonMapper;
+import ut.edu.com.trainingonboardingmanagementsystem.Model.Course;
+import ut.edu.com.trainingonboardingmanagementsystem.Model.Lesson;
+import ut.edu.com.trainingonboardingmanagementsystem.Model.User;
+import ut.edu.com.trainingonboardingmanagementsystem.Repository.LessonRepository;
+
+import java.util.List;
+import java.util.stream.Collectors;
+
+@Service
+@RequiredArgsConstructor
+public class LessonService {
+    private final LessonRepository lessonRepository;
+    private final LessonMapper lessonMapper;
+
+    public LessonResponse createLesson(LessonRequest request, Course course, User user) {
+        Lesson lesson = lessonMapper.CreateLesson(request, course, user);
+        Lesson savedLesson = lessonRepository.save(lesson);
+        return lessonMapper.lessonResponse(savedLesson);
+    }
+
+    public LessonResponse updateLesson(Integer id, LessonRequest request) {
+        Lesson lesson = lessonRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Lesson not found with id: " + id));
+
+        lessonMapper.updateEntity(lesson, request);
+        Lesson updatedLesson = lessonRepository.save(lesson);
+        return lessonMapper.lessonResponse(updatedLesson);
+    }
+
+    public LessonResponse getLessonById(Integer id) {
+        Lesson lesson = lessonRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Lesson not found with id: " + id));
+        return lessonMapper.lessonResponse(lesson);
+    }
+
+    public List<LessonResponse> getAllLessons() {
+        return lessonRepository.findAll().stream()
+                .map(lessonMapper::lessonResponse)
+                .collect(Collectors.toList());
+    }
+
+    public void deleteLesson(Integer id) {
+        if (!lessonRepository.existsById(id)) {
+            throw new ResourceNotFoundException("Lesson not found with id: " + id);
+        }
+        lessonRepository.deleteById(id);
+    }
+}

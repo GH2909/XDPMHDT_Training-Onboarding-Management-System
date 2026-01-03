@@ -1,16 +1,14 @@
 package ut.edu.com.trainingonboardingmanagementsystem.Model;
 
 import jakarta.persistence.*;
-import lombok.AccessLevel;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 import lombok.experimental.FieldDefaults;
 
 @Entity
 @Table(name = "choice")
 @Getter
 @Setter
+@Data
 @NoArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class Choice {
@@ -33,8 +31,8 @@ public class Choice {
     @Column(name = "is_answer", nullable = false)
     private Boolean isAnswer;
 
-    @Column(name = "score")
-    private Integer score;
+    @Column(columnDefinition = "INT DEFAULT 0")
+    private Integer score = 0;
 
     @Column(name ="order_index")
     private Integer orderIndex;
