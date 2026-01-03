@@ -8,7 +8,7 @@ import ut.edu.com.trainingonboardingmanagementsystem.Dto.Request.CourseCreateReq
 import ut.edu.com.trainingonboardingmanagementsystem.Service.CourseService;
 
 @RestController
-@RequestMapping("/course")
+@RequestMapping("/hr/course")
 //@PreAuthorize("hasRole('HR')")
 @RequiredArgsConstructor
 public class CourseController {

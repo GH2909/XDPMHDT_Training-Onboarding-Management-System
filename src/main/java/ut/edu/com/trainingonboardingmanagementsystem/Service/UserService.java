@@ -34,7 +34,6 @@ public class UserService {
 
         User user = userRepository.findByEmail(email).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "User not found"));
 
-        // password trong DB là hash
         if (!passwordEncoder.matches(request.getOldPassword(), user.getPassword())) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Old password is incorrect");
         }
@@ -43,7 +42,6 @@ public class UserService {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Passwords do not match");
         }
 
-        // chỉ mã hoá password mới
         user.setPassword(passwordEncoder.encode(request.getNewPassword()));
         userRepository.save(user);
     }
@@ -54,6 +52,5 @@ public class UserService {
     public User getEmployeeProfile(String email) {
         return userRepository.findByEmail(email) .orElseThrow(() -> new RuntimeException("Employee Profile not found"));
     }
-
 
 }

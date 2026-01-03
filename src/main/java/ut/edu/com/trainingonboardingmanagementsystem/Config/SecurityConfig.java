@@ -34,17 +34,20 @@ public class SecurityConfig {
                 .csrf(csrf -> csrf.disable())
                 .sessionManagement(sess ->
                         sess.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+
+                .userDetailsService(cusDetailsService)
+
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/training/**").permitAll()
-                        .requestMatchers("/hr/**").permitAll()
-                        .requestMatchers("/hr/**").hasRole("HR")
-                        .requestMatchers("/api/sync/**").permitAll()
-                        .anyRequest().authenticated()
+//                        .requestMatchers("/auth/**").permitAll()
+//                        .requestMatchers("/hr/**").permitAll()
+//                       .requestMatchers("/hr/**").hasRole("HR")
+                        .anyRequest().permitAll()
                 )
                 .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class);
 
         return http.build();
     }
+
 
     @Bean
     public AuthenticationManager authenticationManager(
