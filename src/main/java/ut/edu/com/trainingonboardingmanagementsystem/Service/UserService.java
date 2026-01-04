@@ -6,9 +6,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 import ut.edu.com.trainingonboardingmanagementsystem.Dto.Request.ChangePasswordRequest;
-import ut.edu.com.trainingonboardingmanagementsystem.Dto.Request.EmployeeProfileCreationRequest;
 import ut.edu.com.trainingonboardingmanagementsystem.Dto.Request.EmployeeProfileUpdateRequest;
-import ut.edu.com.trainingonboardingmanagementsystem.Mapper.UserMapper;
 import ut.edu.com.trainingonboardingmanagementsystem.Model.User;
 import ut.edu.com.trainingonboardingmanagementsystem.Repository.UserRepository;
 
@@ -24,7 +22,7 @@ public class UserService {
     public User updateEmployeeProfile(String email, EmployeeProfileUpdateRequest request) {
         User user = userRepository.findByEmail(email)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "User not found"));
-        user.setPassword(request.getPassword());
+        user.setPassword(passwordEncoder.encode(request.getPassword()));
         user.setFullName(request.getFullName());
         user.setPhone(request.getPhone());
         return userRepository.save(user);
