@@ -1,6 +1,8 @@
 package ut.edu.com.trainingonboardingmanagementsystem.Config;
+//package ut.edu.com.trainingonboardingmanagementsystem.;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -20,7 +22,9 @@ import ut.edu.com.trainingonboardingmanagementsystem.Security.User.CusDetailsSer
 @EnableMethodSecurity
 @RequiredArgsConstructor
 public class SecurityConfig {
+    @Autowired
     private final CusDetailsService cusDetailsService;
+    @Autowired
     private final JwtAuthFilter jwtFilter;
     @Bean
     public PasswordEncoder passwordEncoder() {
@@ -31,22 +35,29 @@ public class SecurityConfig {
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
 
         http
+                // Tắt CSRF vì dùng JWT
                 .csrf(csrf -> csrf.disable())
-                .sessionManagement(sess ->
-                        sess.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
 
+                // Stateless session
+                .sessionManagement(session ->
+                        session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+
+                // Cấu hình phân quyền
+                .authorizeHttpRequests(auth -> auth
+                        .requestMatchers("/auth/**").permitAll()   // login, register
+                        .requestMatchers("/hr/**").hasRole("HR")   // chỉ HR
+                        .anyRequest().authenticated()              // còn lại phải đăng nhập
+                )
+
+                // Custom UserDetailsService
                 .userDetailsService(cusDetailsService)
 
-                .authorizeHttpRequests(auth -> auth
-//                        .requestMatchers("/auth/**").permitAll()
-//                        .requestMatchers("/hr/**").permitAll()
-//                       .requestMatchers("/hr/**").hasRole("HR")
-                        .anyRequest().permitAll()
-                )
+                // JWT filter
                 .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class);
 
         return http.build();
     }
+
 
 
     @Bean
