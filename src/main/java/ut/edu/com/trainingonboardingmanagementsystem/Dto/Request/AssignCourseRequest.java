@@ -5,9 +5,9 @@ import lombok.Setter;
 
 import java.util.List;
 
-@Getter
 @Setter
-public class AssignRequest {
+@Getter
+public class AssignCourseRequest {
     private Integer courseId;
     private List<Integer> employeeIds;
 }

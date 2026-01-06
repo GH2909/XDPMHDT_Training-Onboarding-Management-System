@@ -3,7 +3,7 @@ package ut.edu.com.trainingonboardingmanagementsystem.Service;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-import ut.edu.com.trainingonboardingmanagementsystem.Dto.Request.AssignRequest;
+import ut.edu.com.trainingonboardingmanagementsystem.Dto.Request.AssignCourseRequest;
 import ut.edu.com.trainingonboardingmanagementsystem.Model.Assignment;
 import ut.edu.com.trainingonboardingmanagementsystem.Model.Course;
 import ut.edu.com.trainingonboardingmanagementsystem.Repository.AssignmentRepository;
@@ -20,7 +20,7 @@ public class AssignmentService {
     private final UserRepository userRepo;
 
     @Transactional
-    public void assign(AssignRequest req, Integer hrId) {
+    public void assign(AssignCourseRequest req, Integer hrId) {
 
         Course course = courseRepo.findById(req.getCourseId())
                 .orElseThrow(() -> new RuntimeException("Khóa học không tồn tại"));
