@@ -20,9 +20,13 @@ public class JwtAuthFilter extends OncePerRequestFilter {
     private final JwtUtil jwtUtil;
     private final CusDetailsService cusDetailsService;
 
-    @Override protected boolean shouldNotFilter(HttpServletRequest request) {
-        return request.getServletPath().startsWith("/auth/");
+    @Override
+    protected boolean shouldNotFilter(HttpServletRequest request) {
+        String path = request.getRequestURI();
+        // Bỏ qua filter cho /auth/**
+        return path.startsWith("/training/auth/") || path.startsWith("/auth/");
     }
+
     @Override
     protected void doFilterInternal(
             HttpServletRequest request,
