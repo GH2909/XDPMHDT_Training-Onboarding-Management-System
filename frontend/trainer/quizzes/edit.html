@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tạo Bài Quiz - UTH LMS</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="quizzes.css">
+</head>
+
+<body>
+    <!-- HEADER -->
+    <header class="header">
+        <div class="header-left">
+            <a href="index.html" class="logo">
+                <i class="fas fa-book-reader"></i>
+                UTH - LMS
+            </a>
+            <nav class="nav-icons">
+                <a href="../dashboard/index.html" class="nav-link" title="Trang chủ">
+                    <i class="fas fa-home"></i>
+                </a>
+                <a href="../lessons/index.html" class="nav-link" title="Bài giảng">
+                    <i class="fas fa-book"></i>
+                </a>
+                <a href="../quizzes/index.html" class="nav-link" title="quiz">
+                    <i class="fas fa-question-circle"></i>
+                </a>
+                <a href="../grading/index.html" class="nav-link" title="Chấm Điểm">
+                    <i class="fas fa-chart-line"></i>
+                </a>
+                <a href="settings.html" class="nav-link" title="Cài đặt">
+                    <i class="fas fa-cog"></i>
+                </a>
+            </nav>
+        </div>
+        <div class="header-right">
+            <div class="search-box">
+                <i class="fas fa-search"></i>
+                <input type="text" placeholder="Tìm bài kiểm tra...">
+            </div>
+            <div class="user-avatar">TN</div>
+        </div>
+    </header>
+
+    <!-- MAIN CONTENT -->
+    <div class="container">
+        <!-- PAGE HEADER -->
+        <div class="page-header">
+            <h1><i class="fas fa-edit"></i> Tạo Bài Quiz Mới</h1>
+            <p>Thiết lập thông tin và câu hỏi cho bài kiểm tra</p>
+        </div>
+
+        <!-- FORM TABS -->
+        <div class="form-tabs">
+            <button class="tab-btn active" data-tab="info">
+                <i class="fas fa-info-circle"></i> Thông tin Quiz
+            </button>
+            <button class="tab-btn" data-tab="questions">
+                <i class="fas fa-list"></i> Câu hỏi
+            </button>
+            <button class="tab-btn" data-tab="settings">
+                <i class="fas fa-sliders-h"></i> Cài đặt
+            </button>
+        </div>
+
+        <!-- FORM CONTAINER -->
+        <div class="form-container">
+            <!-- TAB 1: THÔNG TIN QUIZ -->
+            <div class="tab-content active" id="info">
+                <div class="form-group">
+                    <label for="quiz-title">Tiêu đề Bài Quiz *</label>
+                    <input type="text" id="quiz-title" class="form-input" placeholder="Ví dụ: Quiz HTML Tuần 1"
+                        required>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="quiz-course">Khóa học *</label>
+                        <select id="quiz-course" class="form-input" required>
+                            <option value="">Chọn khóa học</option>
+                            <option value="web">Lập Trình Web</option>
+                            <option value="mobile">Lập Trình Mobile</option>
+                            <option value="ui-ux">Thiết Kế UI/UX</option>
+                            <option value="backend">Backend Development</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="quiz-category">Danh mục *</label>
+                        <select id="quiz-category" class="form-input" required>
+                            <option value="">Chọn danh mục</option>
+                            <option value="html">HTML</option>
+                            <option value="css">CSS</option>
+                            <option value="javascript">JavaScript</option>
+                            <option value="react">React</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="quiz-description">Mô tả</label>
+                    <textarea id="quiz-description" class="form-input" rows="4"
+                        placeholder="Mô tả chi tiết về nội dung bài kiểm tra..."></textarea>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="quiz-time">Thời gian làm bài (phút) *</label>
+                        <input type="number" id="quiz-time" class="form-input" placeholder="30" min="1" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="quiz-max-score">Điểm tối đa *</label>
+                        <input type="number" id="quiz-max-score" class="form-input" placeholder="100" min="1" required>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="quiz-passing-score">Điểm đạt *</label>
+                        <input type="number" id="quiz-passing-score" class="form-input" placeholder="60" min="1"
+                            required>
+                    </div>
+                    <div class="form-group">
+                        <label for="quiz-attempts">Số lần làm bài *</label>
+                        <input type="number" id="quiz-attempts" class="form-input" placeholder="3" min="1" required>
+                    </div>
+                </div>
+
+                <div class="checkbox-group">
+                    <label class="checkbox-label">
+                        <input type="checkbox" id="show-answers" checked>
+                        <span>Hiển thị đáp án sau khi hoàn thành</span>
+                    </label>
+                    <label class="checkbox-label">
+                        <input type="checkbox" id="shuffle-questions" checked>
+                        <span>Xáo trộn thứ tự câu hỏi</span>
+                    </label>
+                    <label class="checkbox-label">
+                        <input type="checkbox" id="shuffle-answers">
+                        <span>Xáo trộn thứ tự đáp án</span>
+                    </label>
+                </div>
+            </div>
+
+            <!-- TAB 2: CÂUỎI -->
+            <div class="tab-content" id="questions">
+                <div class="questions-container">
+                    <!-- QUESTION 1 -->
+                    <div class="question-card">
+                        <div class="question-header">
+                            <span class="question-number">Câu hỏi 1</span>
+                            <div class="question-actions">
+                                <button class="btn-icon" title="Sửa"><i class="fas fa-edit"></i></button>
+                                <button class="btn-icon" title="Xóa"><i class="fas fa-trash"></i></button>
+                            </div>
+                        </div>
+
+                        <div class="question-content">
+                            <div class="form-group">
+                                <label>Nội dung câu hỏi *</label>
+                                <textarea class="form-input" rows="3" placeholder="Nhập câu hỏi..."></textarea>
+                            </div>
+
+                            <div class="form-group">
+                                <label>Loại câu hỏi *</label>
+                                <select class="form-input">
+                                    <option value="multiple">Trắc nghiệm (Một đáp án)</option>
+                                    <option value="checkbox">Trắc nghiệm (Nhiều đáp án)</option>
+                                    <option value="essay">Tự luận</option>
+                                    <option value="true-false">Đúng/Sai</option>
+                                </select>
+                            </div>
+
+                            <div class="answers-container">
+                                <label style="margin-bottom: 1rem; display: block;">Đáp án: <span
+                                        style="color: #ef4444;">*</span></label>
+                                <div class="answer-item">
+                                    <input type="radio" name="answer-1" value="a" checked>
+                                    <input type="text" class="form-input" placeholder="Đáp án A"
+                                        style="margin: 0 10px; flex: 1;">
+                                    <input type="number" class="form-input" placeholder="Điểm" style="width: 80px;">
+                                    <button class="btn-delete-answer" type="button" title="Xóa">
+                                        <i class="fas fa-times"></i>
+                                    </button>
+                                </div>
+                                <div class="answer-item">
+                                    <input type="radio" name="answer-1" value="b">
+                                    <input type="text" class="form-input" placeholder="Đáp án B"
+                                        style="margin: 0 10px; flex: 1;">
+                                    <input type="number" class="form-input" placeholder="Điểm" style="width: 80px;">
+                                    <button class="btn-delete-answer" type="button" title="Xóa">
+                                        <i class="fas fa-times"></i>
+                                    </button>
+                                </div>
+                                <div class="answer-item">
+                                    <input type="radio" name="answer-1" value="c">
+                                    <input type="text" class="form-input" placeholder="Đáp án C"
+                                        style="margin: 0 10px; flex: 1;">
+                                    <input type="number" class="form-input" placeholder="Điểm" style="width: 80px;">
+                                    <button class="btn-delete-answer" type="button" title="Xóa">
+                                        <i class="fas fa-times"></i>
+                                    </button>
+                                </div>
+                                <div class="answer-item">
+                                    <input type="radio" name="answer-1" value="d">
+                                    <input type="text" class="form-input" placeholder="Đáp án D"
+                                        style="margin: 0 10px; flex: 1;">
+                                    <input type="number" class="form-input" placeholder="Điểm" style="width: 80px;">
+                                    <button class="btn-delete-answer" type="button" title="Xóa">
+                                        <i class="fas fa-times"></i>
+                                    </button>
+                                </div>
+                                <button class="btn-add-answer" type="button">
+                                    <i class="fas fa-plus"></i> Thêm đáp án
+                                </button>
+                            </div>
+
+                            <div class="form-group">
+                                <label>Ghi chú/Giải thích</label>
+                                <textarea class="form-input" rows="2"
+                                    placeholder="Giải thích đáp án đúng..."></textarea>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- ADD MORE QUESTIONS -->
+                    <button class="btn-add-question" type="button">
+                        <i class="fas fa-plus-circle"></i> Thêm câu hỏi
+                    </button>
+                </div>
+            </div>
+
+            <!-- TAB 3: CÀI ĐẶT -->
+            <div class="tab-content" id="settings">
+                <div class="form-group">
+                    <label>Trạng thái *</label>
+                    <select class="form-input">
+                        <option value="draft">Nháp</option>
+                        <option value="active">Đang mở</option>
+                        <option value="closed">Đã đóng</option>
+                    </select>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Ngày bắt đầu</label>
+                        <input type="datetime-local" class="form-input">
+                    </div>
+                    <div class="form-group">
+                        <label>Ngày kết thúc</label>
+                        <input type="datetime-local" class="form-input">
+                    </div>
+                </div>
+
+                <div class="checkbox-group">
+                    <label class="checkbox-label">
+                        <input type="checkbox" checked>
+                        <span>Hiển thị điểm ngay sau khi nộp</span>
+                    </label>
+                    <label class="checkbox-label">
+                        <input type="checkbox">
+                        <span>Cho phép xem lại bài làm</span>
+                    </label>
+                    <label class="checkbox-label">
+                        <input type="checkbox">
+                        <span>Yêu cầu mật khẩu để vào bài kiểm tra</span>
+                    </label>
+                </div>
+
+                <div class="form-group">
+                    <label>Mật khẩu (nếu có)</label>
+                    <input type="password" class="form-input" placeholder="Nhập mật khẩu...">
+                </div>
+            </div>
+
+            <!-- FORM ACTIONS -->
+            <div class="form-actions">
+                <a href="index.html" class="btn btn-secondary">
+                    <i class="fas fa-arrow-left"></i> Quay lại
+                </a>
+                <button class="btn btn-secondary">
+                    <i class="fas fa-save"></i> Lưu nháp
+                </button>
+                <button class="btn btn-primary">
+                    <i class="fas fa-check"></i> Lưu
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script src="quiz-edit.js"></script>
+    <script>
+        // Simple tab switching
+        document.querySelectorAll('.tab-btn').forEach(btn => {
+            btn.addEventListener('click', function (e) {
+                e.preventDefault();
+                const tabName = this.getAttribute('data-tab');
+
+                // Remove active from all
+                document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+                document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+
+                // Add active to clicked
+                this.classList.add('active');
+                document.getElementById(tabName).classList.add('active');
+            });
+        });
+    </script>
+</body>
+
+</html>
