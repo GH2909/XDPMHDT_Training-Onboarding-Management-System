@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Làm Bài Kiểm Tra - Quiz</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="../../assets/css/pages/quiz.css">
+</head>
+
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="header-left">
+            <a href="../dashboard/index.html" class="logo">
+                <i class="fas fa-book-reader"></i>
+                UTH - LMS
+            </a>
+            <nav class="nav-icons">
+                <a href="../dashboard/index.html" title="Dashboard">
+                    <i class="fas fa-home"></i>
+                </a>
+                <a href="../courses/list.html" title="Khóa học">
+                    <i class="fas fa-graduation-cap"></i>
+                </a>
+                <a href="list.html" class="active" title="Quiz">
+                    <i class="fas fa-question-circle"></i>
+                </a>
+                <a href="../progress/index.html" title="Tiến độ">
+                    <i class="fas fa-chart-line"></i>
+                </a>
+                <a href="../certificates/index.html" title="Chứng chỉ">
+                    <i class="fas fa-certificate"></i>
+                </a>
+            </nav>
+        </div>
+        <div class="header-right">
+            <div class="search-box">
+                <i class="fas fa-search"></i>
+                <input type="text" placeholder="Tìm khóa học...">
+            </div>
+            <div class="user-avatar">
+                <a href="../profile/index.html" title="profile">
+                    <i class="fas fa-user"></i>
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <!-- Quiz Container -->
+    <div class="quiz-take-container">
+        <!-- Quiz Header với Timer -->
+        <div class="quiz-take-header">
+            <div class="quiz-info">
+                <h2>Module 1: HTML Basics Quiz</h2>
+                <p>Lập Trình Web Truyền Thuyết</p>
+            </div>
+            <div class="quiz-timer">
+                <i class="fas fa-clock"></i>
+                <span id="timer">14:35</span>
+            </div>
+        </div>
+
+        <!-- Progress Bar -->
+        <div class="quiz-progress">
+            <div class="progress-bar">
+                <div class="progress-fill" style="width: 30%"></div>
+            </div>
+            <span class="progress-text">Câu 8/10</span>
+        </div>
+
+        <!-- Question Card -->
+        <div class="question-container">
+            <div class="question-header">
+                <span class="question-number">Câu 8</span>
+                <span class="question-type">Chọn một đáp án đúng</span>
+            </div>
+
+            <div class="question-content">
+                <h3 class="question-text">
+                    Thẻ HTML nào được sử dụng để tạo một liên kết (hyperlink)?
+                </h3>
+
+                <div class="answers-list">
+                    <label class="answer-option">
+                        <input type="radio" name="answer" value="A">
+                        <div class="answer-content">
+                            <span class="answer-label">A</span>
+                            <span class="answer-text">&lt;link&gt;</span>
+                        </div>
+                    </label>
+
+                    <label class="answer-option">
+                        <input type="radio" name="answer" value="B">
+                        <div class="answer-content">
+                            <span class="answer-label">B</span>
+                            <span class="answer-text">&lt;a&gt;</span>
+                        </div>
+                    </label>
+
+                    <label class="answer-option">
+                        <input type="radio" name="answer" value="C">
+                        <div class="answer-content">
+                            <span class="answer-label">C</span>
+                            <span class="answer-text">&lt;href&gt;</span>
+                        </div>
+                    </label>
+
+                    <label class="answer-option">
+                        <input type="radio" name="answer" value="D">
+                        <div class="answer-content">
+                            <span class="answer-label">D</span>
+                            <span class="answer-text">&lt;url&gt;</span>
+                        </div>
+                    </label>
+                </div>
+            </div>
+        </div>
+
+        <!-- Navigation Buttons -->
+        <div class="quiz-navigation">
+            <button class="btn btn-secondary">
+                <i class="fas fa-arrow-left"></i> Câu trước
+            </button>
+            <button class="btn btn-primary">
+                Câu tiếp <i class="fas fa-arrow-right"></i>
+            </button>
+        </div>
+
+        <!-- Question Navigator -->
+        <div class="question-navigator">
+            <h4>Danh sách câu hỏi</h4>
+            <div class="question-grid">
+                <button class="question-btn answered">1</button>
+                <button class="question-btn answered">2</button>
+                <button class="question-btn answered">3</button>
+                <button class="question-btn answered">4</button>
+                <button class="question-btn answered">5</button>
+                <button class="question-btn answered">6</button>
+                <button class="question-btn answered">7</button>
+                <button class="question-btn answered">8</button>
+                <button class="question-btn active">9</button>
+                <button class="question-btn">10</button>
+            </div>
+            <button class="btn btn-primary btn-submit" onclick="submitQuiz()">
+                <i class="fas fa-paper-plane"></i> Nộp bài
+            </button>
+        </div>
+    </div>
+
+    <script>
+        // Timer countdown
+        let timeLeft = 875; // 14:35 in seconds
+        const timerElement = document.getElementById('timer');
+
+        function updateTimer() {
+            const minutes = Math.floor(timeLeft / 60);
+            const seconds = timeLeft % 60;
+            timerElement.textContent = `${minutes}:${seconds.toString().padStart(2, '0')}`;
+
+            if (timeLeft <= 60) {
+                timerElement.parentElement.classList.add('warning');
+            }
+
+            if (timeLeft <= 0) {
+                alert('Hết giờ! Bài làm sẽ được tự động nộp.');
+                window.location.href = 'result.html';
+            }
+
+            timeLeft--;
+        }
+
+        setInterval(updateTimer, 1000);
+
+        // Submit quiz
+        function submitQuiz() {
+            if (confirm('Bạn có chắc muốn nộp bài? Bạn sẽ không thể thay đổi câu trả lời sau khi nộp.')) {
+                window.location.href = 'result.html';
+            }
+        }
+
+        // Answer selection
+        document.querySelectorAll('.answer-option').forEach(option => {
+            option.addEventListener('click', function () {
+                document.querySelectorAll('.answer-option').forEach(opt => {
+                    opt.classList.remove('selected');
+                });
+                this.classList.add('selected');
+            });
+        });
+    </script>
+</body>
+
+</html>
