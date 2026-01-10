@@ -1,6 +1,7 @@
 package ut.edu.com.trainingonboardingmanagementsystem.Controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import ut.edu.com.trainingonboardingmanagementsystem.Dto.Request.ChangePasswordRequest;
 import ut.edu.com.trainingonboardingmanagementsystem.Dto.Request.EmployeeProfileCreationRequest;
@@ -26,16 +27,21 @@ public class EmployeeProfileController {
 //    }
 
     @GetMapping
-    ApiResponse<List<User>> getEmployeeProfiles() {
-        ApiResponse<List<User>> apiResponse = new ApiResponse<>();
-        apiResponse.setResult(userService.getEmployeeProfiles());
-        return apiResponse;
+//    ApiResponse<List<User>> getEmployeeProfiles() {
+//        ApiResponse<List<User>> apiResponse = new ApiResponse<>();
+//        apiResponse.setResult(userService.getEmployeeProfiles());
+//        return apiResponse;
+//    }
+
+    public ResponseEntity<ApiResponse<List<User>>> getEmployeeProfiles() {
+        List<User> userList = userService.getEmployeeProfiles();
+        return ResponseEntity.ok(ApiResponse.success(userList));
     }
 
     @GetMapping("/{email}")
     ApiResponse<User> getEmployeeProfiles(@PathVariable String email) {
         ApiResponse<User> apiResponse = new ApiResponse<>();
-        apiResponse.setResult(userService.getEmployeeProfile(email));
+        apiResponse.setData(userService.getEmployeeProfile(email));
         return apiResponse;
     }
 
@@ -45,7 +51,7 @@ public class EmployeeProfileController {
             @RequestBody EmployeeProfileUpdateRequest request) {
 
         ApiResponse<User> apiResponse = new ApiResponse<>();
-        apiResponse.setResult(userService.updateEmployeeProfile(email, request));
+        apiResponse.setData(userService.updateEmployeeProfile(email, request));
         return apiResponse;
     }
 
@@ -56,7 +62,7 @@ public class EmployeeProfileController {
 
         ApiResponse<String> apiResponse = new ApiResponse<>();
         userService.changePassword(email, request);
-        apiResponse.setResult("Password changed successfully");
+        apiResponse.setMessage("Password changed successfully");
         return apiResponse;
     }
 

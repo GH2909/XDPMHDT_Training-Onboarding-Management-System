@@ -5,6 +5,9 @@ import lombok.*;
 import lombok.experimental.FieldDefaults;
 import ut.edu.com.trainingonboardingmanagementsystem.enums.CourseCategory;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Setter
 @Getter
 @NoArgsConstructor
@@ -23,7 +26,7 @@ public class Course {
     private String courseName;
 
     @Column(name = "duration")
-    private int duration;
+    private Integer duration;
 
     @Column(name = "description")
     private String description;
@@ -34,5 +37,12 @@ public class Course {
 
     @Column(name = "completion_rule")
     private String completionRule;
+
+    @OneToMany(
+            mappedBy = "course",
+            cascade = CascadeType.ALL,
+            orphanRemoval = true
+    )
+    private List<Lesson> lessons = new ArrayList<>();
 
 }

@@ -19,17 +19,18 @@ public class LessonMapper {
         return lesson;
     }
 
-    public LessonResponse lessonResponse (Lesson lesson) {
-        LessonResponse lessonRes = new LessonResponse();
-        lessonRes.setId(lesson.getId());
-        lessonRes.setCourseId(lesson.getCourse().getId());
-        lessonRes.setDuration(lesson.getDuration());
-        lessonRes.setTitle(lesson.getTitle());
-        lessonRes.setDescription(lesson.getDescription());
-        return lessonRes;
+    public LessonResponse lessonResponse(Lesson lesson) {
+        return LessonResponse.builder()
+                .id(lesson.getId())
+                .courseId(lesson.getCourse().getId())
+                .title(lesson.getTitle())
+                .duration(lesson.getDuration())
+                .description(lesson.getDescription())
+                .createdBy(lesson.getCreatedBy().getId())
+                .build();
     }
 
-    public void updateEntity(Lesson lesson, LessonRequest request) {
+    public void updateLesson(Lesson lesson, LessonRequest request) {
         lesson.setTitle(request.getTitle());
         lesson.setDuration(request.getDuration());
         lesson.setDescription(request.getDescription());

@@ -15,9 +15,6 @@ import java.io.Serializable;
 @EqualsAndHashCode
 public class QuizQuestionId implements Serializable {
 
-    @Column(name = "quiz_id")
     private Integer quizId;
-
-    @Column(name = "question_id")
     private Integer questionId;
 }

@@ -23,12 +23,10 @@ public class QuizQuestion {
     private Integer questionId;
 
     @ManyToOne(fetch = FetchType.LAZY)
-//    @MapsId("quizId")
     @JoinColumn(name = "quiz_id")
     private Quiz quiz;
 
     @ManyToOne(fetch = FetchType.LAZY)
-//    @MapsId("questionId")
     @JoinColumn(name = "question_id")
     private Question question;
 

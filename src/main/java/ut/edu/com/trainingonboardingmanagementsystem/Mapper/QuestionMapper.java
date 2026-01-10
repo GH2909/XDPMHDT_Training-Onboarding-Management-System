@@ -1,7 +1,7 @@
 package ut.edu.com.trainingonboardingmanagementsystem.Mapper;
 
 import org.springframework.stereotype.Component;
-import ut.edu.com.trainingonboardingmanagementsystem.Dto.Request.QuestionCreateRequest;
+import ut.edu.com.trainingonboardingmanagementsystem.Dto.Request.QuestionRequest;
 import ut.edu.com.trainingonboardingmanagementsystem.Dto.Response.ChoiceResponse;
 import ut.edu.com.trainingonboardingmanagementsystem.Dto.Response.QuestionResponse;
 import ut.edu.com.trainingonboardingmanagementsystem.Model.Choice;
@@ -12,7 +12,7 @@ import java.util.stream.Collectors;
 
 @Component
 public class QuestionMapper {
-    public Question questionCreate (QuestionCreateRequest request) {
+    public Question questionCreate (QuestionRequest request) {
         Question question = new Question();
         question.setContent(request.getContent());
         question.setType(request.getType());
@@ -25,23 +25,22 @@ public class QuestionMapper {
                 .map(choice -> toChoiceResponse(choice, showAnswers))
                 .collect(Collectors.toList());
 
-        QuestionResponse questionRes = new QuestionResponse();
-        questionRes.setId(question.getId());
-        questionRes.setContent(question.getContent());
-        questionRes.setType(question.getType());
-        questionRes.setChoices(choiceResponses);
-
-        return questionRes;
+        return QuestionResponse.builder()
+                .id(question.getId())
+                .content(question.getContent())
+                .type(question.getType())
+                .choices(choiceResponses)
+                .build();
 
     }
     public ChoiceResponse toChoiceResponse(Choice choice, boolean showAnswers) {
-       ChoiceResponse choices = new ChoiceResponse();
-       choices.setId(choice.getId());
-       choices.setContent(choice.getContent());
-       choices. setChoices(choice.getChoices());
-       choices.setIsAnswer(showAnswers ? choice.getIsAnswer() : null);
-       choices.setScore(choice.getScore());
-       choices.setOrderIndex(choice.getOrderIndex());
-       return choices;
+        return ChoiceResponse.builder()
+                .id(choice.getId())
+                .content(choice.getContent())
+                .choices(choice.getChoices())
+                .isAnswer(showAnswers ? choice.getIsAnswer() : null)
+                .score(choice.getScore())
+                .orderIndex(choice.getOrderIndex())
+                .build();
     }
 }

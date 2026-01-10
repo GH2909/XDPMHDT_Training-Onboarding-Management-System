@@ -3,7 +3,7 @@ package ut.edu.com.trainingonboardingmanagementsystem.Service;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import ut.edu.com.trainingonboardingmanagementsystem.Dto.Request.ChoiceRequest;
-import ut.edu.com.trainingonboardingmanagementsystem.Dto.Request.QuestionCreateRequest;
+import ut.edu.com.trainingonboardingmanagementsystem.Dto.Request.QuestionRequest;
 import ut.edu.com.trainingonboardingmanagementsystem.Dto.Response.QuestionResponse;
 import ut.edu.com.trainingonboardingmanagementsystem.Exception.ResourceNotFoundException;
 import ut.edu.com.trainingonboardingmanagementsystem.Mapper.QuestionMapper;
@@ -11,6 +11,7 @@ import ut.edu.com.trainingonboardingmanagementsystem.Model.Choice;
 import ut.edu.com.trainingonboardingmanagementsystem.Model.Question;
 import ut.edu.com.trainingonboardingmanagementsystem.Repository.ChoiceRepository;
 import ut.edu.com.trainingonboardingmanagementsystem.Repository.QuestionRepository;
+import ut.edu.com.trainingonboardingmanagementsystem.Validators.QuestionValidator;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -23,9 +24,11 @@ public class QuestionService {
     private final ChoiceRepository choiceRepository;
     private final QuestionRepository questionRepository;
     private final QuestionMapper questionMapper;
+    private final QuestionValidator questionValidator;
 
-    public QuestionResponse createQuestion(QuestionCreateRequest request) {
+    public QuestionResponse createQuestion(QuestionRequest request) {
 
+        questionValidator.validateQuestionRequest(request);
         Question question = questionMapper.questionCreate(request);
         Question savedQuestion = questionRepository.save(question);
 

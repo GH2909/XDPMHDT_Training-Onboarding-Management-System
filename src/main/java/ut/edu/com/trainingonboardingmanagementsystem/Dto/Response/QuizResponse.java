@@ -30,4 +30,5 @@ public class QuizResponse {
     private Boolean shuffleQuestions;
     private Boolean shuffleChoices;
     private LocalDateTime updatedAt;
+    private Integer questionCount;
 }

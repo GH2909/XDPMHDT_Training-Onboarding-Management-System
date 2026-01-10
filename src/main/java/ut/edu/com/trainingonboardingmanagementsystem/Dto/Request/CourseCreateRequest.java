@@ -12,7 +12,7 @@ import ut.edu.com.trainingonboardingmanagementsystem.enums.CourseCategory;
 public class CourseCreateRequest {
     private String courseName;
 
-    private int duration;
+    private Integer duration;
 
     private String description;
 

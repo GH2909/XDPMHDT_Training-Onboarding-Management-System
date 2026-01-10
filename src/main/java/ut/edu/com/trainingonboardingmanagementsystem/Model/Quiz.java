@@ -79,4 +79,9 @@ public class Quiz {
             orphanRemoval = true
     )
     List<QuizQuestion> quizQuestions = new ArrayList<>();
+
+    @PreUpdate
+    protected void onUpdate() {
+        updatedAt = LocalDateTime.now();
+    }
 }

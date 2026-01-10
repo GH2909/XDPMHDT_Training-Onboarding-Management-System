@@ -2,8 +2,10 @@ package ut.edu.com.trainingonboardingmanagementsystem.Controller;
 
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import ut.edu.com.trainingonboardingmanagementsystem.Dto.Request.QuestionCreateRequest;
+import ut.edu.com.trainingonboardingmanagementsystem.Dto.Request.QuestionRequest;
 import ut.edu.com.trainingonboardingmanagementsystem.Dto.Response.ApiResponse;
 import ut.edu.com.trainingonboardingmanagementsystem.Dto.Response.QuestionResponse;
 import ut.edu.com.trainingonboardingmanagementsystem.Service.QuestionService;
@@ -18,31 +20,31 @@ public class QuestionController {
     private final QuestionService questionService;
 
     @PostMapping
-    public ApiResponse<QuestionResponse> createQuestion(@Valid @RequestBody QuestionCreateRequest request) {
-        ApiResponse<QuestionResponse> apiResponse = new ApiResponse<>();
-        apiResponse.setResult(questionService.createQuestion(request));
-        return apiResponse;
+    public ResponseEntity<ApiResponse<QuestionResponse>> createQuestion(
+            @Valid @RequestBody QuestionRequest request) {
+        QuestionResponse response = questionService.createQuestion(request);
+        return ResponseEntity.status(HttpStatus.CREATED)
+                .body(ApiResponse.success(response, "Question created successfully"));
     }
 
     @GetMapping("/{id}")
-    public ApiResponse<QuestionResponse> getQuestion(@PathVariable Integer id, @RequestParam(defaultValue = "false") boolean showAnswers) {
-        ApiResponse<QuestionResponse> apiResponse = new ApiResponse<>();
-        apiResponse.setResult(questionService.getQuestionById(id, showAnswers));
-        return apiResponse;
+    public ResponseEntity<ApiResponse<QuestionResponse>> getQuestion(
+            @PathVariable Integer id,
+            @RequestParam(defaultValue = "false") boolean showAnswers) {
+        QuestionResponse response = questionService.getQuestionById(id, showAnswers);
+        return ResponseEntity.ok(ApiResponse.success(response));
     }
 
     @GetMapping
-    public ApiResponse<List<QuestionResponse>> getAllQuestions(@RequestParam(defaultValue = "false") boolean showAnswers) {
-        ApiResponse<List<QuestionResponse>> apiResponse = new ApiResponse<>();
-        apiResponse.setResult(questionService.getAllQuestions(showAnswers));
-        return apiResponse;
+    public ResponseEntity<ApiResponse<List<QuestionResponse>>> getAllQuestions(
+            @RequestParam(defaultValue = "false") boolean showAnswers) {
+        List<QuestionResponse> responses = questionService.getAllQuestions(showAnswers);
+        return ResponseEntity.ok(ApiResponse.success(responses));
     }
 
     @DeleteMapping("/{id}")
-    public ApiResponse<Void> deleteQuestion(@PathVariable Integer id) {
-        ApiResponse<Void> apiResponse = new ApiResponse<>();
+    public ResponseEntity<ApiResponse<Void>> deleteQuestion(@PathVariable Integer id) {
         questionService.deleteQuestion(id);
-        apiResponse.setResult(null);
-        return apiResponse;
+        return ResponseEntity.ok(ApiResponse.success(null, "Question deleted successfully"));
     }
 }

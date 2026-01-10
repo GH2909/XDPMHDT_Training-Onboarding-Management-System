@@ -36,11 +36,13 @@ public class QuizQuestionService {
         Question question = questionRepository.findById(request.getQuestionId())
                 .orElseThrow(() -> new ResourceNotFoundException("Question not found with id: " + request.getQuestionId()));
 
+        // Kiểm tra xem câu hỏi đã tồn tại trong bài kiểm tra chưa
         QuizQuestionId id = new QuizQuestionId(quizId, request.getQuestionId());
         if (quizQuestionRepository.existsById(id)) {
             throw new DuplicateResourceException("Question already assigned to this quiz");
         }
 
+        // Xác định số thứ tự
         Integer sequenceNumber = request.getSequenceNumber();
         if (sequenceNumber == null) {
             Integer maxSeq = quizQuestionRepository.findMaxSequenceNumberByQuizId(quizId);
