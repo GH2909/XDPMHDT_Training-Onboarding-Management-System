@@ -16,7 +16,7 @@ import ut.edu.com.trainingonboardingmanagementsystem.enums.LearningStatus;
 import java.util.List;
 
 @RestController
-@RequestMapping("/employee/profile")
+@RequestMapping("/training/employee/profile")
 @RequiredArgsConstructor
 @Validated
 public class EmployeeProfileController {
@@ -29,19 +29,19 @@ public class EmployeeProfileController {
         return ResponseEntity.ok(ApiResponse.success(userList));
     }
 
-    @GetMapping("/{email}/{status}")
+    @GetMapping("/{email}")
     public ResponseEntity<ApiResponse<EmployeeProfileResponse>> getProfile(
             @PathVariable String email,
-            @PathVariable LearningStatus status) {
+            @RequestParam LearningStatus status) {
 
         EmployeeProfileResponse response = userService.getProfile(email, status);
         return ResponseEntity.ok(ApiResponse.success(response));
     }
 
-    @PutMapping(("/{email}/{status}"))
+    @PutMapping(("/{email}"))
     public ResponseEntity<ApiResponse<EmployeeProfileResponse>> updateProfile(
             @PathVariable String email,
-            @PathVariable LearningStatus status,
+            @RequestParam LearningStatus status,
             @Valid @RequestBody EmployeeProfileUpdateRequest request) {
 
         EmployeeProfileResponse response = userService.updateEmployeeProfile(

@@ -87,16 +87,16 @@ public class SecurityConfig {
                         .requestMatchers("/auth/**", "/training/auth/**").permitAll()
 
                         // Employee endpoints
-                        .requestMatchers("/employee/**").hasAnyRole("EMPLOYEE", "ADMIN")
+                        .requestMatchers("/training/employee/**").hasAnyRole("EMPLOYEE", "ADMIN")
 
                         // HR endpoints
-                        .requestMatchers("/hr/**").hasAnyRole("HR", "ADMIN")
+                        .requestMatchers("/training/hr/**").hasAnyRole("HR", "ADMIN")
 
                         // Trainer endpoints
-                        .requestMatchers("/trainer/**").hasAnyRole("TRAINER", "ADMIN")
+                        .requestMatchers("/training/trainer/**").hasAnyRole("TRAINER", "ADMIN")
 
                         // Admin endpoints
-                        .requestMatchers("/admin/**").hasRole("ADMIN")
+                        .requestMatchers("/training/admin/**").hasRole("ADMIN")
 
                         // All other requests need authentication
                         .anyRequest().authenticated()
