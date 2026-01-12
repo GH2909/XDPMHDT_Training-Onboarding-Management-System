@@ -14,7 +14,7 @@ public class UserPrincipal implements UserDetails {
     private Collection<? extends GrantedAuthority> authorities;
     public UserPrincipal(User user) {
         this.id = user.getId();
-        this.username = user.getUsername();
+        this.username = user.getUserName();
         this.password = user.getPassword();
         this.authorities = List.of(
                 new SimpleGrantedAuthority("ROLE_" + user.getRole().getRoleName())

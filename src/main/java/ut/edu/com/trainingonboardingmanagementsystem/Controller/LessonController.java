@@ -4,12 +4,11 @@ import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import ut.edu.com.trainingonboardingmanagementsystem.Dto.Request.LessonRequest;
 import ut.edu.com.trainingonboardingmanagementsystem.Dto.Response.ApiResponse;
 import ut.edu.com.trainingonboardingmanagementsystem.Dto.Response.LessonResponse;
-import ut.edu.com.trainingonboardingmanagementsystem.Model.Course;
-import ut.edu.com.trainingonboardingmanagementsystem.Model.User;
 import ut.edu.com.trainingonboardingmanagementsystem.Service.LessonService;
 
 import java.util.List;
@@ -17,6 +16,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/lessons")
 @RequiredArgsConstructor
+@Validated
 public class LessonController {
 
     private final LessonService lessonService;

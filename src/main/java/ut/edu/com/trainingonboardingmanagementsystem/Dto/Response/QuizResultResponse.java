@@ -15,7 +15,8 @@ import java.util.List;
 @AllArgsConstructor
 public class QuizResultResponse {
     private Integer quizId;
-    private Integer userId;
+    private String quizTitle;
+    private Integer attemptNumber;
     private Integer totalScore;
     private Integer maxScore;
     private Integer passScore;
@@ -23,6 +24,8 @@ public class QuizResultResponse {
     private Double percentage;
     private Integer correctAnswers;
     private Integer totalQuestions;
+    private Integer timeTakenMinutes;
     private LocalDateTime submittedAt;
+    private Integer remainingAttempts;
     private List<QuestionResultResponse> questionResults;
 }

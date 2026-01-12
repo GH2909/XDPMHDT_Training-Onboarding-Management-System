@@ -6,6 +6,8 @@ import lombok.experimental.FieldDefaults;
 import ut.edu.com.trainingonboardingmanagementsystem.enums.UserStatus;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 
 @Setter
@@ -23,7 +25,7 @@ public class User {
     private Integer id;
 
     @Column(name = "user_name")
-    private String username;
+    private String userName;
 
     @Column(name = "password")
     private String password;
@@ -53,5 +55,11 @@ public class User {
             insertable = false)
     private LocalDateTime createdAt;
 
+    @OneToMany(mappedBy = "employee", cascade = CascadeType.ALL)
+    private List<LearningProgress> learningProgresses = new ArrayList<>();
 
+    @PrePersist
+    protected void onCreate() {
+        createdAt = LocalDateTime.now();
+    }
 }

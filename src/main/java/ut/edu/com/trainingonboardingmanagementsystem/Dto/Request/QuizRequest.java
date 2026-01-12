@@ -16,32 +16,32 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 public class QuizRequest {
 
-    @NotNull(message = "Lesson ID is required")
+    @NotNull
     private Integer lessonId;
 
-    @NotBlank(message = "Title is required")
-    @Size(max = 255, message = "Title must not exceed 255 characters")
+    @NotBlank
+    @Size(max = 255)
     private String title;
 
     private String description;
 
-    @NotNull(message = "Category ID is required")
+    @NotNull
     private Integer categoryId;
 
-    @NotNull(message = "Duration is required")
-    @Positive(message = "Duration must be positive")
+    @NotNull
+    @Positive
     private Integer durationMinutes;
 
-    @NotNull(message = "Max score is required")
-    @Positive(message = "Max score must be positive")
+    @NotNull
+    @Positive
     private Integer maxScore;
 
-    @NotNull(message = "Pass score is required")
-    @Positive(message = "Pass score must be positive")
+    @NotNull
+    @Positive
     private Integer passScore;
 
-    @NotNull(message = "Attempt limit is required")
-    @Positive(message = "Attempt limit must be positive")
+    @NotNull
+    @Positive
     private Integer attemptLimit;
     private QuizStatus status;
     private LocalDateTime startTime;

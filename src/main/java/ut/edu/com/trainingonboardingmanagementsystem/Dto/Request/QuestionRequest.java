@@ -17,14 +17,14 @@ import java.util.List;
 @AllArgsConstructor
 public class QuestionRequest {
 
-    @NotBlank(message = "Content is required")
-    @Size(max = 255, message = "Content must not exceed 255 characters")
+    @NotBlank
+    @Size(max = 255)
     private String content;
 
-    @NotNull(message = "Question type is required")
+    @NotNull
     private QuestionType type;
 
-    @NotEmpty(message = "At least one choice is required")
+    @NotEmpty
     @Valid
     private List<ChoiceRequest> choices;
 }

@@ -5,11 +5,8 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Data
-@NoArgsConstructor
 @AllArgsConstructor
-public class EmployeeProfileUpdateRequest {
-    private String fullName;
-    private String phone;
-    private String avatar;
-
+@NoArgsConstructor
+public class CompleteLessonRequest {
+    private Integer lessonId;
 }

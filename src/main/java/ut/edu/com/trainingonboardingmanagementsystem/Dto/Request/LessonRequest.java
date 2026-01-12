@@ -13,15 +13,15 @@ import lombok.*;
 @AllArgsConstructor
 public class LessonRequest {
 
-    @NotNull(message = "Course ID is required")
+    @NotNull
     private Integer course;
 
-    @NotBlank(message = "Title is required")
-    @Size(max = 255, message = "Title must not exceed 255 characters")
+    @NotBlank
+    @Size(max = 255)
     private String title;
 
-    @NotNull(message = "Duration is required")
-    @Positive(message = "Duration must be positive")
+    @NotNull
+    @Positive
     private Integer duration;
 
     private String description;

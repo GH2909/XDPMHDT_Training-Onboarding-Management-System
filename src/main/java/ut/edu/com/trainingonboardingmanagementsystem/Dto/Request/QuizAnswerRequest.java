@@ -11,11 +11,11 @@ import java.util.List;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class AnswerRequest {
+public class QuizAnswerRequest {
 
-    @NotNull(message = "Question ID is required")
+    @NotNull
     private Integer questionId;
 
-    @NotEmpty(message = "At least one choice ID is required")
+    @NotEmpty
     private List<Integer> choiceIds;
 }

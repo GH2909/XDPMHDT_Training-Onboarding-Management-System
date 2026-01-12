@@ -38,11 +38,11 @@ public class Course {
     @Column(name = "completion_rule")
     private String completionRule;
 
-    @OneToMany(
-            mappedBy = "course",
-            cascade = CascadeType.ALL,
-            orphanRemoval = true
+    @OneToMany(mappedBy = "course", cascade = CascadeType.ALL, orphanRemoval = true
     )
     private List<Lesson> lessons = new ArrayList<>();
+
+    @OneToMany(mappedBy = "course", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Module> modules = new ArrayList<>();
 
 }

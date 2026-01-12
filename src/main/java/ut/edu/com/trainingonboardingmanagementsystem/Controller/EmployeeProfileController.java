@@ -1,77 +1,60 @@
 package ut.edu.com.trainingonboardingmanagementsystem.Controller;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import jakarta.validation.Valid;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import ut.edu.com.trainingonboardingmanagementsystem.Dto.Request.ChangePasswordRequest;
-import ut.edu.com.trainingonboardingmanagementsystem.Dto.Request.EmployeeProfileCreationRequest;
 import ut.edu.com.trainingonboardingmanagementsystem.Dto.Request.EmployeeProfileUpdateRequest;
 import ut.edu.com.trainingonboardingmanagementsystem.Dto.Response.ApiResponse;
+import ut.edu.com.trainingonboardingmanagementsystem.Dto.Response.EmployeeProfileResponse;
 import ut.edu.com.trainingonboardingmanagementsystem.Model.User;
 import ut.edu.com.trainingonboardingmanagementsystem.Service.UserService;
+import ut.edu.com.trainingonboardingmanagementsystem.enums.LearningStatus;
 
 import java.util.List;
 
 @RestController
-@RequestMapping("/employeeProfile")
+@RequestMapping("/employee/profile")
+@RequiredArgsConstructor
+@Validated
 public class EmployeeProfileController {
 
-    @Autowired
-    UserService userService;
-
-//    @PostMapping
-//    ApiResponse<User> createEmployeeProfile(@RequestBody EmployeeProfileCreationRequest request){
-//        ApiResponse<User> apiResponse = new ApiResponse<>();
-//        apiResponse.setResult(userService.creatEmployeeProfile(request));
-//        return apiResponse;
-//    }
+    private final UserService userService;
 
     @GetMapping
-//    ApiResponse<List<User>> getEmployeeProfiles() {
-//        ApiResponse<List<User>> apiResponse = new ApiResponse<>();
-//        apiResponse.setResult(userService.getEmployeeProfiles());
-//        return apiResponse;
-//    }
-
     public ResponseEntity<ApiResponse<List<User>>> getEmployeeProfiles() {
         List<User> userList = userService.getEmployeeProfiles();
         return ResponseEntity.ok(ApiResponse.success(userList));
     }
 
-    @GetMapping("/{email}")
-    ApiResponse<User> getEmployeeProfiles(@PathVariable String email) {
-        ApiResponse<User> apiResponse = new ApiResponse<>();
-        apiResponse.setData(userService.getEmployeeProfile(email));
-        return apiResponse;
+    @GetMapping("/{email}/{status}")
+    public ResponseEntity<ApiResponse<EmployeeProfileResponse>> getProfile(
+            @PathVariable String email,
+            @PathVariable LearningStatus status) {
+
+        EmployeeProfileResponse response = userService.getProfile(email, status);
+        return ResponseEntity.ok(ApiResponse.success(response));
     }
 
-    @PutMapping("/{email}")
-    ApiResponse<User> updateEmployeeProfile(
+    @PutMapping(("/{email}/{status}"))
+    public ResponseEntity<ApiResponse<EmployeeProfileResponse>> updateProfile(
             @PathVariable String email,
-            @RequestBody EmployeeProfileUpdateRequest request) {
+            @PathVariable LearningStatus status,
+            @Valid @RequestBody EmployeeProfileUpdateRequest request) {
 
-        ApiResponse<User> apiResponse = new ApiResponse<>();
-        apiResponse.setData(userService.updateEmployeeProfile(email, request));
-        return apiResponse;
+        EmployeeProfileResponse response = userService.updateEmployeeProfile(
+                email, request, status);
+        return ResponseEntity.ok(ApiResponse.success(response, "Cập nhật trang cá nhân thành công"));
     }
 
-    @PutMapping("/{email}/changePassword")
-    ApiResponse<String> changePassword(
+    @PostMapping("/change-password/{email}")
+    public ResponseEntity<ApiResponse<Void>> changePassword(
             @PathVariable String email,
-            @RequestBody ChangePasswordRequest request) {
+            @Valid @RequestBody ChangePasswordRequest request) {
 
-        ApiResponse<String> apiResponse = new ApiResponse<>();
         userService.changePassword(email, request);
-        apiResponse.setMessage("Password changed successfully");
-        return apiResponse;
+        return ResponseEntity.ok(ApiResponse.success(null, "Đổi mật khẩu thành công."));
     }
-
-//    @DeleteMapping("/{email}")
-//    ApiResponse<String> deleteEmployeeProfile(@PathVariable String email){
-//        ApiResponse<String> apiResponse = new ApiResponse<>();
-//        apiResponse.setResult("Customerprofile has been deleted");
-//        userService.deleteEmployeeProfile(email);
-//        return apiResponse;
-//    }
-
 }

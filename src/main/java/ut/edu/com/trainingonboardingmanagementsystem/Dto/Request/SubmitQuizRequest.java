@@ -12,12 +12,13 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 public class SubmitQuizRequest {
-    @NotNull(message = "Quiz ID is required")
+
+    @NotNull
     private Integer quizId;
 
-    @NotNull(message = "User ID is required")
-    private Integer userId;
+    @NotNull
+    private Integer employeeId;
 
-    @NotEmpty(message = "Answers are required")
-    private List<AnswerRequest> answers;
+    @NotEmpty
+    private List<QuizAnswerRequest> answers;
 }

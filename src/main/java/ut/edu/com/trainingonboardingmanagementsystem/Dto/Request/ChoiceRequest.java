@@ -12,15 +12,15 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class ChoiceRequest {
 
-    @NotBlank(message = "Content is required")
-    @Size(max = 255, message = "Content must not exceed 255 characters")
+    @NotBlank
+    @Size(max = 255)
     private String content;
 
-    @NotBlank(message = "Choices label is required")
-    @Size(max = 255, message = "Choices must not exceed 255 characters")
+    @NotBlank
+    @Size(max = 255)
     private String choices;
 
-    @NotNull(message = "isAnswer flag is required")
+    @NotNull
     private Boolean isAnswer;
 
     private Integer score;

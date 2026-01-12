@@ -4,44 +4,53 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.server.ResponseStatusException;
 import ut.edu.com.trainingonboardingmanagementsystem.Dto.Request.ChangePasswordRequest;
 import ut.edu.com.trainingonboardingmanagementsystem.Dto.Request.EmployeeProfileUpdateRequest;
+import ut.edu.com.trainingonboardingmanagementsystem.Dto.Response.EmployeeProfileResponse;
+import ut.edu.com.trainingonboardingmanagementsystem.Exception.ResourceNotFoundException;
+import ut.edu.com.trainingonboardingmanagementsystem.Mapper.UserMapper;
 import ut.edu.com.trainingonboardingmanagementsystem.Model.User;
 import ut.edu.com.trainingonboardingmanagementsystem.Repository.UserRepository;
+import ut.edu.com.trainingonboardingmanagementsystem.Validators.EmployeeValidator;
+import ut.edu.com.trainingonboardingmanagementsystem.enums.LearningStatus;
 
 import java.util.List;
 
 @Service
+@Transactional
 @RequiredArgsConstructor
 public class UserService {
 
     private final UserRepository userRepository;
-    private final PasswordEncoder passwordEncoder;
+    private final UserMapper userMapper;
+    private final EmployeeValidator employeeValidator;
 
-    public User updateEmployeeProfile(String email, EmployeeProfileUpdateRequest request) {
-        User user = userRepository.findByEmail(email)
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "User not found"));
-        user.setPassword(passwordEncoder.encode(request.getPassword()));
-        user.setFullName(request.getFullName());
-        user.setPhone(request.getPhone());
-        return userRepository.save(user);
+    public EmployeeProfileResponse getProfile(String email, LearningStatus status) {
+        User employee = userRepository.findByEmail(email)
+                .orElseThrow(() -> new ResourceNotFoundException("Không tìm thấy nhân viên."));
+
+        return userMapper.creatEmployeeProfile(employee, status);
+    }
+
+    public EmployeeProfileResponse updateEmployeeProfile(String email, EmployeeProfileUpdateRequest request, LearningStatus status) {
+        employeeValidator.validateProfileUpdate(email, request);
+        User employee = userRepository.findByEmail(email)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Không tìm thấy nhân viên."));
+
+        userMapper.updateEmployeeProfile(employee, request);
+        User updatedEmployee = userRepository.save(employee);
+
+        return userMapper.creatEmployeeProfile(updatedEmployee, status);
     }
 
     public void changePassword(String email, ChangePasswordRequest request) {
+        employeeValidator.validateChangePassword(email,request);
+        User employee = userRepository.findByEmail(email).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "User not found"));
 
-        User user = userRepository.findByEmail(email).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "User not found"));
-
-        if (!passwordEncoder.matches(request.getOldPassword(), user.getPassword())) {
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Old password is incorrect");
-        }
-
-        if (!request.getNewPassword().equals(request.getConfirmPassword())) {
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Passwords do not match");
-        }
-
-        user.setPassword(passwordEncoder.encode(request.getNewPassword()));
-        userRepository.save(user);
+        employee.setPassword(request.getNewPassword());
+        userRepository.save(employee);
     }
 
     public List<User> getEmployeeProfiles() {

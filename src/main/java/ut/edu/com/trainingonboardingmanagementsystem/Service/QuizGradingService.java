@@ -3,7 +3,7 @@ package ut.edu.com.trainingonboardingmanagementsystem.Service;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import ut.edu.com.trainingonboardingmanagementsystem.Dto.Request.AnswerRequest;
+import ut.edu.com.trainingonboardingmanagementsystem.Dto.Request.QuizAnswerRequest;
 import ut.edu.com.trainingonboardingmanagementsystem.Dto.Request.SubmitQuizRequest;
 import ut.edu.com.trainingonboardingmanagementsystem.Dto.Response.QuestionResultResponse;
 import ut.edu.com.trainingonboardingmanagementsystem.Dto.Response.QuizResultResponse;
@@ -32,8 +32,8 @@ import java.util.stream.Collectors;
 public class QuizGradingService {
 
     private final QuizRepository quizRepository;
-    private final QuestionRepository questionRepository;
-    private final ChoiceRepository choiceRepository;
+//    private final QuestionRepository questionRepository;
+//    private final ChoiceRepository choiceRepository;
     private final QuizQuestionRepository quizQuestionRepository;
     private final QuizValidator quizValidator;
 
@@ -51,7 +51,7 @@ public class QuizGradingService {
         int correctAnswers = 0;
         List<QuestionResultResponse> questionResults = new ArrayList<>();
 
-        for (AnswerRequest answer : request.getAnswers()) {
+        for (QuizAnswerRequest answer : request.getAnswers()) {
             QuizQuestion quizQuestion = quizQuestions.stream()
                     .filter(qq -> qq.getQuestionId().equals(answer.getQuestionId()))
                     .findFirst()
@@ -115,7 +115,7 @@ public class QuizGradingService {
 
         return QuizResultResponse.builder()
                 .quizId(quiz.getId())
-                .userId(request.getUserId())
+//                .userId(request.getUserId())
                 .totalScore(totalScore)
                 .maxScore(quiz.getMaxScore())
                 .passScore(quiz.getPassScore())

@@ -1,7 +1,6 @@
 package ut.edu.com.trainingonboardingmanagementsystem.Service;
 
 import lombok.RequiredArgsConstructor;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ut.edu.com.trainingonboardingmanagementsystem.Model.Role;
@@ -20,7 +19,6 @@ public class UserSheetSyncService {
     private final GGSheetService ggSheetService;
     private final UserRepository userRepository;
     private final RoleRepository roleRepository;
-    private final PasswordEncoder passwordEncoder;
 
     @Transactional
     public void syncUsersFromGGSheet() {
@@ -48,10 +46,10 @@ public class UserSheetSyncService {
             User user = userRepository.findByEmail(dto.getEmail())
                     .orElseGet(User::new);
 
-            user.setUsername(dto.getUsername());
+            user.setUserName(dto.getUsername());
 
             if (dto.getPassword() != null) {
-                user.setPassword(passwordEncoder.encode(dto.getPassword()));
+                user.setPassword(dto.getPassword());
             }
 
             user.setEmail(dto.getEmail());

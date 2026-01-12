@@ -59,34 +59,66 @@ public class SecurityConfig {
 //        return http.build();
 //    }
 
+//    @Bean
+//    public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
+//        http
+//                .csrf(csrf -> csrf.disable())
+//                .cors(cors -> cors.disable())
+//                .sessionManagement(session ->
+//                        session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+//                .authorizeHttpRequests(auth -> auth
+//                        .anyRequest().permitAll() // ⭐ Tạm thời cho phép tất cả
+//                );
+//        // ⭐ Tạm thời comment JWT filter
+//        // .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class);
+//
+//        return http.build();
+//    }
+
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http
                 .csrf(csrf -> csrf.disable())
-                .cors(cors -> cors.disable())
+                .cors(cors -> cors.configurationSource(corsConfigurationSource()))
                 .sessionManagement(session ->
                         session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(auth -> auth
-                        .anyRequest().permitAll() // ⭐ Tạm thời cho phép tất cả
-                );
-        // ⭐ Tạm thời comment JWT filter
-        // .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class);
+                        // Public endpoints
+                        .requestMatchers("/auth/**", "/training/auth/**").permitAll()
+
+                        // Employee endpoints
+                        .requestMatchers("/employee/**").hasAnyRole("EMPLOYEE", "ADMIN")
+
+                        // HR endpoints
+                        .requestMatchers("/hr/**").hasAnyRole("HR", "ADMIN")
+
+                        // Trainer endpoints
+                        .requestMatchers("/trainer/**").hasAnyRole("TRAINER", "ADMIN")
+
+                        // Admin endpoints
+                        .requestMatchers("/admin/**").hasRole("ADMIN")
+
+                        // All other requests need authentication
+                        .anyRequest().authenticated()
+                )
+                .userDetailsService(cusDetailsService)
+                .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class);
 
         return http.build();
     }
 
-//    @Bean
-//    public CorsConfigurationSource corsConfigurationSource() {
-//        CorsConfiguration configuration = new CorsConfiguration();
-//        configuration.setAllowedOrigins(Arrays.asList("*"));
-//        configuration.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE", "OPTIONS"));
-//        configuration.setAllowedHeaders(Arrays.asList("*"));
-//        configuration.setAllowCredentials(false);
-//
-//        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
-//        source.registerCorsConfiguration("/**", configuration);
-//        return source;
-//    }
+    @Bean
+    public CorsConfigurationSource corsConfigurationSource() {
+        CorsConfiguration configuration = new CorsConfiguration();
+        configuration.setAllowedOrigins(Arrays.asList("*"));
+        configuration.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE", "OPTIONS"));
+        configuration.setAllowedHeaders(Arrays.asList("*"));
+        configuration.setAllowCredentials(false);
+
+        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+        source.registerCorsConfiguration("/**", configuration);
+        return source;
+    }
 
 
     @Bean

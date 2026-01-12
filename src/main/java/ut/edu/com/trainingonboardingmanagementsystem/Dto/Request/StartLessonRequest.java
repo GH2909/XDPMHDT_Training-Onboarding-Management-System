@@ -1,15 +1,15 @@
 package ut.edu.com.trainingonboardingmanagementsystem.Dto.Request;
 
+import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Data
-@NoArgsConstructor
 @AllArgsConstructor
-public class EmployeeProfileUpdateRequest {
-    private String fullName;
-    private String phone;
-    private String avatar;
+@NoArgsConstructor
+public class StartLessonRequest {
 
+    @NotNull
+    private Integer lessonId;
 }

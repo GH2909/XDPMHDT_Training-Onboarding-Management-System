@@ -37,4 +37,6 @@ public class LearningProgress {
     @Enumerated(EnumType.STRING)
      LearningStatus status = LearningStatus.STUDYING;
 
+    @OneToOne(mappedBy = "learningProgress", cascade = CascadeType.ALL)
+    private Certificate certificate;
 }
