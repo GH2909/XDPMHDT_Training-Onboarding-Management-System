@@ -14,6 +14,7 @@ import ut.edu.com.trainingonboardingmanagementsystem.Repository.AssignmentReposi
 import ut.edu.com.trainingonboardingmanagementsystem.Repository.LearningProgressRepository;
 import ut.edu.com.trainingonboardingmanagementsystem.Repository.QuizAttemptRepository;
 import ut.edu.com.trainingonboardingmanagementsystem.enums.LearningStatus;
+import ut.edu.com.trainingonboardingmanagementsystem.enums.UserStatus;
 
 import java.util.List;
 
@@ -21,20 +22,12 @@ import java.util.List;
 @RequiredArgsConstructor
 public class UserMapper {
 
-//    public User creatEmployeeProfile(EmployeeProfileCreationRequest request){
-//        User user = new User();
-//        user.setFullName(request.getFullName());
-//        user.setPhone(request.getPhone());
-//        user.setAvatar(request.getAvatar());
-//        return user;
-//    }
-
     private final LearningProgressRepository learningProgressRepository;
     private final AssignmentRepository assignmentRepository;
 //    private final QuizAttemptRepository quizAttemptRepository;
 
-    public EmployeeProfileResponse creatEmployeeProfile(User employee, LearningStatus status) {
-        EmployeeStatisticsResponse statistics = buildStatistics(employee.getId(),status);
+    public EmployeeProfileResponse getEmployeeProfile(User employee) {
+//        EmployeeStatisticsResponse statistics = buildStatistics(employee.getId(),status);
 
         return EmployeeProfileResponse.builder()
                 .id(employee.getId())
@@ -46,37 +39,37 @@ public class UserMapper {
                 .status(employee.getStatus())
                 .roleName(employee.getRole() != null ? employee.getRole().getRoleName() : null)
                 .createdAt(employee.getCreatedAt())
-                .statistics(statistics)
+//                .statistics(statistics)
                 .build();
     }
 
-    private EmployeeStatisticsResponse buildStatistics(Integer eId, LearningStatus status) {
-        Long totalAssigned = (long) assignmentRepository.findByEmployeeIdWithCourse(eId).size();
-        Long completed = learningProgressRepository.countByStatus(status);
-
-        List<LearningProgress> progresses = learningProgressRepository.findByEmployeeId(eId);
-        Long inProgress = progresses.stream()
-                .filter(lp -> lp.getStatus() == LearningStatus.STUDYING)
-                .count();
-
-        Float avgScore = progresses.isEmpty() ? 0f :
-                (float) progresses.stream()
-                        .mapToDouble(LearningProgress::getScore)
-                        .average()
-                        .orElse(0.0);
-
-        // Quiz statistics would need QuizAttempt data
-
-        return EmployeeStatisticsResponse.builder()
-                .totalAssignedCourses(totalAssigned)
-                .completedCourses(completed)
-                .inProgressCourses(inProgress)
-                .averageScore(avgScore)
-                .totalQuizzesTaken(0) // Calculate from QuizAttempt
-                .totalQuizzesPassed(0) // Calculate from QuizAttempt
-                .build();
-    }
-
+//    private EmployeeStatisticsResponse buildStatistics(Integer eId, LearningStatus status) {
+//        Long totalAssigned = (long) assignmentRepository.findByEmployeeIdWithCourse(eId).size();
+//        Long completed = learningProgressRepository.countByStatus(status);
+//
+//        List<LearningProgress> progresses = learningProgressRepository.findByEmployeeId(eId);
+//        Long inProgress = progresses.stream()
+//                .filter(lp -> lp.getStatus() == LearningStatus.STUDYING)
+//                .count();
+//
+//        Float avgScore = progresses.isEmpty() ? 0f :
+//                (float) progresses.stream()
+//                        .mapToDouble(LearningProgress::getScore)
+//                        .average()
+//                        .orElse(0.0);
+//
+//        // Quiz statistics would need QuizAttempt data
+//
+//        return EmployeeStatisticsResponse.builder()
+//                .totalAssignedCourses(totalAssigned)
+//                .completedCourses(completed)
+//                .inProgressCourses(inProgress)
+//                .averageScore(avgScore)
+//                .totalQuizzesTaken(0) // Calculate from QuizAttempt
+//                .totalQuizzesPassed(0) // Calculate from QuizAttempt
+//                .build();
+//    }
+//
     public void updateEmployeeProfile(User employee, EmployeeProfileUpdateRequest request) {
         employee.setFullName(request.getFullName());
         employee.setPhone(request.getPhone());

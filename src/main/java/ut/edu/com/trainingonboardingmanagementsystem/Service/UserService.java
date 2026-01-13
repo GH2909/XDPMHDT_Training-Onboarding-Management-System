@@ -15,6 +15,7 @@ import ut.edu.com.trainingonboardingmanagementsystem.Model.User;
 import ut.edu.com.trainingonboardingmanagementsystem.Repository.UserRepository;
 import ut.edu.com.trainingonboardingmanagementsystem.Validators.EmployeeValidator;
 import ut.edu.com.trainingonboardingmanagementsystem.enums.LearningStatus;
+import ut.edu.com.trainingonboardingmanagementsystem.enums.UserStatus;
 
 import java.util.List;
 
@@ -27,14 +28,14 @@ public class UserService {
     private final UserMapper userMapper;
     private final EmployeeValidator employeeValidator;
 
-    public EmployeeProfileResponse getProfile(String email, LearningStatus status) {
+    public EmployeeProfileResponse getProfile(String email) {
         User employee = userRepository.findByEmail(email)
                 .orElseThrow(() -> new ResourceNotFoundException("Không tìm thấy nhân viên."));
 
-        return userMapper.creatEmployeeProfile(employee, status);
+        return userMapper.getEmployeeProfile(employee);
     }
 
-    public EmployeeProfileResponse updateEmployeeProfile(String email, EmployeeProfileUpdateRequest request, LearningStatus status) {
+    public EmployeeProfileResponse updateEmployeeProfile(String email, EmployeeProfileUpdateRequest request) {
         employeeValidator.validateProfileUpdate(email, request);
         User employee = userRepository.findByEmail(email)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Không tìm thấy nhân viên."));
@@ -42,7 +43,7 @@ public class UserService {
         userMapper.updateEmployeeProfile(employee, request);
         User updatedEmployee = userRepository.save(employee);
 
-        return userMapper.creatEmployeeProfile(updatedEmployee, status);
+        return userMapper.getEmployeeProfile(updatedEmployee);
     }
 
     public void changePassword(String email, ChangePasswordRequest request) {

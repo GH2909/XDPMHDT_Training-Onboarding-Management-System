@@ -13,6 +13,7 @@ import ut.edu.com.trainingonboardingmanagementsystem.Dto.Response.EmployeeProfil
 import ut.edu.com.trainingonboardingmanagementsystem.Model.User;
 import ut.edu.com.trainingonboardingmanagementsystem.Service.UserService;
 import ut.edu.com.trainingonboardingmanagementsystem.enums.LearningStatus;
+import ut.edu.com.trainingonboardingmanagementsystem.enums.UserStatus;
 
 import java.util.List;
 
@@ -33,21 +34,20 @@ public class EmployeeProfileController {
 
     @GetMapping("/{email}")
     public ResponseEntity<ApiResponse<EmployeeProfileResponse>> getProfile(
-            @PathVariable String email,
-            @RequestParam LearningStatus status) {
+            @PathVariable String email
+           ) {
 
-        EmployeeProfileResponse response = userService.getProfile(email, status);
+        EmployeeProfileResponse response = userService.getProfile(email);
         return ResponseEntity.ok(ApiResponse.success(response));
     }
 
     @PutMapping(("/{email}"))
     public ResponseEntity<ApiResponse<EmployeeProfileResponse>> updateProfile(
             @PathVariable String email,
-            @RequestParam LearningStatus status,
             @Valid @RequestBody EmployeeProfileUpdateRequest request) {
 
         EmployeeProfileResponse response = userService.updateEmployeeProfile(
-                email, request, status);
+                email, request);
         return ResponseEntity.ok(ApiResponse.success(response, "Cập nhật trang cá nhân thành công"));
     }
 
