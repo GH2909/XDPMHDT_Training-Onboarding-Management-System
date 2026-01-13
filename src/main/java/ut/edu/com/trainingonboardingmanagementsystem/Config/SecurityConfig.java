@@ -83,22 +83,11 @@ public class SecurityConfig {
                 .sessionManagement(session ->
                         session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(auth -> auth
-                        // Public endpoints
                         .requestMatchers("/auth/**", "/training/auth/**").permitAll()
-
-                        // Employee endpoints
                         .requestMatchers("/training/employee/**").hasAnyRole("EMPLOYEE", "ADMIN")
-
-                        // HR endpoints
                         .requestMatchers("/training/hr/**").hasAnyRole("HR", "ADMIN")
-
-                        // Trainer endpoints
                         .requestMatchers("/training/trainer/**").hasAnyRole("TRAINER", "ADMIN")
-
-                        // Admin endpoints
                         .requestMatchers("/training/admin/**").hasRole("ADMIN")
-
-                        // All other requests need authentication
                         .anyRequest().authenticated()
                 )
                 .userDetailsService(cusDetailsService)

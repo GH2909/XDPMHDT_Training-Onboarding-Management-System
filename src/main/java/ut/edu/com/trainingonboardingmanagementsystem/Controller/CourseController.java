@@ -9,7 +9,7 @@ import ut.edu.com.trainingonboardingmanagementsystem.Service.CourseService;
 
 @RestController
 @RequestMapping("/hr/course")
-//@PreAuthorize("hasRole('HR')")
+@PreAuthorize("hasAnyRole('HR', 'ADMIN')")
 @RequiredArgsConstructor
 public class CourseController {
     private final CourseService courseService;

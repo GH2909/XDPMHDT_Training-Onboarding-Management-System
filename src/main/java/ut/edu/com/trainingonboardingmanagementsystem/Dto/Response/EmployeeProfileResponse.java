@@ -22,6 +22,6 @@ public class EmployeeProfileResponse {
     private UserStatus status;
     private String roleName;
     private LocalDateTime createdAt;
-    private EmployeeStatisticsResponse statistics; //thống kê
+    private EmployeeStatisticsResponse statistics;
 }
 

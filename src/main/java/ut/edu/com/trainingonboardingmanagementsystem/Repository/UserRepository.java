@@ -1,13 +1,19 @@
 package ut.edu.com.trainingonboardingmanagementsystem.Repository;
 
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import ut.edu.com.trainingonboardingmanagementsystem.Model.User;
 
 import java.util.Optional;
 
 public interface UserRepository extends JpaRepository<User, Integer> {
+    @Query("""
+        SELECT u FROM User u
+        JOIN FETCH u.role
+        WHERE u.email = :email
+    """)
+    Optional<User> findByEmailWithRole(@Param("email") String email);
     Optional<User> findByEmail(String email);
-    boolean existsByUserName(String username);
-    Optional<User> findByUserName(String username);
-//    void deleteByEmail(String email);
+
 }

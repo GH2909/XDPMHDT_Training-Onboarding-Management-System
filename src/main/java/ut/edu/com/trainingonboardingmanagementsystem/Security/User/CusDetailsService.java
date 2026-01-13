@@ -17,7 +17,7 @@ public class CusDetailsService implements UserDetailsService {
     @Override
     public UserDetails loadUserByUsername(String email)
             throws UsernameNotFoundException {
-        User user = userRepo.findByEmail(email)
+        User user = userRepo.findByEmailWithRole(email)
                 .orElseThrow(() ->
                         new UsernameNotFoundException("User not found"));
 

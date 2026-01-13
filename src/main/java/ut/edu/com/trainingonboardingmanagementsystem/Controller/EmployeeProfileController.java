@@ -3,6 +3,7 @@ package ut.edu.com.trainingonboardingmanagementsystem.Controller;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import ut.edu.com.trainingonboardingmanagementsystem.Dto.Request.ChangePasswordRequest;
@@ -16,7 +17,8 @@ import ut.edu.com.trainingonboardingmanagementsystem.enums.LearningStatus;
 import java.util.List;
 
 @RestController
-@RequestMapping("/training/employee/profile")
+@RequestMapping("/employee/profile")
+@PreAuthorize("hasRole('EMPLOYEE')")
 @RequiredArgsConstructor
 @Validated
 public class EmployeeProfileController {
