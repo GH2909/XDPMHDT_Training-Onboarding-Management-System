@@ -38,13 +38,13 @@ public class JwtAuthFilter extends OncePerRequestFilter {
 
         if (header != null && header.startsWith("Bearer ")) {
             String token = header.substring(7);
-            String username = jwtUtil.extractUsername(token);
+            String email = jwtUtil.extractUsername(token);
 
-            if (username != null &&
+            if (email != null &&
                     SecurityContextHolder.getContext().getAuthentication() == null) {
 
                 UserDetails userDetails =
-                        cusDetailsService.loadUserByUsername(username);
+                        cusDetailsService.loadUserByUsername(email);
 
                 UsernamePasswordAuthenticationToken auth =
                         new UsernamePasswordAuthenticationToken(

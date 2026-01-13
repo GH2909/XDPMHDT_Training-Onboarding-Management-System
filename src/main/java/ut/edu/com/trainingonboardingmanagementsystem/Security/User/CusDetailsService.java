@@ -15,16 +15,16 @@ public class CusDetailsService implements UserDetailsService {
     private final UserRepository userRepo;
 
     @Override
-    public UserDetails loadUserByUsername(String username)
+    public UserDetails loadUserByUsername(String email)
             throws UsernameNotFoundException {
-        User user = userRepo.findByEmail(username)
+        User user = userRepo.findByEmail(email)
                 .orElseThrow(() ->
                         new UsernameNotFoundException("User not found"));
 
         if (user.getStatus() == UserStatus.LOCKED) {
             throw new RuntimeException("User is locked");
         }
-        System.out.println("Login username = " + username);
+        System.out.println("Login email = " + email);
 
 
         return new UserPrincipal(user);

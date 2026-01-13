@@ -27,7 +27,7 @@ public class AuthController {
 
         Authentication authentication = authManager.authenticate(
                 new UsernamePasswordAuthenticationToken(
-                        req.getUsername(),
+                        req.getEmail(),
                         req.getPassword()
                 )
         );

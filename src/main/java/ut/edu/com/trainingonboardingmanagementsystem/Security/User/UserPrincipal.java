@@ -9,12 +9,12 @@ import java.util.Collection;
 import java.util.List;
 public class UserPrincipal implements UserDetails {
     private Integer id;
-    private String username;
+    private String email;
     private String password;
     private Collection<? extends GrantedAuthority> authorities;
     public UserPrincipal(User user) {
         this.id = user.getId();
-        this.username = user.getUserName();
+        this.email = user.getEmail();
         this.password = user.getPassword();
         this.authorities = List.of(
                 new SimpleGrantedAuthority("ROLE_" + user.getRole().getRoleName())
@@ -29,10 +29,12 @@ public class UserPrincipal implements UserDetails {
     }
 
     @Override public String getPassword() { return password; }
-    @Override public String getUsername() { return username; }
+    @Override public String getUsername() { return email; }
 
     @Override public boolean isAccountNonExpired() { return true; }
     @Override public boolean isAccountNonLocked() { return true; }
     @Override public boolean isCredentialsNonExpired() { return true; }
     @Override public boolean isEnabled() { return true; }
+
+
 }
