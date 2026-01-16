@@ -43,7 +43,7 @@ public class UserMapper {
                 .build();
     }
 
-//    private EmployeeStatisticsResponse buildStatistics(Integer eId, LearningStatus status) {
+    //    private EmployeeStatisticsResponse buildStatistics(Integer eId, LearningStatus status) {
 //        Long totalAssigned = (long) assignmentRepository.findByEmployeeIdWithCourse(eId).size();
 //        Long completed = learningProgressRepository.countByStatus(status);
 //
@@ -77,5 +77,5 @@ public class UserMapper {
             employee.setAvatar(request.getAvatar());
         }
     }
-    }
+}
 

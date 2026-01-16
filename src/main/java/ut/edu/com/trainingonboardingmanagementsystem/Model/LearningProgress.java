@@ -21,21 +21,21 @@ public class LearningProgress {
 
     @ManyToOne
     @JoinColumn(name = "employee_id")
-     User employee;
+    User employee;
 
     @ManyToOne
     @JoinColumn(name = "course_id")
-     Course course;
+    Course course;
 
     @Column(name = "progress_percent")
-     Float progressPercent;
+    Float progressPercent;
 
     @Column(name = "score")
-     Float score;
+    Float score;
 
     @Column(name = "status")
     @Enumerated(EnumType.STRING)
-     LearningStatus status = LearningStatus.STUDYING;
+    LearningStatus status = LearningStatus.STUDYING;
 
     @OneToOne(mappedBy = "learningProgress", cascade = CascadeType.ALL)
     private Certificate certificate;

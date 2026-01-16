@@ -16,8 +16,11 @@ public class CompetencyFramework {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
-     Integer id;
+    Integer id;
 
-    @Column(name = "name")
-     String name;
+    @Column(name = "name", nullable = false)
+    String name;
+
+    @Column(name = "description", columnDefinition = "TEXT")
+    String description;
 }

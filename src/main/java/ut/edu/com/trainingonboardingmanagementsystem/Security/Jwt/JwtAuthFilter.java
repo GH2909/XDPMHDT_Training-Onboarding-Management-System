@@ -37,22 +37,37 @@ public class JwtAuthFilter extends OncePerRequestFilter {
         String header = request.getHeader("Authorization");
 
         if (header != null && header.startsWith("Bearer ")) {
-            String token = header.substring(7);
-            String email = jwtUtil.extractUsername(token);
+            try {
+                String token = header.substring(7);
 
-            if (email != null &&
-                    SecurityContextHolder.getContext().getAuthentication() == null) {
+                // Validate token format first
+                if (token == null || token.isEmpty()) {
+                    filterChain.doFilter(request, response);
+                    return;
+                }
 
-                UserDetails userDetails =
-                        cusDetailsService.loadUserByUsername(email);
+                String email = jwtUtil.extractUsername(token);
 
-                UsernamePasswordAuthenticationToken auth =
-                        new UsernamePasswordAuthenticationToken(
-                                userDetails,
-                                null,
-                                userDetails.getAuthorities());
+                if (email != null &&
+                        SecurityContextHolder.getContext().getAuthentication() == null) {
 
-                SecurityContextHolder.getContext().setAuthentication(auth);
+                    UserDetails userDetails =
+                            cusDetailsService.loadUserByUsername(email);
+
+                    UsernamePasswordAuthenticationToken auth =
+                            new UsernamePasswordAuthenticationToken(
+                                    userDetails,
+                                    null,
+                                    userDetails.getAuthorities());
+
+                    SecurityContextHolder.getContext().setAuthentication(auth);
+                }
+            } catch (Exception e) {
+                // Log error but don't stop the filter chain
+                // Let Spring Security handle the 403 response
+                System.err.println("JWT Filter Error: " + e.getMessage());
+                // Clear any existing authentication
+                SecurityContextHolder.clearContext();
             }
         }
 

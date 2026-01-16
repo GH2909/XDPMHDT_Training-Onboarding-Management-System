@@ -35,7 +35,7 @@ public class EmployeeProfileController {
     @GetMapping("/{email}")
     public ResponseEntity<ApiResponse<EmployeeProfileResponse>> getProfile(
             @PathVariable String email
-           ) {
+    ) {
 
         EmployeeProfileResponse response = userService.getProfile(email);
         return ResponseEntity.ok(ApiResponse.success(response));
