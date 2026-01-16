@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Thông Tin Cá Nhân - Profile</title>
+    <link rel="stylesheet" href="../CSS/informationHR.css">
+</head>
+
+<body>
+    <!-- Header -->
+    <div class="header">
+        <a href="informationHR.html"><div class="header-icon">👤</div></a>
+        <div class="header-icon">☰</div>
+    </div>
+
+    <!-- Top Banner -->
+    <div class="top-banner">
+        <div class="banner-left">
+            <div class="logo">
+                <a href="dashboard.html"><img src="../images/baove.jpg" alt="Logo"></a>
+            </div>
+            <div class="welcome-text">
+                <h1>Welcome, Quản trị viên đã trở lại</h1>
+                <p>Đây là hệ thống giành cho HR</p>
+            </div>
+        </div>
+        <div class="banner-right">
+            <button class="banner-btn"> Tài nguyên </button>
+            <a href="course_management.html"><button class="banner-btn"> Khóa học gần đây</button></a>
+            <a href="course_management.html"><button class="banner-btn"> Tất cả khóa học</button></a>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <main class="profile-container">
+        <!-- Left Sidebar -->
+        <div class="profile-sidebar">
+            <!-- Avatar Section -->
+            <div class="avatar-section">
+                <div class="avatar-wrapper">
+                    <img src="https://inkythuatso.com/uploads/thumbnails/800/2022/03/anh-da-dien-fb-hai-32-29-13-54-49.jpg"
+                        alt="Avatar" class="avatar-img" id="avatarImg">
+                    <button class="edit-avatar-btn" onclick="document.getElementById('avatarInput').click()">
+                        <i class="fas fa-camera"></i>
+                    </button>
+                    <input type="file" id="avatarInput" accept="image/*" style="display: none;"
+                        onchange="previewAvatar(event)">
+                </div>
+            </div>
+
+            <!-- Sidebar Menu -->
+            <div class="sidebar-menu">
+                <a href="index.html" class="menu-item active">
+                    <i class="fas fa-user-circle"></i>
+                    <span>Thông Tin Cá Nhân</span>
+                </a>
+                <a href="#" class="menu-item menu-logout" onclick="logout(event)">
+                    <i class="fas fa-sign-out-alt"></i>
+                    <span>Đăng Xuất</span>
+                </a>
+            </div>
+        </div>
+
+        <!-- Right Content -->
+        <div class="profile-content">
+            <!-- Personal Info Card -->
+            <div class="profile-card">
+                <div class="card-header">
+                    <i class="fas fa-user-circle"></i>
+                    <h2>Thông Tin Cá Nhân</h2>
+                </div>
+                <form id="profileForm" class="profile-form">
+                    <div class="info-grid">
+                        <div class="info-item">
+                            <label>Họ và tên</label>
+                            <input type="text" id="fullName" value="Nguyễn Văn A" class="info-input">
+                        </div>
+                        <div class="info-item">
+                            <label>Email</label>
+                            <input type="email" id="email" value="nguyenvana@company.com" class="info-input" readonly>
+                        </div>
+                        <div class="info-item">
+                            <label>Số điện thoại</label>
+                            <input type="tel" id="phone" value="0912 345 678" class="info-input">
+                        </div>
+                        <div class="info-item">
+                            <label>Bộ phận</label>
+                            <input type="text" id="department" value="Phòng IT" class="info-input" readonly>
+                        </div>
+                        <div class="info-item">
+                            <label>Chức vụ</label>
+                            <input type="text" id="position" value="HR" class="info-input" readonly>
+                        </div>
+                        <div class="info-item">
+                            <label>Ngày tham gia</label>
+                            <input type="date" id="joinDate" value="2024-01-15" class="info-input" readonly>
+                        </div>
+                    </div>
+                </form>
+            </div>
+    </div>
+    <script src="../Javascipt/informationHR.js"></script>
+
+</body>
+</html>
