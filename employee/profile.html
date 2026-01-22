@@ -6,31 +6,31 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Thông Tin Cá Nhân - Profile</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link rel="stylesheet" href="../../assets/css/pages/profile.css">
+    <link rel="stylesheet" href="../assets/css/pages/profile.css">
 </head>
 
 <body>
     <!-- Header -->
     <header class="header">
         <div class="header-left">
-            <a href="../dashboard/index.html" class="logo">
+            <a href="dashboard.html" class="logo">
                 <i class="fas fa-book-reader"></i>
                 UTH - LMS
             </a>
             <nav class="nav-icons">
-                <a href="../dashboard/index.html" title="Dashboard">
+                <a href="dashboard.html" title="Dashboard">
                     <i class="fas fa-home"></i>
                 </a>
-                <a href="../courses/list.html" title="Khóa học">
+                <a href="./courses/list.html" title="Khóa học">
                     <i class="fas fa-graduation-cap"></i>
                 </a>
-                <a href="../quiz/list.html" title="Quiz">
+                <a href="./quiz/list.html" title="Quiz">
                     <i class="fas fa-question-circle"></i>
                 </a>
-                <a href="../progress/index.html" title="Tiến độ">
+                <a href="progress.html" title="Tiến độ">
                     <i class="fas fa-chart-line"></i>
                 </a>
-                <a href="../certificates/index.html" title="Chứng chỉ">
+                <a href="certificates.html" title="Chứng chỉ">
                     <i class="fas fa-certificate"></i>
                 </a>
             </nav>
@@ -67,7 +67,7 @@
 
             <!-- Sidebar Menu -->
             <div class="sidebar-menu">
-                <a href="index.html" class="menu-item active">
+                <a href="profile.html" class="menu-item active">
                     <i class="fas fa-user-circle"></i>
                     <span>Thông Tin Cá Nhân</span>
                 </a>
@@ -163,7 +163,7 @@
         </div>
     </main>
 
-    <script src="../../../employee/js/pages/profile/index.js"></script>
+    <script src="../employee/js/pages/profile/index.js"></script>
     <script>
         function logout(e) {
             e.preventDefault();
@@ -174,7 +174,7 @@
             localStorage.removeItem('email');
 
             // Chuyển hướng tới trang login
-            window.location.href = '../../../shared/pages/auth/login.html';
+            window.location.href = './shared/auth/login.html';
         }
     </script>
 </body>

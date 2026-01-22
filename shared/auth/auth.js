@@ -49,10 +49,10 @@ loginForm.addEventListener("submit", async function (e) {
         // Điều hướng theo role
         switch (role) {
             case "employee":
-                window.location.href = "/employee/index.html";
+                window.location.href = "/employee/dashboard.html";
                 break;
             case "trainer":
-                window.location.href = "/trainer/index.html";
+                window.location.href = "/trainer/dashboard/index.html";
                 break;
             case "hr":
                 window.location.href = "/HR/dashboard.html";
