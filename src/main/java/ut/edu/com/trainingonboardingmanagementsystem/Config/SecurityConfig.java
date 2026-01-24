@@ -32,48 +32,6 @@ public class SecurityConfig {
         return new BCryptPasswordEncoder();
     }
 
-//    @Bean
-//    public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-//
-//        http
-//                // Tắt CSRF vì dùng JWT
-//                .csrf(csrf -> csrf.disable())
-//                .cors(cors -> cors.configurationSource(corsConfigurationSource()))
-//                // Stateless session
-//                .sessionManagement(session ->
-//                        session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
-//
-//                // Cấu hình phân quyền
-//                .authorizeHttpRequests(auth -> auth
-//                        .requestMatchers("/auth/**", "/training/auth/**").permitAll()   // login, register
-//                        .requestMatchers("/hr/**").hasRole("HR")   // chỉ HR
-//                        .anyRequest().authenticated()              // còn lại phải đăng nhập
-//                )
-//
-//                // Custom UserDetailsService
-//                .userDetailsService(cusDetailsService)
-//
-//                // JWT filter
-//                .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class);
-//
-//        return http.build();
-//    }
-
-//    @Bean
-//    public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-//        http
-//                .csrf(csrf -> csrf.disable())
-//                .cors(cors -> cors.disable())
-//                .sessionManagement(session ->
-//                        session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
-//                .authorizeHttpRequests(auth -> auth
-//                        .anyRequest().permitAll() // ⭐ Tạm thời cho phép tất cả
-//                );
-//        // ⭐ Tạm thời comment JWT filter
-//        // .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class);
-//
-//        return http.build();
-//    }
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {

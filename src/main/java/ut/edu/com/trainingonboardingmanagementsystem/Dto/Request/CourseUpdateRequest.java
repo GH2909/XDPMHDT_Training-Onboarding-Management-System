@@ -1,17 +1,12 @@
 package ut.edu.com.trainingonboardingmanagementsystem.Dto.Request;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.EnumType;
-import jakarta.persistence.Enumerated;
 import lombok.Getter;
 import lombok.Setter;
 import ut.edu.com.trainingonboardingmanagementsystem.enums.CourseCategory;
 
-import java.util.List;
-
 @Setter
 @Getter
-public class CourseCreateRequest {
+public class CourseUpdateRequest {
     private String courseName;
 
     private Integer duration;

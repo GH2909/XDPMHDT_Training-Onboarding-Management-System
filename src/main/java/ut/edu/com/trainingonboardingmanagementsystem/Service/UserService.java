@@ -29,6 +29,7 @@ public class UserService {
     private final EmployeeValidator employeeValidator;
 
     public EmployeeProfileResponse getProfile(String email) {
+
         User employee = userRepository.findByEmail(email)
                 .orElseThrow(() -> new ResourceNotFoundException("Không tìm thấy nhân viên."));
 
@@ -55,7 +56,7 @@ public class UserService {
     }
 
     public List<User> getEmployeeProfiles() {
-        return userRepository.findAll();
+        return userRepository.findByRoleName("EMPLOYEE");
     }
     public User getEmployeeProfile(String email) {
         return userRepository.findByEmail(email) .orElseThrow(() -> new RuntimeException("Employee Profile not found"));

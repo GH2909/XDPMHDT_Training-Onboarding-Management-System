@@ -5,6 +5,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import ut.edu.com.trainingonboardingmanagementsystem.Dto.Request.CourseCreateRequest;
+import ut.edu.com.trainingonboardingmanagementsystem.Dto.Request.CourseUpdateRequest;
 import ut.edu.com.trainingonboardingmanagementsystem.Service.CourseService;
 
 @RestController
@@ -22,5 +23,16 @@ public class CourseController {
     @GetMapping
     public ResponseEntity<?> getAll() {
         return ResponseEntity.ok(courseService.getAll());
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<?> update(@PathVariable Integer id, @RequestBody CourseUpdateRequest req){
+        return ResponseEntity.ok(courseService.update(id, req));
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<?> delete(@PathVariable Integer id){
+        courseService.delete(id);
+        return ResponseEntity.ok("Khoá học đã được xóa");
     }
 }

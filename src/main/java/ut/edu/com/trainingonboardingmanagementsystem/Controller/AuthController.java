@@ -23,8 +23,6 @@ public class AuthController {
     @PostMapping("/login")
     public ResponseEntity<?> login(@RequestBody LoginRequest req) {
 
-        System.out.println("=== LOGIN CONTROLLER HIT ===");
-
         Authentication authentication = authManager.authenticate(
                 new UsernamePasswordAuthenticationToken(
                         req.getEmail(),
