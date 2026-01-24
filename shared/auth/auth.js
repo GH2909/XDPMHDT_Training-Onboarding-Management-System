@@ -35,28 +35,28 @@ loginForm.addEventListener("submit", async function (e) {
         });
 
         if (!response.ok) {
-            throw new Error("Email hoặc mật khẩu không đúng");
-        }
+            throw new Error(alert("Email hoặc mật khẩu không đúng"));
+        } else {
+            const data = await response.json();
 
-        const data = await response.json();
+            // Lưu JWT
+            localStorage.setItem("access_token", data.token);
+            localStorage.setItem("role", role);
 
-        // Lưu JWT
-        localStorage.setItem("access_token", data.token);
-        localStorage.setItem("role", role);
+            alert("Đăng nhập thành công");
 
-        alert("Đăng nhập thành công 🎉");
-
-        // Điều hướng theo role
-        switch (role) {
-            case "employee":
-                window.location.href = "/employee/dashboard.html";
-                break;
-            case "trainer":
-                window.location.href = "/trainer/dashboard/index.html";
-                break;
-            case "hr":
-                window.location.href = "/HR/dashboard.html";
-                break;
+            // Điều hướng theo role
+            switch (role) {
+                case "employee":
+                    window.location.href = "/employee/dashboard.html";
+                    break;
+                case "trainer":
+                    window.location.href = "/trainer/dashboard/index.html";
+                    break;
+                case "hr":
+                    window.location.href = "/HR/dashboard.html";
+                    break;
+            }
         }
 
     } catch (err) {
