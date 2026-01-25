@@ -4,6 +4,7 @@ import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import ut.edu.com.trainingonboardingmanagementsystem.Dto.Request.LessonRequest;
@@ -15,13 +16,15 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/lessons")
+@PreAuthorize("hasAnyRole('TRAINER', 'ADMIN')")
 @RequiredArgsConstructor
+
 @Validated
 public class LessonController {
 
     private final LessonService lessonService;
 
-    @PostMapping
+    @PostMapping("/create")
     public ResponseEntity<ApiResponse<LessonResponse>> createLesson(
             @Valid @RequestBody LessonRequest request) {
         LessonResponse response = lessonService.createLesson(request);
@@ -43,7 +46,7 @@ public class LessonController {
         return ResponseEntity.ok(ApiResponse.success(response));
     }
 
-    @GetMapping
+    @GetMapping("/all")
     public ResponseEntity<ApiResponse<List<LessonResponse>>> getAllLessons() {
         List<LessonResponse> responses = lessonService.getAllLessons();
         return ResponseEntity.ok(ApiResponse.success(responses));
