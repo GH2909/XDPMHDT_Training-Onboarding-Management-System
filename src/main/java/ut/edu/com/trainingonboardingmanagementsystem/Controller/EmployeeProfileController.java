@@ -19,19 +19,20 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/employee/profile")
-@PreAuthorize("hasRole('EMPLOYEE')")
 @RequiredArgsConstructor
 @Validated
 public class EmployeeProfileController {
 
     private final UserService userService;
 
+    @PreAuthorize("hasAnyRole('ADMIN', 'HR')")
     @GetMapping
     public ResponseEntity<ApiResponse<List<User>>> getEmployeeProfiles() {
         List<User> userList = userService.getEmployeeProfiles();
         return ResponseEntity.ok(ApiResponse.success(userList));
     }
 
+    @PreAuthorize("hasRole('EMPLOYEE')")
     @GetMapping("/{email}")
     public ResponseEntity<ApiResponse<EmployeeProfileResponse>> getProfile(
             @PathVariable String email
@@ -41,6 +42,7 @@ public class EmployeeProfileController {
         return ResponseEntity.ok(ApiResponse.success(response));
     }
 
+    @PreAuthorize("hasRole('EMPLOYEE')")
     @PutMapping(("/{email}"))
     public ResponseEntity<ApiResponse<EmployeeProfileResponse>> updateProfile(
             @PathVariable String email,
@@ -51,6 +53,7 @@ public class EmployeeProfileController {
         return ResponseEntity.ok(ApiResponse.success(response, "Cập nhật trang cá nhân thành công"));
     }
 
+    @PreAuthorize("hasRole('EMPLOYEE')")
     @PostMapping("/change-password/{email}")
     public ResponseEntity<ApiResponse<Void>> changePassword(
             @PathVariable String email,

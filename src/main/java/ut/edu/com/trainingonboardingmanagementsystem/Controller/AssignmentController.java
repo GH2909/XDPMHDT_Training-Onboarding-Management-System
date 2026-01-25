@@ -37,17 +37,16 @@ public class AssignmentController {
         return user;
     }
 
-    @GetMapping
-    public ResponseEntity<ApiResponse<List<User>>> getEmployeeProfiles() {
-        List<User> userList = userService.getEmployeeProfiles();
-        return ResponseEntity.ok(ApiResponse.success(userList));
-    }
-
     @GetMapping("/{employeeId}")
     public ResponseEntity<ApiResponse<List<AssignedCourseResponse>>> getAssignedCourses(@PathVariable Integer employeeId) {
 
         List<AssignedCourseResponse> courses = service.getAssignedCourses(employeeId);
         return ResponseEntity.ok(ApiResponse.success(courses));
+    }
+
+    @GetMapping
+    public ResponseEntity<?> getAll(){
+        return ResponseEntity.ok(service.getAll());
     }
 
     @GetMapping("/{courseId}/{employeeId}")

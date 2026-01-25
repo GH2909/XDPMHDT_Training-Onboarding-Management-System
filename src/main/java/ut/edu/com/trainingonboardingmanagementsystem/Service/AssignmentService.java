@@ -53,6 +53,8 @@ public class AssignmentService {
         }
     }
 
+    public List<Assignment> getAll(){ return assignmentRepository.findAll();}
+
     public List<AssignedCourseResponse> getAssignedCourses(Integer employeeId) {
         List<Assignment> assignments = assignmentRepository.findByEmployeeIdWithCourse(employeeId);
 
