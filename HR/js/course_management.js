@@ -73,7 +73,7 @@ function viewCourseDetail(id) {
     detailBody.innerHTML = `
         <div class="detail-row">
             <div class="detail-label">📚 Tên khóa học:</div>
-            <div class="detail-value">${course.name}</div>
+            <div class="detail-value">${course.courseName}</div>
         </div>
         <div class="detail-row">
             <div class="detail-label">⏱️ Thời lượng:</div>
@@ -87,15 +87,15 @@ function viewCourseDetail(id) {
             <div class="detail-label">🏷️ Phân loại:</div>
             <div class="detail-value">${course.category.replace('_', ' ')}</div>
         </div>
-        <div class="detail-row">
-            <div class="detail-label">📦 Module:</div>
-            <div class="module-badges">
-                ${course.modules.map(m => `<span class="module-badge">${m}</span>`).join('')}
-            </div>
-        </div>
+        // <div class="detail-row">
+        //     <div class="detail-label">📦 Module:</div>
+        //     <div class="module-badges">
+        //         ${course.modules.map(m => `<span class="module-badge">${m}</span>`).join('')}
+        //     </div>
+        // </div>
         <div class="detail-row">
             <div class="detail-label">✅ Điều kiện hoàn thành:</div>
-            <div class="detail-value">${course.completion}</div>
+            <div class="detail-value">${course.completionRule}</div>
         </div>
     `;
     
