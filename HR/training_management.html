@@ -73,14 +73,14 @@
             </div>
 
             <div class="button-group">
-                <button class="btn btn-primary" id="saveBtn" disabled> Lưu và Gửi Thông báo</button>
-                <button class="btn btn-secondary" id="cancelBtn"> Hủy</button>
+                <button class="btn btn-primary" id="saveBtn" disabled onclick="handleSave()"> Lưu và Gửi Thông báo</button>
+                <button class="btn btn-secondary" id="cancelBtn" onclick="handleCancel()"> Hủy</button>
             </div>
         </div>
     </div>
     
     <!-- Loading Overlay -->
-    <div class="loading-overlay" id="loadingOverlay">
+    <div class="loading-overlay" id="loadingOverlay" disabled onclick="showLoading()">
         <div class="spinner"></div>
         <p>Đang xử lý...</p>
     </div>
@@ -96,7 +96,7 @@
                 <p id="successMessage"></p>
             </div>
             <div class="modal-footer">
-                <button class="btn btn-primary" id="closeModalBtn">Đóng</button>
+                <button class="btn btn-primary" id="closeModalBtn" disabled onclick="closeModal()">Đóng</button>
             </div>
         </div>
     </div>

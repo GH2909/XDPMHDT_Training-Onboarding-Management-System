@@ -1,5 +1,5 @@
 //Khóa học đề xuất
-//  let suggestedCoursesData = [];
+ let suggestedCoursesData = [];
 
 //Tất cả khóa học
 let allCoursesData = [];
@@ -153,7 +153,8 @@ function updateSelectedInfo() {
     
     if (selectedCourse || selectedEmployees.length > 0) {
         container.classList.add('show');
-        
+        console.log('selectedCourse:', selectedCourse);
+
         if (selectedCourse) {
             courseInfo.innerHTML = `<strong>Khóa học đã chọn:</strong> ${selectedCourse.courseName}`;
         } else {
@@ -182,26 +183,43 @@ function updateSaveButton() {
 }
 
 // Xử lý khi nhấn Lưu
-function handleSave() {
+async function handleSave() {
     if (!selectedCourse || selectedEmployees.length === 0) {
         alert('Vui lòng chọn khóa học và nhân viên!');
         return;
     }
 
-    // Hiển thị loading
-    showLoading();
+    const payload = {
+        courseId : selectedCourse.id,
+        employeeIds: selectedEmployees.map(e => e.id)
+    };
 
-    // Giả lập gọi API
-    setTimeout(() => {
-        // Ẩn loading
+    try {
+        showLoading();
+
+        const res = await fetch(`${API_BASE}/hr/assignments`, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+                ...getAuthHeader()
+            },
+            body: JSON.stringify(payload)
+        });
+
+        if (!res.ok) {
+            const err = await res.text();
+            throw new Error(err || "Gán khóa học thất bại");
+        }
+
         hideLoading();
-
-        // Hiển thị thông báo thành công
         showSuccessModal();
-
-        // Reset form
         resetForm();
-    }, 1500);
+
+    } catch (error) {
+        hideLoading();
+        alert(error.message);
+        console.error(error);
+    }
 }
 
 // Xử lý khi nhấn Hủy
@@ -218,9 +236,6 @@ function resetForm() {
         card.classList.remove('selected');
     });
     selectedCourse = null;
-
-    // Bỏ chọn department
-    document.getElementById('departmentSelect').value = '';
 
     // Bỏ chọn employees
     document.querySelectorAll('#employeeCheckboxes input[type="checkbox"]').forEach(cb => {
