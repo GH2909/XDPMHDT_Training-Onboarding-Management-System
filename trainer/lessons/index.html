@@ -78,119 +78,13 @@
             </div>
         </div>
 
-        <!-- LESSONS LIST -->
-        <div class="lessons-grid">
-            <!-- LESSON ITEM -->
-            <div class="lesson-card">
-                <div class="lesson-header">
-                    <div class="lesson-type video">Video</div>
-                    <div class="lesson-actions">
-                        <a href="edit-lesson.html" class="action-btn" title="Sửa">
-                            <i class="fas fa-edit"></i>
-                        </a>
-                        <a href="#" class="action-btn" title="Xóa" onclick="return confirm('Bạn có chắc muốn xóa?')">
-                            <i class="fas fa-trash"></i>
-                        </a>
-                    </div>
-                </div>
-
-                <div class="lesson-content">
-                    <h3 class="lesson-title">HTML & CSS Cơ Bản</h3>
-                    <p class="lesson-meta">
-                        <span><i class="fas fa-clock"></i> 15 phút</span>
-                    </p>
-                    <p class="lesson-description">Học cơ bản về HTML và CSS để xây dựng website đẹp và responsive.</p>
-                </div>
-
-                <div class="lesson-footer">
-                    <a href="lesson-detail.html" class="btn-link">Xem chi tiết →</a>
-                </div>
-            </div>
-
-            <!-- LESSON ITEM -->
-            <div class="lesson-card">
-                <div class="lesson-header">
-                    <div class="lesson-type slide">Slide</div>
-                    <div class="lesson-actions">
-                        <a href="edit-lesson.html" class="action-btn" title="Sửa">
-                            <i class="fas fa-edit"></i>
-                        </a>
-                        <a href="#" class="action-btn" title="Xóa" onclick="return confirm('Bạn có chắc muốn xóa?')">
-                            <i class="fas fa-trash"></i>
-                        </a>
-                    </div>
-                </div>
-
-                <div class="lesson-content">
-                    <h3 class="lesson-title">JavaScript Fundamentals</h3>
-                    <p class="lesson-meta">
-                        <span><i class="fas fa-clock"></i> 25 phút</span>
-                    </p>
-                    <p class="lesson-description">Những khái niệm cơ bản trong JavaScript để bạn bắt đầu lập trình.</p>
-                </div>
-
-                <div class="lesson-footer">
-                    <a href="lesson-detail.html" class="btn-link">Xem chi tiết →</a>
-                </div>
-            </div>
-
-            <!-- LESSON ITEM -->
-            <div class="lesson-card">
-                <div class="lesson-header">
-                    <div class="lesson-type pdf">PDF</div>
-                    <div class="lesson-actions">
-                        <a href="edit-lesson.html" class="action-btn" title="Sửa">
-                            <i class="fas fa-edit"></i>
-                        </a>
-                        <a href="#" class="action-btn" title="Xóa" onclick="return confirm('Bạn có chắc muốn xóa?')">
-                            <i class="fas fa-trash"></i>
-                        </a>
-                    </div>
-                </div>
-
-                <div class="lesson-content">
-                    <h3 class="lesson-title">Advanced CSS Techniques</h3>
-                    <p class="lesson-meta">
-                        <span><i class="fas fa-clock"></i> 30 phút</span>
-                    </p>
-                    <p class="lesson-description">Các kỹ thuật CSS nâng cao để tạo giao diện đẹp và hiệu năng tốt.</p>
-                </div>
-
-                <div class="lesson-footer">
-                    <a href="lesson-detail.html" class="btn-link">Xem chi tiết →</a>
-                </div>
-            </div>
-
-            <!-- LESSON ITEM -->
-            <div class="lesson-card">
-                <div class="lesson-header">
-                    <div class="lesson-type scorm">SCORM</div>
-                    <div class="lesson-actions">
-                        <a href="edit-lesson.html" class="action-btn" title="Sửa">
-                            <i class="fas fa-edit"></i>
-                        </a>
-                        <a href="#" class="action-btn" title="Xóa" onclick="return confirm('Bạn có chắc muốn xóa?')">
-                            <i class="fas fa-trash"></i>
-                        </a>
-                    </div>
-                </div>
-
-                <div class="lesson-content">
-                    <h3 class="lesson-title">React Course Module</h3>
-                    <p class="lesson-meta">
-                        <span><i class="fas fa-clock"></i> 45 phút</span>
-                    </p>
-                    <p class="lesson-description">Khóa học React interative với bài kiểm tra tích hợp.</p>
-                </div>
-
-                <div class="lesson-footer">
-                    <a href="lesson-detail.html" class="btn-link">Xem chi tiết →</a>
-                </div>
-            </div>
+        <div class="lessons-grid" id="lessonsContainer">
+    <!-- Lessons sẽ được load từ API -->
         </div>
+
     </div>
 
-    <script src="lessons.js"></script>
+    <script src="../lessons/lessons.js"></script>
 </body>
 
 </html>
