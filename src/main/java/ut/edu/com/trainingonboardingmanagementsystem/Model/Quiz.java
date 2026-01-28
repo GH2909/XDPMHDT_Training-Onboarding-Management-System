@@ -34,8 +34,8 @@ public class Quiz {
     @Column(columnDefinition = "TEXT", name = "description")
     private String description;
 
-    @Column(name = "category_id", nullable = false)
-    private Integer categoryId;
+//    @Column(name = "category_id", nullable = false)
+//    private Integer categoryId;
 
     @Column(name = "duration_minutes", nullable = false)
     private Integer durationMinutes;
@@ -50,6 +50,7 @@ public class Quiz {
     private Integer attemptLimit;
 
     @Enumerated(EnumType.STRING)
+    @Column(name = "status")
     private QuizStatus status = QuizStatus.DRAFT;
 
     @JoinColumn(name = "start_time")

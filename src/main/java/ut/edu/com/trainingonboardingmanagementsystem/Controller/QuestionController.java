@@ -4,6 +4,7 @@ import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import ut.edu.com.trainingonboardingmanagementsystem.Dto.Request.QuestionRequest;
 import ut.edu.com.trainingonboardingmanagementsystem.Dto.Response.ApiResponse;
@@ -14,6 +15,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/questions")
+@PreAuthorize("hasAnyRole('TRAINER', 'ADMIN')")
 @RequiredArgsConstructor
 public class QuestionController {
 

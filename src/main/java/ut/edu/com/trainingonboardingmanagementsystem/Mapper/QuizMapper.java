@@ -14,7 +14,7 @@ public class QuizMapper {
         quiz.setLesson(lesson);
         quiz.setTitle(request.getTitle());
         quiz.setDescription(request.getDescription());
-        quiz.setCategoryId(request.getCategoryId());
+//        quiz.setCategoryId(request.getCategoryId());
         quiz.setDurationMinutes(request.getDurationMinutes());
         quiz.setMaxScore(request.getMaxScore());
         quiz.setPassScore(request.getPassScore());
@@ -35,7 +35,7 @@ public class QuizMapper {
                 .lessonId(quiz.getLesson().getId())
                 .title(quiz.getTitle())
                 .description(quiz.getDescription())
-                .categoryId(quiz.getCategoryId())
+//                .categoryId(quiz.getCategoryId())
                 .durationMinutes(quiz.getDurationMinutes())
                 .maxScore(quiz.getMaxScore())
                 .passScore(quiz.getPassScore())
@@ -44,7 +44,7 @@ public class QuizMapper {
                 .startTime(quiz.getStartTime())
                 .endTime(quiz.getEndTime())
                 .showAnswers(quiz.getShowAnswers())
-                .allowReview(quiz.getAllowReview())
+//                .allowReview(quiz.getAllowReview())
                 .shuffleQuestions(quiz.getShuffleQuestions())
                 .shuffleChoices(quiz.getShuffleChoices())
                 .updatedAt(quiz.getUpdatedAt())

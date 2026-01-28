@@ -27,10 +27,10 @@ public class LessonService {
     private final UserRepository userRepository;
     public LessonResponse createLesson(LessonRequest request) {
 
-        Course course = courseRepository.findById(request.getCourse())
+        Course course = courseRepository.findById(request.getCourseId())
                 .orElseThrow(() ->
                         new ResourceNotFoundException(
-                                "Course not found with id: " + request.getCourse()
+                                "Course not found with id: " + request.getCourseId()
                         )
                 );
 

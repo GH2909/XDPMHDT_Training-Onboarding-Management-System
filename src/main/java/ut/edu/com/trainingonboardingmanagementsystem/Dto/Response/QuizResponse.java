@@ -17,7 +17,7 @@ public class QuizResponse {
     private Integer lessonId;
     private String title;
     private String description;
-    private Integer categoryId;
+//    private Integer categoryId;
     private Integer durationMinutes;
     private Integer maxScore;
     private Integer passScore;

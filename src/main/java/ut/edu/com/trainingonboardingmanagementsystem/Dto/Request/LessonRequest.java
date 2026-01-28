@@ -14,7 +14,7 @@ import lombok.*;
 public class LessonRequest {
 
     @NotNull
-    private Integer course;
+    private Integer courseId;
 
     @NotBlank
     @Size(max = 255)

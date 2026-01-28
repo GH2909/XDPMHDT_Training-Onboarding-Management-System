@@ -25,8 +25,8 @@ public class QuizRequest {
 
     private String description;
 
-    @NotNull
-    private Integer categoryId;
+//    @NotNull
+//    private Integer categoryId;
 
     @NotNull
     @Positive
