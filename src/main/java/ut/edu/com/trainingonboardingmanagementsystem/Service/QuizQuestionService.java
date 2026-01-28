@@ -57,7 +57,7 @@ public class QuizQuestionService {
         quizQuestionRepository.save(quizQuestion);
     }
 
-    public void assignMultipleQuestions(Integer quizId, List<AssignQuestionRequest> requests) {
+    public void assignSingleQuestions(Integer quizId, List<AssignQuestionRequest> requests) {
         for (AssignQuestionRequest request : requests) {
             assignQuestionToQuiz(quizId, request);
         }
