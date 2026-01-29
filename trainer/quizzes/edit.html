@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Tạo Bài Quiz - UTH LMS</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link rel="stylesheet" href="quizzes.css">
+    <link rel="stylesheet" href="../quizzes/quizzes.css">
 </head>
 
 <body>
@@ -69,33 +69,14 @@
         <div class="form-container">
             <!-- TAB 1: THÔNG TIN QUIZ -->
             <div class="tab-content active" id="info">
+
+                <input type="hidden" id="quiz-id">
+                <input type="hidden" id="lesson-id">    
+
                 <div class="form-group">
                     <label for="quiz-title">Tiêu đề Bài Quiz *</label>
                     <input type="text" id="quiz-title" class="form-input" placeholder="Ví dụ: Quiz HTML Tuần 1"
                         required>
-                </div>
-
-                <div class="form-row">
-                    <div class="form-group">
-                        <label for="quiz-course">Khóa học *</label>
-                        <select id="quiz-course" class="form-input" required>
-                            <option value="">Chọn khóa học</option>
-                            <option value="web">Lập Trình Web</option>
-                            <option value="mobile">Lập Trình Mobile</option>
-                            <option value="ui-ux">Thiết Kế UI/UX</option>
-                            <option value="backend">Backend Development</option>
-                        </select>
-                    </div>
-                    <div class="form-group">
-                        <label for="quiz-category">Danh mục *</label>
-                        <select id="quiz-category" class="form-input" required>
-                            <option value="">Chọn danh mục</option>
-                            <option value="html">HTML</option>
-                            <option value="css">CSS</option>
-                            <option value="javascript">JavaScript</option>
-                            <option value="react">React</option>
-                        </select>
-                    </div>
                 </div>
 
                 <div class="form-group">
@@ -118,26 +99,26 @@
                 <div class="form-row">
                     <div class="form-group">
                         <label for="quiz-passing-score">Điểm đạt *</label>
-                        <input type="number" id="quiz-passing-score" class="form-input" placeholder="60" min="1"
+                        <input type="number" id="quiz-pass-score" class="form-input" placeholder="60" min="1"
                             required>
                     </div>
                     <div class="form-group">
                         <label for="quiz-attempts">Số lần làm bài *</label>
-                        <input type="number" id="quiz-attempts" class="form-input" placeholder="3" min="1" required>
+                        <input type="number" id="quiz-attempt-limit" class="form-input" placeholder="3" min="1" required>
                     </div>
                 </div>
 
                 <div class="checkbox-group">
                     <label class="checkbox-label">
-                        <input type="checkbox" id="show-answers" checked>
+                        <input type="checkbox" id="show-answers">
                         <span>Hiển thị đáp án sau khi hoàn thành</span>
                     </label>
                     <label class="checkbox-label">
-                        <input type="checkbox" id="shuffle-questions" checked>
+                        <input type="checkbox" id="shuffle-questions">
                         <span>Xáo trộn thứ tự câu hỏi</span>
                     </label>
                     <label class="checkbox-label">
-                        <input type="checkbox" id="shuffle-answers">
+                        <input type="checkbox" id="shuffle-choices">
                         <span>Xáo trộn thứ tự đáp án</span>
                     </label>
                 </div>
@@ -147,35 +128,41 @@
             <div class="tab-content" id="questions">
                 <div class="questions-container">
                     <!-- QUESTION 1 -->
-                    <div class="question-card">
+                    <div class="question-card" data-question-id="">
                         <div class="question-header">
-                            <span class="question-number">Câu hỏi 1</span>
+                            <span class="question-number">Câu hỏi</span>
                             <div class="question-actions">
-                                <button class="btn-icon" title="Sửa"><i class="fas fa-edit"></i></button>
-                                <button class="btn-icon" title="Xóa"><i class="fas fa-trash"></i></button>
+                                <!-- <button class="btn-icon" title="Sửa"><i class="fas fa-edit"></i></button> -->
+                                <button class="btn-icon btn-delete-question" type="button"><i class="fas fa-trash"></i></button>
                             </div>
                         </div>
 
                         <div class="question-content">
                             <div class="form-group">
                                 <label>Nội dung câu hỏi *</label>
-                                <textarea class="form-input" rows="3" placeholder="Nhập câu hỏi..."></textarea>
+                                <textarea class="form-input question-content-input" rows="3" placeholder="Nhập câu hỏi..."></textarea>
                             </div>
 
                             <div class="form-group">
                                 <label>Loại câu hỏi *</label>
                                 <select class="form-input">
-                                    <option value="multiple">Trắc nghiệm (Một đáp án)</option>
-                                    <option value="checkbox">Trắc nghiệm (Nhiều đáp án)</option>
-                                    <option value="essay">Tự luận</option>
-                                    <option value="true-false">Đúng/Sai</option>
+                                    <option value="SINGLE_CHOICE">Trắc nghiệm</option>
+                                    <option value="TRUE_FALSE">Đúng/Sai</option>
                                 </select>
                             </div>
 
                             <div class="answers-container">
                                 <label style="margin-bottom: 1rem; display: block;">Đáp án: <span
                                         style="color: #ef4444;">*</span></label>
-                                <div class="answer-item">
+                                    <div class="choices-list"></div>
+
+                                    <div class="answer-item" data-choice-id="">
+                                        <input type="checkbox" class="choice-correct">
+                                        <input type="text" class="form-input choice-content" placeholder="Nội dung đáp án">
+                                        <input type="number" class="form-input choice-score" placeholder="Điểm" style="width:80px">
+                                        <button class="btn-delete-answer" type="button"><i class="fas fa-times"></i></button>
+                                    </div>
+                                <!-- <div class="answer-item">
                                     <input type="radio" name="answer-1" value="a" checked>
                                     <input type="text" class="form-input" placeholder="Đáp án A"
                                         style="margin: 0 10px; flex: 1;">
@@ -210,16 +197,10 @@
                                     <button class="btn-delete-answer" type="button" title="Xóa">
                                         <i class="fas fa-times"></i>
                                     </button>
-                                </div>
+                                </div> -->
                                 <button class="btn-add-answer" type="button">
                                     <i class="fas fa-plus"></i> Thêm đáp án
                                 </button>
-                            </div>
-
-                            <div class="form-group">
-                                <label>Ghi chú/Giải thích</label>
-                                <textarea class="form-input" rows="2"
-                                    placeholder="Giải thích đáp án đúng..."></textarea>
                             </div>
                         </div>
                     </div>
@@ -234,54 +215,39 @@
             <!-- TAB 3: CÀI ĐẶT -->
             <div class="tab-content" id="settings">
                 <div class="form-group">
-                    <label>Trạng thái *</label>
-                    <select class="form-input">
-                        <option value="draft">Nháp</option>
-                        <option value="active">Đang mở</option>
-                        <option value="closed">Đã đóng</option>
+                    <label for="quiz-status">Trạng thái *</label>
+                    <select id="quiz-status" class="form-input">
+                        <option value="DRAFT">Nháp</option>
+                        <option value="ACTIVE">Đang mở</option>
+                        <option value="CLOSED">Đã đóng</option>
                     </select>
                 </div>
 
                 <div class="form-row">
                     <div class="form-group">
                         <label>Ngày bắt đầu</label>
-                        <input type="datetime-local" class="form-input">
+                        <input type="datetime-local" id="quiz-start-time" class="form-input">
                     </div>
                     <div class="form-group">
                         <label>Ngày kết thúc</label>
-                        <input type="datetime-local" class="form-input">
+                        <input type="datetime-local" id="quiz-end-time" class="form-input">
                     </div>
                 </div>
 
-                <div class="checkbox-group">
+                <!-- <div class="checkbox-group">
                     <label class="checkbox-label">
                         <input type="checkbox" checked>
                         <span>Hiển thị điểm ngay sau khi nộp</span>
                     </label>
                     <label class="checkbox-label">
-                        <input type="checkbox">
+                        <input type="checkbox" id="allow-review">
                         <span>Cho phép xem lại bài làm</span>
                     </label>
-                    <label class="checkbox-label">
-                        <input type="checkbox">
-                        <span>Yêu cầu mật khẩu để vào bài kiểm tra</span>
-                    </label>
-                </div>
-
-                <div class="form-group">
-                    <label>Mật khẩu (nếu có)</label>
-                    <input type="password" class="form-input" placeholder="Nhập mật khẩu...">
-                </div>
+                </div> -->
             </div>
 
             <!-- FORM ACTIONS -->
             <div class="form-actions">
-                <a href="index.html" class="btn btn-secondary">
-                    <i class="fas fa-arrow-left"></i> Quay lại
-                </a>
-                <button class="btn btn-secondary">
-                    <i class="fas fa-save"></i> Lưu nháp
-                </button>
                 <button class="btn btn-primary">
                     <i class="fas fa-check"></i> Lưu
                 </button>
