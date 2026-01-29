@@ -44,7 +44,7 @@ public class QuizMapper {
                 .startTime(quiz.getStartTime())
                 .endTime(quiz.getEndTime())
                 .showAnswers(quiz.getShowAnswers())
-//                .allowReview(quiz.getAllowReview())
+                .allowReview(quiz.getAllowReview())
                 .shuffleQuestions(quiz.getShuffleQuestions())
                 .shuffleChoices(quiz.getShuffleChoices())
                 .updatedAt(quiz.getUpdatedAt())

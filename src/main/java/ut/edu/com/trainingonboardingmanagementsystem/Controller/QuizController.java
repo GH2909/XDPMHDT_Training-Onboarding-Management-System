@@ -73,10 +73,10 @@ public class QuizController {
     }
 
     @PostMapping("/{quizId}/questions/batch")
-    public ResponseEntity<ApiResponse<Void>> assignSingleQuestions(
+    public ResponseEntity<ApiResponse<Void>> assignMultipleQuestions(
             @PathVariable Integer quizId,
             @Valid @RequestBody List<AssignQuestionRequest> requests) {
-        quizQuestionService.assignSingleQuestions(quizId, requests);
+        quizQuestionService.assignMultipleQuestions(quizId, requests);
         return ResponseEntity.ok(ApiResponse.success(null, "Questions assigned successfully"));
     }
 

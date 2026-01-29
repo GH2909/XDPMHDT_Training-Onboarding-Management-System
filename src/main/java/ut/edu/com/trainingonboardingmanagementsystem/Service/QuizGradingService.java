@@ -12,10 +12,7 @@ import ut.edu.com.trainingonboardingmanagementsystem.Model.Choice;
 import ut.edu.com.trainingonboardingmanagementsystem.Model.Question;
 import ut.edu.com.trainingonboardingmanagementsystem.Model.Quiz;
 import ut.edu.com.trainingonboardingmanagementsystem.Model.QuizQuestion;
-import ut.edu.com.trainingonboardingmanagementsystem.Repository.ChoiceRepository;
-import ut.edu.com.trainingonboardingmanagementsystem.Repository.QuestionRepository;
-import ut.edu.com.trainingonboardingmanagementsystem.Repository.QuizQuestionRepository;
-import ut.edu.com.trainingonboardingmanagementsystem.Repository.QuizRepository;
+import ut.edu.com.trainingonboardingmanagementsystem.Repository.*;
 import ut.edu.com.trainingonboardingmanagementsystem.Validators.QuizValidator;
 import ut.edu.com.trainingonboardingmanagementsystem.enums.QuestionType;
 
@@ -36,28 +33,42 @@ public class QuizGradingService {
 //    private final ChoiceRepository choiceRepository;
     private final QuizQuestionRepository quizQuestionRepository;
     private final QuizValidator quizValidator;
+    private final QuizAttemptRepository quizAttemptRepository;
 
     public QuizResultResponse gradeQuiz(SubmitQuizRequest request) {
         Quiz quiz = quizRepository.findById(request.getQuizId())
                 .orElseThrow(() -> new ResourceNotFoundException("Quiz not found with id: " + request.getQuizId()));
 
-        // Validate quiz availability
+        // Validate có làm đuọc không
         quizValidator.validateQuizAvailability(quiz);
 
+        // Lấy tất cả questions của quiz (với choices)
         List<QuizQuestion> quizQuestions = quizQuestionRepository
                 .findByQuizIdWithQuestionsAndChoices(request.getQuizId());
 
+        // Chấm điểm
+        QuizResultResponse result = gradeQuizAnswers(quiz, quizQuestions, request);
+
+        return result;
+    }
+    private QuizResultResponse gradeQuizAnswers(
+            Quiz quiz,
+            List<QuizQuestion> quizQuestions,
+            SubmitQuizRequest request) {
         int totalScore = 0;
         int correctAnswers = 0;
         List<QuestionResultResponse> questionResults = new ArrayList<>();
 
+        // Duyệt qua từng câu trả lời
         for (QuizAnswerRequest answer : request.getAnswers()) {
+            // Tìm question
             QuizQuestion quizQuestion = quizQuestions.stream()
                     .filter(qq -> qq.getQuestionId().equals(answer.getQuestionId()))
                     .findFirst()
                     .orElseThrow(() -> new ResourceNotFoundException("Question not found in quiz"));
 
             Question question = quizQuestion.getQuestion();
+            // Lấy tất cả đáp án ĐÚNG
             List<Choice> correctChoices = question.getChoices().stream()
                     .filter(Choice::getIsAnswer)
                     .collect(Collectors.toList());
@@ -66,7 +77,7 @@ public class QuizGradingService {
                     .map(Choice::getId)
                     .collect(Collectors.toList());
 
-            // Calculate score for this question
+            // LOGIC CHẤM ĐIỂM
             int earnedScore = 0;
             boolean isCorrect = false;
 
@@ -76,24 +87,28 @@ public class QuizGradingService {
                         correctChoiceIds.contains(answer.getChoiceIds().get(0))) {
                     earnedScore = correctChoices.get(0).getScore();
                     isCorrect = true;
+                    correctAnswers++;
                 }
             } else {
                 // For Multiple Choice
                 Set<Integer> selectedSet = new HashSet<>(answer.getChoiceIds());
                 Set<Integer> correctSet = new HashSet<>(correctChoiceIds);
 
+                // So sánh: Đã chọn == Đáp án đúng?
                 if (selectedSet.equals(correctSet)) {
+                    // Đúng tính điểm
                     earnedScore = correctChoices.stream()
                             .mapToInt(Choice::getScore)
                             .sum();
                     isCorrect = true;
+                    correctAnswers++;
                 }
             }
 
             totalScore += earnedScore;
-            if (isCorrect) {
-                correctAnswers++;
-            }
+//            if (isCorrect) {
+//                correctAnswers++;
+//            }
 
             int maxQuestionScore = correctChoices.stream()
                     .mapToInt(Choice::getScore)

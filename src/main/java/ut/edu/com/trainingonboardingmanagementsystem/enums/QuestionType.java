@@ -1,6 +1,6 @@
 package ut.edu.com.trainingonboardingmanagementsystem.enums;
 
 public enum QuestionType {
-    SINGLE_CHOICE,
+    MULTIPLE_CHOICE,
     TRUE_FALSE
 }
