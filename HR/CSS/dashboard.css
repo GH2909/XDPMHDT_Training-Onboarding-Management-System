@@ -214,6 +214,78 @@ body {
     transform: translateY(-2px);
 }
 
+/* Load course */
+.recent-courses-list {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+}
+
+.recent-course-card {
+    display: flex;
+    gap: 16px;
+    padding: 16px;
+    background: #ffffff;
+    border-radius: 12px;
+    box-shadow: 0 6px 18px rgba(0,0,0,0.06);
+    cursor: pointer;
+    transition: transform .2s, box-shadow .2s;
+}
+
+.recent-course-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 24px rgba(0,0,0,0.1);
+}
+
+.course-icon-big {
+    font-size: 36px;
+    background: #edf2f7;
+    width: 60px;
+    height: 60px;
+    border-radius: 14px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.course-name {
+    font-weight: 600;
+    font-size: 16px;
+    margin-bottom: 10px;
+}
+
+.course-values {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+.value-box {
+    background: #f7fafc;
+    padding: 6px 10px;
+    border-radius: 8px;
+    font-size: 13px;
+    display: flex;
+    flex-direction: column;
+}
+
+.value-label {
+    color: #718096;
+    font-size: 11px;
+}
+
+.value-number {
+    font-weight: 600;
+}
+
+.value-box.tag {
+    background: #ebf8ff;
+    color: #2b6cb0;
+    font-weight: 500;
+    justify-content: center;
+}
+
+
 /* Footer */
 .footer {
     background-color: #3d4f5d;

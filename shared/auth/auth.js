@@ -1,3 +1,32 @@
+// ===== TOGGLE PASSWORD VISIBILITY =====
+const togglePasswordBtn = document.getElementById("togglePasswordBtn");
+const passwordInput = document.getElementById("password");
+
+if (togglePasswordBtn && passwordInput) {
+    togglePasswordBtn.addEventListener("click", function (e) {
+        e.preventDefault();
+
+        // Toggle input type
+        const isPassword = passwordInput.type === "password";
+        passwordInput.type = isPassword ? "text" : "password";
+
+        // Toggle icon
+        const icon = togglePasswordBtn.querySelector("i");
+        if (icon) {
+            if (isPassword) {
+                // Thay đổi icon từ eye thành eye-slash
+                icon.classList.remove("fa-eye");
+                icon.classList.add("fa-eye-slash");
+            } else {
+                // Thay đổi icon từ eye-slash thành eye
+                icon.classList.remove("fa-eye-slash");
+                icon.classList.add("fa-eye");
+            }
+        }
+    });
+}
+
+// ===== LOGIN FORM =====
 const loginForm = document.getElementById("loginForm");
 
 loginForm.addEventListener("submit", async function (e) {
@@ -8,15 +37,17 @@ loginForm.addEventListener("submit", async function (e) {
     const password = document.getElementById("password").value.trim();
     const role = document.querySelector("input[name='role']:checked").value;
 
-    // reset lỗi
+    // Reset lỗi
     document.getElementById("emailError").innerText = "";
     document.getElementById("passwordError").innerText = "";
 
+    // Validate email
     if (!email) {
         document.getElementById("emailError").innerText = "Email không được để trống";
         return;
     }
 
+    // Validate password
     if (!password) {
         document.getElementById("passwordError").innerText = "Mật khẩu không được để trống";
         return;
@@ -35,7 +66,7 @@ loginForm.addEventListener("submit", async function (e) {
         });
 
         if (!response.ok) {
-            throw new Error(alert("Email hoặc mật khẩu không đúng"));
+            throw new Error("Email hoặc mật khẩu không đúng");
         } else {
             const data = await response.json();
 
@@ -62,4 +93,4 @@ loginForm.addEventListener("submit", async function (e) {
     } catch (err) {
         document.getElementById("passwordError").innerText = err.message;
     }
-});
+}); 
