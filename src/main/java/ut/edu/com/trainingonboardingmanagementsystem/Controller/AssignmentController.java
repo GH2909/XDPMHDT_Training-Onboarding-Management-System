@@ -19,11 +19,11 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/hr/assignments")
-@PreAuthorize("hasRole('HR')")
 @RequiredArgsConstructor
 public class AssignmentController {
     private final UserService userService;
     private final AssignmentService service;
+    @PreAuthorize("hasRole('HR')")
     @PostMapping
     public ResponseEntity<?> assign(
             @RequestBody AssignCourseRequest req,
@@ -32,24 +32,26 @@ public class AssignmentController {
         service.assign(req, user.getId());
         return ResponseEntity.ok("Khóa học đã được gán");
     }
+    @PreAuthorize("hasRole('HR')")
     @GetMapping("/me")
     public Object me(@AuthenticationPrincipal UserPrincipal user) {
         return user;
     }
 
-    @GetMapping("/{employeeId}")
-    public ResponseEntity<ApiResponse<List<AssignedCourseResponse>>> getAssignedCourses(@PathVariable Integer employeeId) {
+    @PreAuthorize("hasAnyRole('EMPLOYEE', 'HR')")
+    @GetMapping("/{id}")
+    public ResponseEntity<ApiResponse<List<AssignedCourseResponse>>> getAssignedCourses(@PathVariable("id") Integer employeeId) {
 
         List<AssignedCourseResponse> courses = service.getAssignedCourses(employeeId);
         return ResponseEntity.ok(ApiResponse.success(courses));
     }
-
+    @PreAuthorize("hasRole('HR')")
     @GetMapping
     public ResponseEntity<?> getAll(){
         return ResponseEntity.ok(service.getAll());
     }
 
-    @GetMapping("/{courseId}/{employeeId}")
+    @PreAuthorize("hasRole('EMPLOYEE')")
     public ResponseEntity<ApiResponse<CourseForEmployeeResponse>> getCourseDetail(
             @PathVariable Integer employeeId,
             @PathVariable Integer courseId) {

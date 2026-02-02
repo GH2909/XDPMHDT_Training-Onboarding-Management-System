@@ -4,6 +4,7 @@ import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import ut.edu.com.trainingonboardingmanagementsystem.Dto.Request.AssignCourseRequest;
+import ut.edu.com.trainingonboardingmanagementsystem.Dto.Request.EmployeeCourseRequest;
 import ut.edu.com.trainingonboardingmanagementsystem.Dto.Response.*;
 import ut.edu.com.trainingonboardingmanagementsystem.Exception.ResourceNotFoundException;
 import ut.edu.com.trainingonboardingmanagementsystem.Mapper.AssignmentMapper;
@@ -18,6 +19,7 @@ import ut.edu.com.trainingonboardingmanagementsystem.enums.LearningStatus;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -28,6 +30,7 @@ public class AssignmentService {
     private final AssignmentRepository assignmentRepository;
     private final CourseRepository courseRepository;
     private final LearningProgressRepository learningProgressRepository;
+    
     private final AssignmentMapper assignmentMapper;
     private final EmployeeValidator employeeValidator;
 
@@ -56,12 +59,18 @@ public class AssignmentService {
     public List<Assignment> getAll(){ return assignmentRepository.findAll();}
 
     public List<AssignedCourseResponse> getAssignedCourses(Integer employeeId) {
-        List<Assignment> assignments = assignmentRepository.findByEmployeeIdWithCourse(employeeId);
+
+        User emp = userRepo.findById(employeeId)
+                .orElseThrow(() -> new RuntimeException("Employee not found"));
+
+        List<Assignment> assignments =
+                assignmentRepository.findByEmployeeIdWithCourse(emp.getId());
 
         return assignments.stream()
                 .map(assignmentMapper::assignedCourseResponse)
                 .collect(Collectors.toList());
     }
+
 
 
     public CourseForEmployeeResponse getCourseDetail(Integer employeeId, Integer courseId) {
