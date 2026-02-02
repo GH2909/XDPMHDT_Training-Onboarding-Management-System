@@ -9,10 +9,10 @@ import ut.edu.com.trainingonboardingmanagementsystem.Model.User;
 
 @Component
 public class LessonMapper {
-    public Lesson CreateLesson (LessonRequest request, Course course, User user) {
+    public Lesson CreateLesson (LessonRequest request, Course course, User create) {
         Lesson lesson = new Lesson();
         lesson.setCourse(course);
-        lesson.setCreatedBy(user);
+        lesson.setCreatedBy(create);
         lesson.setTitle(request.getTitle());
         lesson.setDuration(request.getDuration());
         lesson.setDescription(request.getDescription());
@@ -22,11 +22,11 @@ public class LessonMapper {
     public LessonResponse lessonResponse(Lesson lesson) {
         return LessonResponse.builder()
                 .id(lesson.getId())
-                .courseId(lesson.getCourse().getId())
+                .courseName(lesson.getCourse().getCourseName())
                 .title(lesson.getTitle())
                 .duration(lesson.getDuration())
                 .description(lesson.getDescription())
-                .createdBy(lesson.getCreatedBy().getId())
+                .createdBy(lesson.getCreatedBy().getEmail())
                 .build();
     }
 

@@ -18,6 +18,7 @@ import ut.edu.com.trainingonboardingmanagementsystem.Security.User.CusDetailsSer
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
+import org.springframework.security.core.context.SecurityContextHolder;
 import java.util.Arrays;
 @Configuration
 @EnableMethodSecurity
@@ -73,5 +74,4 @@ public class SecurityConfig {
             AuthenticationConfiguration config) throws Exception {
         return config.getAuthenticationManager();
     }
-
 }

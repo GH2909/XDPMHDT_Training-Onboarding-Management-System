@@ -14,7 +14,7 @@ import lombok.*;
 public class LessonRequest {
 
     @NotNull
-    private Integer courseId;
+    private String courseName;
 
     @NotBlank
     @Size(max = 255)
@@ -25,5 +25,5 @@ public class LessonRequest {
     private Integer duration;
 
     private String description;
-    private Integer createdBy;
+//    private String createdBy;
 }

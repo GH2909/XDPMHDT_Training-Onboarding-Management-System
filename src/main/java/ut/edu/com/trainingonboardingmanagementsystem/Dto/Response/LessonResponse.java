@@ -10,6 +10,6 @@ public class LessonResponse {
     private String title;
     private Integer duration;
     private String description;
-    private Integer courseId;
-    private Integer createdBy;
+    private String courseName;
+    private String createdBy;
 }
