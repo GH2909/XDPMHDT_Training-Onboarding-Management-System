@@ -8,6 +8,6 @@ import java.util.List;
 import java.util.Optional;
 @Repository
 public interface LessonRepository extends JpaRepository<Lesson, Integer> {
-    List<Lesson> findByCourseId(Integer courseId);
-    Optional<Lesson> findByIdAndCreatedBy(Integer id, Integer createdBy);
+//    List<Lesson> findByCourseName(String courseName);
+//    Optional<Lesson> findByFullNameAndCreatedBy(String fullName, String createdBy);
 }

@@ -1,6 +1,7 @@
 package ut.edu.com.trainingonboardingmanagementsystem.Service;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ut.edu.com.trainingonboardingmanagementsystem.Dto.Request.LessonRequest;
@@ -27,20 +28,29 @@ public class LessonService {
     private final UserRepository userRepository;
     public LessonResponse createLesson(LessonRequest request) {
 
-        Course course = courseRepository.findById(request.getCourseId())
+        Course course = courseRepository.findByCourseName(request.getCourseName())
                 .orElseThrow(() ->
                         new ResourceNotFoundException(
-                                "Course not found with id: " + request.getCourseId()
+                                "Course not found with name: " + request.getCourseName()
                         )
                 );
 
-        User user = userRepository.findById(request.getCreatedBy())
+        var authentication = SecurityContextHolder.getContext().getAuthentication();
+
+        if (authentication == null || !authentication.isAuthenticated()) {
+            throw new RuntimeException("User is not authenticated");
+        }
+
+        String email = authentication.getName();
+
+
+        User create = userRepository.findByEmail(email)
                 .orElseThrow(() ->
                         new ResourceNotFoundException(
-                                "Course not found with id: " + request.getCreatedBy()
-                        )
+                                "Course not found with email: " + email)
                 );
-        Lesson lesson = lessonMapper.CreateLesson(request, course, user);
+
+        Lesson lesson = lessonMapper.CreateLesson(request, course, create);
         Lesson savedLesson = lessonRepository.save(lesson);
         return lessonMapper.lessonResponse(savedLesson);
     }

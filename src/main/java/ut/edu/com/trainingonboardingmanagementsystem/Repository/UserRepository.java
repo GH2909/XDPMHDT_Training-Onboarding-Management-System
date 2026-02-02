@@ -18,10 +18,12 @@ public interface UserRepository extends JpaRepository<User, Integer> {
     """)
     Optional<User> findByEmailWithRole(@Param("email") String email);
     Optional<User> findByEmail(String email);
+    Optional<User> findByUserName(String userName);
     @Query("SELECT COUNT(lp) FROM LearningProgress lp WHERE lp.status = 'PASSED'")
     Long countByStatus(LearningStatus status);
 
     @Query("SELECT u FROM User u WHERE u.role.roleName = :roleName")
     List<User> findByRoleName(@Param("roleName") String roleName);
 
+    String userName(String userName);
 }
