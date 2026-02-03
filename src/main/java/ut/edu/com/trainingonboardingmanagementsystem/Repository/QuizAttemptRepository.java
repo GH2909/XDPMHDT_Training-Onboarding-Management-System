@@ -12,7 +12,4 @@ public interface QuizAttemptRepository extends JpaRepository<QuizAttempt, Intege
 
     @Query("SELECT COUNT(qa) FROM QuizAttempt qa WHERE qa.employee.id = :employeeId AND qa.quiz.id = :quizId")
     Integer countAttemptsByEmployeeAndQuiz(Integer employeeId, Integer quizId);
-
-    @Query("SELECT qa FROM QuizAttempt qa WHERE qa.employee.id = :employeeId AND qa.quiz.id = :quizId ORDER BY qa.score DESC")
-    List<QuizAttempt> findBestAttempt(Integer employeeId, Integer quizId);
 }

@@ -15,8 +15,6 @@ public interface QuizQuestionRepository extends JpaRepository<QuizQuestion, Quiz
     @Query("SELECT qq FROM QuizQuestion qq JOIN FETCH qq.question q LEFT JOIN FETCH q.choices WHERE qq.quizId = :quizId ORDER BY qq.sequenceNumber")
     List<QuizQuestion> findByQuizIdWithQuestionsAndChoices(Integer quizId);
 
-    void deleteByQuizId(Integer quizId);
-
     @Query("SELECT MAX(qq.sequenceNumber) FROM QuizQuestion qq WHERE qq.quizId = :quizId")
     Integer findMaxSequenceNumberByQuizId(Integer quizId);
 }
