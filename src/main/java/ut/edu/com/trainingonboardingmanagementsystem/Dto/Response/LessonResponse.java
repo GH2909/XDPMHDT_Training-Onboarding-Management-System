@@ -1,6 +1,9 @@
 package ut.edu.com.trainingonboardingmanagementsystem.Dto.Response;
 
 import lombok.*;
+
+import java.util.List;
+
 @Data
 @Builder
 @NoArgsConstructor
@@ -12,4 +15,5 @@ public class LessonResponse {
     private String description;
     private String courseName;
     private String createdBy;
+    private List<QuizResponse> quizzes;
 }

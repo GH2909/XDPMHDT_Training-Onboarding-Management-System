@@ -8,6 +8,8 @@ import ut.edu.com.trainingonboardingmanagementsystem.Dto.Request.CourseCreateReq
 import ut.edu.com.trainingonboardingmanagementsystem.Dto.Request.CourseUpdateRequest;
 import ut.edu.com.trainingonboardingmanagementsystem.Service.CourseService;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/hr/course")
 @PreAuthorize("hasAnyRole('HR', 'ADMIN')")
@@ -21,7 +23,8 @@ public class CourseController {
     }
 
     @GetMapping
-    public ResponseEntity<?> getAll() {
+    public ResponseEntity<List<?>> getAll() {
+
         return ResponseEntity.ok(courseService.getAll());
     }
 

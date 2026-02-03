@@ -1,6 +1,7 @@
 package ut.edu.com.trainingonboardingmanagementsystem.Model;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
@@ -32,7 +33,7 @@ public class Lesson {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "course_id", nullable = false)
-    @JsonBackReference
+    @JsonBackReference // chặn hiển thị ngược lại
     private Course course;
 
     @ManyToOne(fetch = FetchType.LAZY)
@@ -40,5 +41,6 @@ public class Lesson {
     private User createdBy;
 
     @OneToMany(mappedBy = "lesson", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonManagedReference // khi trả --> hiển thị ds
     private List<Quiz> quizzes;
 }
