@@ -21,7 +21,6 @@ import java.util.List;
 @RequestMapping("/hr/assignments")
 @RequiredArgsConstructor
 public class AssignmentController {
-    private final UserService userService;
     private final AssignmentService service;
     @PreAuthorize("hasRole('HR')")
     @PostMapping
@@ -32,13 +31,13 @@ public class AssignmentController {
         service.assign(req, user.getId());
         return ResponseEntity.ok("Khóa học đã được gán");
     }
-    @PreAuthorize("hasRole('HR')")
+
     @GetMapping("/me")
     public Object me(@AuthenticationPrincipal UserPrincipal user) {
         return user;
     }
 
-    @PreAuthorize("hasAnyRole('EMPLOYEE', 'HR')")
+    @PreAuthorize("hasRole('EMPLOYEE')")
     @GetMapping("/{id}")
     public ResponseEntity<ApiResponse<List<AssignedCourseResponse>>> getAssignedCourses(@PathVariable("id") Integer employeeId) {
 

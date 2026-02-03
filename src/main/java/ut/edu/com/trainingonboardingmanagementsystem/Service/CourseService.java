@@ -34,11 +34,8 @@ public class CourseService {
         return courseRepo.save(c);
     }
 
-    public List<CourseResponse> getAll() {
-        return courseRepo.findAll()
-                .stream()
-                .map(course -> courseMapper.toCourseResponse(course))
-                .toList();
+    public List<Course> getAll() {
+        return courseRepo.findAll();
     }
 
     public Course update(Integer id, CourseUpdateRequest req){

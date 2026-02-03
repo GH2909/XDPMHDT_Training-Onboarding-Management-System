@@ -24,9 +24,8 @@ public class CourseController {
     }
 
     @GetMapping
-    public ResponseEntity<List<CourseResponse>> getAll() {
-        List<CourseResponse> res = courseService.getAll();
-        return ResponseEntity.ok(res);
+    public ResponseEntity<List<?>> getAll() {
+        return ResponseEntity.ok(courseService.getAll());
     }
 
     @PutMapping("/{id}")
