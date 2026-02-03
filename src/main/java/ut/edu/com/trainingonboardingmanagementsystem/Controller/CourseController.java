@@ -6,7 +6,10 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import ut.edu.com.trainingonboardingmanagementsystem.Dto.Request.CourseCreateRequest;
 import ut.edu.com.trainingonboardingmanagementsystem.Dto.Request.CourseUpdateRequest;
+import ut.edu.com.trainingonboardingmanagementsystem.Dto.Response.CourseResponse;
 import ut.edu.com.trainingonboardingmanagementsystem.Service.CourseService;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/hr/course")
@@ -21,8 +24,9 @@ public class CourseController {
     }
 
     @GetMapping
-    public ResponseEntity<?> getAll() {
-        return ResponseEntity.ok(courseService.getAll());
+    public ResponseEntity<List<CourseResponse>> getAll() {
+        List<CourseResponse> res = courseService.getAll();
+        return ResponseEntity.ok(res);
     }
 
     @PutMapping("/{id}")
