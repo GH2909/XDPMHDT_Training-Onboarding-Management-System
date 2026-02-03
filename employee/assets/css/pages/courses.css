@@ -226,10 +226,10 @@ body {
     font-weight: 700;
 }
 
-.course-desc {
+.course-compon {
+    margin-bottom: 10px;
     color: #6b7280;
     font-size: 0.95rem;
-    margin-bottom: 1rem;
     line-height: 1.5;
     flex-grow: 1;
 }

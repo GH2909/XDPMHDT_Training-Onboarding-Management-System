@@ -6,21 +6,19 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Thông Tin Cá Nhân - Profile</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link rel="stylesheet" href="../assets/css/pages/profile.css">
+    <link rel="stylesheet" href="./assets/css/pages/profile.css">
 </head>
 
 <body>
     <!-- Header -->
     <header class="header">
         <div class="header-left">
-            <a href="dashboard.html" class="logo">
+            <a href="/employee/dashboard.html" class="logo">
                 <i class="fas fa-book-reader"></i>
                 UTH - LMS
             </a>
             <nav class="nav-icons">
-                <a href="dashboard.html" title="Dashboard">
-                    <i class="fas fa-home"></i>
-                </a>
+            
                 <a href="./courses/list.html" title="Khóa học">
                     <i class="fas fa-graduation-cap"></i>
                 </a>
@@ -32,6 +30,9 @@
                 </a>
                 <a href="certificates.html" title="Chứng chỉ">
                     <i class="fas fa-certificate"></i>
+                </a>
+                <a href="/shared/auth/login.html" class="nav-link" title="Logout">
+                    <i class="fas fa-sign-out-alt"></i>
                 </a>
             </nav>
         </div>
@@ -74,10 +75,6 @@
                 <a href="change-password.html" class="menu-item">
                     <i class="fas fa-lock"></i>
                     <span>Đổi Mật Khẩu</span>
-                </a>
-                <a href="#" class="menu-item menu-logout" onclick="logout(event)">
-                    <i class="fas fa-sign-out-alt"></i>
-                    <span>Đăng Xuất</span>
                 </a>
             </div>
         </div>
@@ -164,19 +161,7 @@
     </main>
 
     <script src="../employee/js/pages/profile/index.js"></script>
-    <script>
-        function logout(e) {
-            e.preventDefault();
-
-            // Xóa token và role từ localStorage
-            localStorage.removeItem('token');
-            localStorage.removeItem('role');
-            localStorage.removeItem('email');
-
-            // Chuyển hướng tới trang login
-            window.location.href = './shared/auth/login.html';
-        }
-    </script>
+    <script src="/shared/auth/auth.js"></script>
 </body>
 
 </html>

@@ -56,10 +56,9 @@ function renderCourseList() {
             <div class="course-name">${course.courseName}</div>
             <div class="course-category">${course.category.replace('_', ' ')}</div>
             <div class="course-duration">⏱️ ${course.duration}</div>
-            <div class="course-modules">${course.modules?.length || 0} module</div>
         </div>
     `;
-}).join('');
+    }).join('');
 }
 
 // Xem chi tiết khóa học
@@ -87,12 +86,6 @@ function viewCourseDetail(id) {
             <div class="detail-label">🏷️ Phân loại:</div>
             <div class="detail-value">${course.category.replace('_', ' ')}</div>
         </div>
-        // <div class="detail-row">
-        //     <div class="detail-label">📦 Module:</div>
-        //     <div class="module-badges">
-        //         ${course.modules.map(m => `<span class="module-badge">${m}</span>`).join('')}
-        //     </div>
-        // </div>
         <div class="detail-row">
             <div class="detail-label">✅ Điều kiện hoàn thành:</div>
             <div class="detail-value">${course.completionRule}</div>
@@ -102,12 +95,10 @@ function viewCourseDetail(id) {
     modal.classList.add('show');
 }
 
-// Đóng detail modal
 function closeDetailModal() {
     document.getElementById('detailModal').classList.remove('show');
 }
 
-// Hiển thị form tạo mới
 function showCreateForm() {
     document.getElementById('courseListCard').style.display = 'none';
     document.getElementById('formCard').style.display = 'block';
@@ -115,9 +106,6 @@ function showCreateForm() {
     switchTab('create');
     resetCreateForm();
 }
-
-
-
 
 // Chuyển đổi tab
 function switchTab(tabName) {
@@ -175,7 +163,7 @@ async function saveCourse() {
     
     // Validate
     if (!name) {
-        showMessage('Lỗi', 'Vui lòng nhập tên khóa học!', 'warning');
+showMessage('Lỗi', 'Vui lòng nhập tên khóa học!', 'warning');
         return;
     }
     
@@ -193,11 +181,6 @@ async function saveCourse() {
         showMessage('Lỗi', 'Vui lòng chọn phân loại!', 'warning');
         return;
     }
-    
-    // if (modules.length === 0) {
-    //     showMessage('Lỗi', 'Vui lòng chọn ít nhất 1 module!', 'warning');
-    //     return;
-    // }
     
     if (!completion) {
         showMessage('Lỗi', 'Vui lòng nhập điều kiện hoàn thành!', 'warning');
@@ -282,7 +265,7 @@ function loadCourseForEdit() {
     
     // Điền dữ liệu
     document.getElementById('editCourseName').value = course.courseName;
-    document.getElementById('editDuration').value = course.duration;
+document.getElementById('editDuration').value = course.duration;
     document.getElementById('editDescription').value = course.description;
     document.getElementById('editCategory').value = course.category;
     document.getElementById('editCompletion').value = course.completionRule;
@@ -295,24 +278,19 @@ function loadCourseForEdit() {
     
 }
 
-// Get selected modules in edit form
 function getSelectedEditModules() {
     const checkboxes = document.querySelectorAll('#editModuleOptions input[type="checkbox"]:checked');
     return Array.from(checkboxes).map(cb => cb.value);
 }
 
-// Update
 async function updateCourse() {
     if (!currentEditingId) return;
     const name = document.getElementById('editCourseName').value.trim();
     const duration = document.getElementById('editDuration').value.trim();
     const description = document.getElementById('editDescription').value.trim();
     const category = document.getElementById('editCategory').value;
-    // const modules = getSelectedModules();
     const completion = document.getElementById('editCompletion').value.trim();
     
-    
-    // Validate
     if (!name) {
         showMessage('Lỗi', 'Vui lòng nhập tên khóa học!', 'warning');
         return;
@@ -332,11 +310,6 @@ async function updateCourse() {
         showMessage('Lỗi', 'Vui lòng chọn phân loại!', 'warning');
         return;
     }
-    
-    // if (modules.length === 0) {
-    //     showMessage('Lỗi', 'Vui lòng chọn ít nhất 1 module!', 'warning');
-    //     return;
-    // }
     
     if (!completion) {
         showMessage('Lỗi', 'Vui lòng nhập điều kiện hoàn thành!', 'warning');
@@ -407,7 +380,7 @@ async function confirmDelete() {
         hideLoading();
         showMessage("Thành công!", "Đã xóa khóa học", "success");
 
-        await loadCourses(); // reload từ server
+        await loadCourses();
 
         setTimeout(() => {
             closeModal();
@@ -420,7 +393,6 @@ async function confirmDelete() {
     }
 }
 
-// Hủy chỉnh sửa
 function cancelEdit() {
     document.getElementById('formCard').style.display = 'none';
     document.getElementById('courseListCard').style.display = 'block';
@@ -429,7 +401,6 @@ function cancelEdit() {
     currentEditingId = null;
 }
 
-// Hiển thị loading
 function showLoading() {
     document.getElementById('loadingOverlay').classList.add('show');
 }
@@ -439,7 +410,6 @@ function hideLoading() {
     document.getElementById('loadingOverlay').classList.remove('show');
 }
 
-// Hiển thị thông báo
 function showMessage(title, message, type = 'success') {
     const modal = document.getElementById('successModal');
     const modalTitle = document.getElementById('modalTitle');
@@ -449,7 +419,6 @@ function showMessage(title, message, type = 'success') {
     modalTitle.textContent = title;
     modalMessage.textContent = message;
     
-    // Đổi class cho header
     modalHeader.className = 'modal-header';
     if (type === 'warning') {
         modalHeader.classList.add('warning');
@@ -483,7 +452,7 @@ window.onclick = function(event) {
     }
     
     if (event.target === confirmModal) {
-        confirmModal.classList.remove('show');
+confirmModal.classList.remove('show');
     }
     
     if (event.target === detailModal) {

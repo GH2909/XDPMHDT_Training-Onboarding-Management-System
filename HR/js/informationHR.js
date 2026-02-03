@@ -36,5 +36,5 @@ function logout(event) {
     localStorage.removeItem("user");
     sessionStorage.clear();
 
-    window.location.href = "login.html";
+    window.location.href = "/shared/auth/login.html";
 }

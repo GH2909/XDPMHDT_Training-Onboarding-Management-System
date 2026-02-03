@@ -16,25 +16,26 @@
     <!-- HEADER -->
     <header class="header">
         <div class="header-left">
-            <a href="dashboard.html" class="logo">
+            <a href="/employee/dashboard.html" class="logo">
                 <i class="fas fa-book-reader"></i>
                 UTH - LMS
             </a>
             <nav class="nav-icons">
-                <a href="dashboard.html" title="Dashboard">
-                    <i class="fas fa-home"></i>
-                </a>
-                <a href="./courses/list.html" class="active" title="Khóa học">
+                
+                <a href="/employee/courses/list.html" class="active" title="Khóa học">
                     <i class="fas fa-graduation-cap"></i>
                 </a>
                 <a href="../quiz/list.html" title="Quiz">
                     <i class="fas fa-question-circle"></i>
                 </a>
-                <a href="#" title="Tiến độ">
+                <a href="/employee/progress.html" title="Tiến độ">
                     <i class="fas fa-chart-line"></i>
                 </a>
-                <a href="certificates.html" title="Chứng chỉ">
+                <a href="/employee/certificates.html" title="Chứng chỉ">
                     <i class="fas fa-certificate"></i>
+                </a>
+                <a href="/shared/auth/login.html" class="nav-link" title="Logout">
+                    <i class="fas fa-sign-out-alt"></i>
                 </a>
             </nav>
         </div>
@@ -62,28 +63,7 @@
     <!-- COURSES SECTION -->
     <section class="courses-section">
         <div class="courses-container">
-            <div class="courses-grid">
-                <!-- Course 1 -->
-                <div class="course-card">
-                    <div class="course-image">
-                        <div class="course-image-placeholder">🌐</div>
-                    </div>
-                    <div class="course-info">
-                        <span class="course-category">INTERMEDIATE</span>
-                        <h3 class="course-title">Lập Trình Web Truyền Thuyết</h3>
-                        <p class="course-desc">Nắm vững các kỹ năng lập trình web từ HTML đến JavaScript</p>
-                        <div class="course-meta">
-                            <div class="course-level">
-                                <i class="fas fa-star"></i>
-                                Intermediate
-                            </div>
-                            <div class="course-students">
-                                <i class="fas fa-users"></i>
-                            </div>
-                        </div>
-                        <a href="./courses/detail.html" class="course-button">Xem chi tiết</a>
-                    </div>
-                </div>
+            <div class="courses-grid" id="courses-grid">  
             </div>
         </div>
     </section>
@@ -93,7 +73,9 @@
         <p>&copy; 2025 UTH - LMS. All rights reserved.</p>
     </footer>
 
-    <script src="./js/pages/courses/list.js"></script>
+    <script src="/employee/js/pages/courses/list.js"></script>
+    <script src="/shared/auth/auth.js"></script>
+    <script src="/employee/js/apiService.js"></script>
 </body>
 
 </html>

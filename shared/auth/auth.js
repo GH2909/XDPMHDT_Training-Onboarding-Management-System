@@ -26,9 +26,20 @@ if (togglePasswordBtn && passwordInput) {
     });
 }
 
+(function () {
+    const token = localStorage.getItem("access_token");
+
+    // Nếu chx login → về trang login
+    if (!token) {
+        window.location.href = "/shared/auth/login.html";
+    }
+})();
+
+
 // ===== LOGIN FORM =====
 const loginForm = document.getElementById("loginForm");
 
+if (loginForm) {
 loginForm.addEventListener("submit", async function (e) {
     e.preventDefault();
     e.stopPropagation();
@@ -37,17 +48,14 @@ loginForm.addEventListener("submit", async function (e) {
     const password = document.getElementById("password").value.trim();
     const role = document.querySelector("input[name='role']:checked").value;
 
-    // Reset lỗi
     document.getElementById("emailError").innerText = "";
     document.getElementById("passwordError").innerText = "";
 
-    // Validate email
     if (!email) {
         document.getElementById("emailError").innerText = "Email không được để trống";
         return;
     }
 
-    // Validate password
     if (!password) {
         document.getElementById("passwordError").innerText = "Mật khẩu không được để trống";
         return;
@@ -70,13 +78,11 @@ loginForm.addEventListener("submit", async function (e) {
         } else {
             const data = await response.json();
 
-            // Lưu JWT
             localStorage.setItem("access_token", data.token);
             localStorage.setItem("role", role);
 
             alert("Đăng nhập thành công");
 
-            // Điều hướng theo role
             switch (role) {
                 case "employee":
                     window.location.href = "/employee/dashboard.html";
@@ -93,4 +99,4 @@ loginForm.addEventListener("submit", async function (e) {
     } catch (err) {
         document.getElementById("passwordError").innerText = err.message;
     }
-}); 
+}); }
