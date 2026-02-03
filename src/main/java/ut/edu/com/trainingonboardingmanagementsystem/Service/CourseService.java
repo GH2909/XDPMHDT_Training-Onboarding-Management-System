@@ -2,9 +2,12 @@ package ut.edu.com.trainingonboardingmanagementsystem.Service;
 
 import jakarta.persistence.criteria.CriteriaBuilder;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import ut.edu.com.trainingonboardingmanagementsystem.Dto.Request.CourseCreateRequest;
 import ut.edu.com.trainingonboardingmanagementsystem.Dto.Request.CourseUpdateRequest;
+import ut.edu.com.trainingonboardingmanagementsystem.Dto.Response.CourseResponse;
+import ut.edu.com.trainingonboardingmanagementsystem.Mapper.CourseMapper;
 import ut.edu.com.trainingonboardingmanagementsystem.Model.Course;
 import ut.edu.com.trainingonboardingmanagementsystem.Repository.CourseRepository;
 
@@ -14,6 +17,8 @@ import java.util.List;
 @RequiredArgsConstructor
 public class CourseService {
     private final CourseRepository courseRepo;
+    @Autowired
+    private CourseMapper courseMapper;
 
     public Course create(CourseCreateRequest req) {
 
@@ -29,8 +34,11 @@ public class CourseService {
         return courseRepo.save(c);
     }
 
-    public List<Course> getAll() {
-        return courseRepo.findAll();
+    public List<CourseResponse> getAll() {
+        return courseRepo.findAll()
+                .stream()
+                .map(course -> courseMapper.toCourseResponse(course))
+                .toList();
     }
 
     public Course update(Integer id, CourseUpdateRequest req){
