@@ -18,9 +18,6 @@
                 UTH - LMS
             </a>
             <nav class="nav-icons">
-                <a href="../dashboard/index.html" class="nav-link" title="Trang chủ">
-                    <i class="fas fa-home"></i>
-                </a>
                 <a href="../lessons/index.html" class="nav-link" title="Bài giảng">
                     <i class="fas fa-book"></i>
                 </a>
@@ -85,30 +82,9 @@
             <div class="card">
                 <div class="card-header">
                     <h2>Bài Giảng Gần Đây</h2>
-                    <a href="lessons.html" class="card-action">Xem tất cả</a>
+                    <a href="/trainer/lessons/index.html" class="card-action">Xem tất cả</a>
                 </div>
-                <div class="list-content">
-                    <div class="list-item">
-                        <div class="item-badge video">V</div>
-                        <div class="item-info">
-                            <div class="item-title">HTML & CSS Cơ Bản</div>
-                            <div class="item-meta">Video • 15 phút</div>
-                        </div>
-                    </div>
-                    <div class="list-item">
-                        <div class="item-badge slide">S</div>
-                        <div class="item-info">
-                            <div class="item-title">JavaScript Fundamentals</div>
-                            <div class="item-meta">Slide • 25 phút</div>
-                        </div>
-                    </div>
-                    <div class="list-item">
-                        <div class="item-badge pdf">P</div>
-                        <div class="item-info">
-                            <div class="item-title">Advanced CSS Techniques</div>
-                            <div class="item-meta">PDF • 30 phút</div>
-                        </div>
-                    </div>
+                <div class="list-content list-lesson">
                 </div>
             </div>
 
@@ -176,7 +152,8 @@
         </div>
     </div>
 
-    <script src="dashboard.js"></script>
+    <script src="/trainer/dashboard/dashboard.js"></script>
+    <script src="/trainer/js/apiService.js"></script>
     <script src="/shared/auth/auth.js"></script>
 </body>
 

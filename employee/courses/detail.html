@@ -15,12 +15,12 @@
     <!-- HEADER -->
     <header class="header">
         <div class="header-left">
-            <a href="./dashboard/index.html" class="logo">
+            <a href="/employee/dashboard.html" class="logo">
                 <i class="fas fa-book-reader"></i>
                 UTH - LMS
             </a>
             <nav class="nav-icons">
-                <a href="./courses/list.html" class="active" title="Khóa học">
+                <a href="./list.html" class="active" title="Khóa học">
                     <i class="fas fa-graduation-cap"></i>
                 </a>
                 <a href="/employee/quiz/list.html" title="Quiz">
@@ -166,45 +166,46 @@
 
             <!-- Sidebar -->
             <aside class="course-sidebar">
-                <div class="course-card-detail">
-                    <div class="course-card-image">
-                        <div class="course-card-emoji">🌐</div>
-                    </div>
-                    <div class="course-card-info">
-                        <div class="course-stat">
-                            <span class="stat-label">Cấp độ</span>
-                            <span class="stat-value">Intermediate</span>
-                        </div>
-                        <div class="course-stat">
-                            <span class="stat-label">Thời gian</span>
-                            <span class="stat-value">20 giờ</span>
-                        </div>
-                        <div class="course-stat">
-                            <span class="stat-label">Bài học</span>
-                            <span class="stat-value">16 bài</span>
-                        </div>
-                        <div class="course-stat">
-                            <span class="stat-label">Học viên</span>
-                        </div>
-                        <a href="learning.html" class="course-button">Học ngay</a>
-                    </div>
-                </div>
+    <div class="course-card-detail">
+        <div class="course-card-image">
+            <div class="course-card-emoji" id="courseIcon">🌐</div>
+        </div>
 
-                <div class="instructor-card">
-                    <h3>Giảng viên</h3>
-                    <div class="instructor-info">
-                        <div class="instructor-avatar">
-                            <i class="fas fa-user-circle"></i>
-                        </div>
-                        <div class="instructor-details">
-                            <h4>Nguyễn Lê Hương Giang</h4>
-                            <p>Senior Web Developer</p>
-                        </div>
-                    </div>
-                    <p class="instructor-bio">Hơn 3 năm kinh nghiệm phát triển web, đã làm việc tại các công ty công
-                        nghệ hàng đầu UTH.</p>
-                </div>
-            </aside>
+        <div class="course-card-info">
+            <div class="course-stat">
+                <span class="stat-label">Cấp độ</span>
+                <span class="stat-value" id="courseLevel">---</span>
+            </div>
+
+            <div class="course-stat">
+                <span class="stat-label">Thời gian</span>
+                <span class="stat-value" id="courseDuration">0 giờ</span>
+            </div>
+
+            <div class="course-stat">
+                <span class="stat-label">Bài học</span>
+                <span class="stat-value" id="courseLessons">0 bài</span>
+            </div>
+
+            <a href="learning.html" class="course-button">Học ngay</a>
+        </div>
+    </div>
+
+    <div class="instructor-card">
+        <h3>Giảng viên</h3>
+        <div class="instructor-info">
+            <div class="instructor-avatar">
+                <i class="fas fa-user-circle"></i>
+            </div>
+            <div class="instructor-details">
+                <h4 id="instructorName">---</h4>
+                <p id="instructorRole">---</p>
+            </div>
+        </div>
+        <p class="instructor-bio" id="instructorBio"></p>
+    </div>
+</aside>
+
         </div>
     </section>
 
@@ -213,9 +214,9 @@
         <p>&copy; 2025 UTH - LMS. All rights reserved.</p>
     </footer>
 
-    <script src="./js/pages/courses/detail.js"></script>
+    <script src="/employee/js/pages/courses/detail.js"></script>
     <script src="/shared/auth/auth.js"></script>
-
+    <script src="/employee/js/apiService.js"></script>
 </body>
 
 </html>
