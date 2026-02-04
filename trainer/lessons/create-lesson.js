@@ -14,13 +14,10 @@ document.addEventListener("DOMContentLoaded", () => {
         e.preventDefault();
 
         const lessonData = {
-            course: parseInt(document.getElementById("course").value),
+            course: document.getElementById("courseName").value.trim(),
             title: document.getElementById("title").value.trim(),
             duration: parseInt(document.getElementById("duration").value),
-            description: document.getElementById("description").value.trim(),
-            createdBy: document.getElementById("createdBy").value
-                ? parseInt(document.getElementById("createdBy").value)
-                : null
+            description: document.getElementById("description").value.trim()
         };
 
         try {
