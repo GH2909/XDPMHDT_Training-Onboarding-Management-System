@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 import ut.edu.com.trainingonboardingmanagementsystem.Dto.Request.CourseCreateRequest;
 import ut.edu.com.trainingonboardingmanagementsystem.Dto.Request.CourseUpdateRequest;
 import ut.edu.com.trainingonboardingmanagementsystem.Dto.Response.CourseResponse;
+import ut.edu.com.trainingonboardingmanagementsystem.Exception.ResourceNotFoundException;
 import ut.edu.com.trainingonboardingmanagementsystem.Mapper.CourseMapper;
 import ut.edu.com.trainingonboardingmanagementsystem.Model.Course;
 import ut.edu.com.trainingonboardingmanagementsystem.Repository.CourseRepository;
@@ -32,6 +33,21 @@ public class CourseService {
         c.setCategory(req.getCategory());
         c.setCompletionRule(req.getCompletionRule());
         return courseRepo.save(c);
+    }
+
+    public CourseResponse getCourseById(Integer id) {
+        Course course = courseRepo.findById(id)
+                .orElseThrow(() ->
+                        new ResourceNotFoundException("Không tìm thấy khóa học với id: " + id));
+
+        return CourseResponse.builder()
+                .id(course.getId())
+                .courseName(course.getCourseName())
+                .description(course.getDescription())
+                .category(course.getCategory())
+                .duration(course.getDuration())
+                .completionRule(course.getCompletionRule())
+                .build();
     }
 
     public List<Course> getAll() {

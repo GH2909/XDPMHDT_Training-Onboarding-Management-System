@@ -23,6 +23,11 @@ public class CourseController {
         return ResponseEntity.ok(courseService.create(req));
     }
 
+    @GetMapping("/{id}")
+    public ResponseEntity<?> getCourseById(@PathVariable Integer id) {
+        return ResponseEntity.ok(courseService.getCourseById(id));
+    }
+
     @GetMapping
     public ResponseEntity<List<?>> getAll() {
         return ResponseEntity.ok(courseService.getAll());
