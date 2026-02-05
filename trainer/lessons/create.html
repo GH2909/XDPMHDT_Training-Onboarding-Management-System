@@ -18,6 +18,9 @@
                 UTH - LMS
             </a>
             <nav class="nav-icons">
+                <a href="../dashboard/index.html" class="nav-link" title="Trang chủ">
+                    <i class="fas fa-home"></i>
+                </a>
                 <a href="../lessons/index.html" class="nav-link" title="Bài giảng">
                     <i class="fas fa-book"></i>
                 </a>
@@ -66,10 +69,11 @@
 
                     <div class="form-row">
                         <div class="form-group">
-                            <label for="course">Khóa học</label>
-                            <input type="text" id="course" name="course" placeholder="Nhập tên khóa học" required>
+                            <label for="courseSelect">Khóa học</label>
+                            <select id="courseSelect" name="courseSelect" required>
+                                <option value="">-- Chọn khóa học --</option>
+                            </select>
                         </div>
-
                     </div>
 
                     <div class="form-group">
