@@ -20,7 +20,6 @@ document.addEventListener("DOMContentLoaded", () => {
     .then(data => {
         console.log("Course API trả về:", data);
 
-        // API của bạn trả mảng trực tiếp
         data.forEach(course => {
             const option = document.createElement("option");
             option.value = course.courseName;              // giá trị là tên khóa học
