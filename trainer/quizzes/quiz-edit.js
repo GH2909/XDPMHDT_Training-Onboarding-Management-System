@@ -15,11 +15,11 @@ document.addEventListener("DOMContentLoaded", () => {
 
     const quizId = document.getElementById("quiz-id").value;
 
-    // 👉 CHƯA CÓ QUIZ → LƯU THÔNG TIN QUIZ TRƯỚC
+    // Chưa có quiz--> lưu inf quiz trước
     if (!quizId) {
         await createQuiz(token);
     } 
-    // 👉 ĐÃ CÓ QUIZ → LƯU CÂU HỎI
+    // Có quiz rồi --> lưu câu hỏi
     else {
         await saveQuestions(token, quizId);
     }
@@ -91,22 +91,21 @@ document.addEventListener("DOMContentLoaded", () => {
         questionsContainer.insertBefore(newQuestion, addQuestionBtn);
     });
 
-    // ===== EVENT DELEGATION =====
     questionsContainer.addEventListener("click", (e) => {
 
-        // ➕ THÊM ĐÁP ÁN
+        // Thêm đáp án
         if (e.target.closest(".btn-add-answer")) {
             const questionCard = e.target.closest(".question-card");
             const choicesList = questionCard.querySelector(".choices-list");
             choicesList.appendChild(createAnswerElement());
         }
 
-        // ❌ XOÁ ĐÁP ÁN
+        // Xoá đáp án
         if (e.target.closest(".btn-delete-answer")) {
             e.target.closest(".answer-item").remove();
         }
 
-        // ❌ XOÁ CÂU HỎI
+        // Xoá câu hỏi
         if (e.target.closest(".btn-delete-question")) {
             e.target.closest(".question-card").remove();
         }
@@ -148,7 +147,7 @@ async function createQuiz(token) {
 
         alert("Đã lưu thông tin Quiz! Bây giờ hãy thêm câu hỏi.");
 
-        // 👉 CHUYỂN SANG TAB CÂU HỎI
+        // --> sang tab câu hỏi
         document.querySelector('[data-tab="questions"]').click();
 
     } catch (err) {
