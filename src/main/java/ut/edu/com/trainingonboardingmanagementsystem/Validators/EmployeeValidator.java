@@ -12,7 +12,6 @@ import ut.edu.com.trainingonboardingmanagementsystem.Exception.ValidationExcepti
 import ut.edu.com.trainingonboardingmanagementsystem.Model.Quiz;
 import ut.edu.com.trainingonboardingmanagementsystem.Model.User;
 import ut.edu.com.trainingonboardingmanagementsystem.Repository.AssignmentRepository;
-import ut.edu.com.trainingonboardingmanagementsystem.Repository.QuizAttemptRepository;
 import ut.edu.com.trainingonboardingmanagementsystem.Repository.UserRepository;
 import ut.edu.com.trainingonboardingmanagementsystem.enums.QuizStatus;
 import ut.edu.com.trainingonboardingmanagementsystem.enums.UserStatus;

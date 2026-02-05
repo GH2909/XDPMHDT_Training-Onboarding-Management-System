@@ -37,9 +37,6 @@ public class Quiz {
     @Column(columnDefinition = "TEXT", name = "description")
     private String description;
 
-//    @Column(name = "category_id", nullable = false)
-//    private Integer categoryId;
-
     @Column(name = "duration_minutes", nullable = false)
     private Integer durationMinutes;
 
