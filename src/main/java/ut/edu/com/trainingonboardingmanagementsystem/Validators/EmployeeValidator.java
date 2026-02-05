@@ -25,7 +25,6 @@ public class EmployeeValidator {
     private final UserRepository userRepository;
     private final AssignmentRepository assignmentRepository;
     private final PasswordEncoder passwordEncoder;
-    private final QuizAttemptRepository quizAttemptRepository;
 
     public void validateProfileUpdate(String email, EmployeeProfileUpdateRequest request) {
         User employee = userRepository.findByEmail(email)

@@ -4,6 +4,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.bind.annotation.PathVariable;
 import ut.edu.com.trainingonboardingmanagementsystem.Dto.Request.LessonRequest;
 import ut.edu.com.trainingonboardingmanagementsystem.Dto.Response.LessonResponse;
 import ut.edu.com.trainingonboardingmanagementsystem.Exception.ResourceNotFoundException;
@@ -26,6 +27,7 @@ public class LessonService {
     private final LessonMapper lessonMapper;
     private final CourseRepository courseRepository;
     private final UserRepository userRepository;
+
     public LessonResponse createLesson(LessonRequest request) {
 
         Course course = courseRepository.findByCourseName(request.getCourseName())
@@ -82,4 +84,13 @@ public class LessonService {
         }
         lessonRepository.deleteById(id);
     }
+
+    public List<LessonResponse> getLessonsByCourse(Integer courseId) {
+
+        List<Lesson> lessons = lessonRepository.findByCourseId(courseId);
+        return lessons.stream()
+                .map(lessonMapper::lessonResponse)
+                .collect(Collectors.toList());
+    }
 }
+

@@ -192,12 +192,8 @@ public class EmployeeQuizService {
                 .orElse(null);
 
         if (progress != null && result.getPassed()) {
-            // Update score (average or best score logic)
             float newScore = (progress.getScore() + result.getTotalScore()) / 2;
             progress.setScore(newScore);
-
-            // Update progress percentage
-            // Logic depends on completion rules
 
             learningProgressRepository.save(progress);
         }

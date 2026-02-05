@@ -57,4 +57,13 @@ public class LessonController {
         lessonService.deleteLesson(id);
         return ResponseEntity.ok(ApiResponse.success(null, "Lesson deleted successfully"));
     }
+
+    @GetMapping("/by-course/{courseId}")
+    public ResponseEntity<ApiResponse<List<LessonResponse>>> getLessonsByCourse(@PathVariable Integer courseId) {
+
+        List<LessonResponse> lessons = lessonService.getLessonsByCourse(courseId);
+
+        return ResponseEntity.ok(ApiResponse.success(lessons));
+    }
+
 }

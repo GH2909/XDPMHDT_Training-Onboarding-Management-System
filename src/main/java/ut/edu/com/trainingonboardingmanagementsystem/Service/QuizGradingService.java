@@ -29,11 +29,8 @@ import java.util.stream.Collectors;
 public class QuizGradingService {
 
     private final QuizRepository quizRepository;
-//    private final QuestionRepository questionRepository;
-//    private final ChoiceRepository choiceRepository;
     private final QuizQuestionRepository quizQuestionRepository;
     private final QuizValidator quizValidator;
-    private final QuizAttemptRepository quizAttemptRepository;
 
     public QuizResultResponse gradeQuiz(SubmitQuizRequest request) {
         Quiz quiz = quizRepository.findById(request.getQuizId())
@@ -82,7 +79,7 @@ public class QuizGradingService {
             boolean isCorrect = false;
 
             if (question.getType() == QuestionType.TRUE_FALSE) {
-                // For True/False, must select exactly the correct choice
+                // True/False
                 if (answer.getChoiceIds().size() == 1 &&
                         correctChoiceIds.contains(answer.getChoiceIds().get(0))) {
                     earnedScore = correctChoices.get(0).getScore();
@@ -90,11 +87,11 @@ public class QuizGradingService {
                     correctAnswers++;
                 }
             } else {
-                // For Multiple Choice
+                // Multiple Choice
                 Set<Integer> selectedSet = new HashSet<>(answer.getChoiceIds());
                 Set<Integer> correctSet = new HashSet<>(correctChoiceIds);
 
-                // So sánh: Đã chọn == Đáp án đúng?
+                // So sánh: Đã chọn = Đáp án đúng?
                 if (selectedSet.equals(correctSet)) {
                     // Đúng tính điểm
                     earnedScore = correctChoices.stream()
@@ -106,9 +103,6 @@ public class QuizGradingService {
             }
 
             totalScore += earnedScore;
-//            if (isCorrect) {
-//                correctAnswers++;
-//            }
 
             int maxQuestionScore = correctChoices.stream()
                     .mapToInt(Choice::getScore)
@@ -130,7 +124,6 @@ public class QuizGradingService {
 
         return QuizResultResponse.builder()
                 .quizId(quiz.getId())
-//                .userId(request.getUserId())
                 .totalScore(totalScore)
                 .maxScore(quiz.getMaxScore())
                 .passScore(quiz.getPassScore())

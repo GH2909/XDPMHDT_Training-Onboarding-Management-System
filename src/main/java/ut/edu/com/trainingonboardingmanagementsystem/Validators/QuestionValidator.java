@@ -34,7 +34,6 @@ public class QuestionValidator {
             }
         }
 
-        // Validate unique choice labels
         Set<String> choiceLabels = request.getChoices().stream()
                 .map(ChoiceRequest::getChoices)
                 .collect(Collectors.toSet());
