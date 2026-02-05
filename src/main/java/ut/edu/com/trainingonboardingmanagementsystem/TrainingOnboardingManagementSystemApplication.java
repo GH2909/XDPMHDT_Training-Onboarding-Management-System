@@ -11,5 +11,4 @@ public class TrainingOnboardingManagementSystemApplication {
     public static void main(String[] args) {
         SpringApplication.run(TrainingOnboardingManagementSystemApplication.class, args);
     }
-
 }

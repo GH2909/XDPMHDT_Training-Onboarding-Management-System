@@ -28,6 +28,7 @@ public class CourseController {
         return ResponseEntity.ok(courseService.getCourseById(id));
     }
 
+    @PreAuthorize("hasAnyRole('HR', 'ADMIN', 'TRAINER')")
     @GetMapping
     public ResponseEntity<List<?>> getAll() {
         return ResponseEntity.ok(courseService.getAll());
